@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  base_title: MyString
+  facebook: MyString
+  twitter: MyString
+  github: MyString
+  linkedin: MyString
+  viadeo: MyString
+  resume: false
+
+two:
+  base_title: MyString
+  facebook: MyString
+  twitter: MyString
+  github: MyString
+  linkedin: MyString
+  viadeo: MyString
+  resume: false
