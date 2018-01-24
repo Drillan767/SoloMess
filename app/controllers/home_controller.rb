@@ -30,12 +30,23 @@ class HomeController < ApplicationController
 
   end
 
-  def contact
-    @title = 'Contact'
-  end
-
   def about
     @title = 'About me'
+  end
+
+  def contact
+    @contact = Contact.new
+    @titre = 'Contact'
+  end
+
+  def create
+    @contact = Contact.new params[:contact]
+    if @contact.valid?
+      ContactMailer.contact_form(@contact).deliver
+      redirect_to contacts_path, notice: "Thank you! I'll reach you in a short while"
+    else
+      render :contact
+    end
   end
 
   private

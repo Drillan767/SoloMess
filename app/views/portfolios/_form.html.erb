@@ -1,4 +1,4 @@
-<%= form_with(model: portfolio, local: true) do |form| %>
+<%= form_with(model: portfolio, local: true) do |f| %>
   <% if portfolio.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(portfolio.errors.count, "error") %> prohibited this portfolio from being saved:</h2>
@@ -12,46 +12,46 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title, id: :portfolio_title %>
+    <%= f.label :title %>
+    <%= f.text_field :title, id: :portfolio_title %>
   </div>
 
   <div class="field">
-    <%= form.label :tags %>
-    <%= form.text_field :tags, id: :portfolio_tags %>
+    <%= f.label :tags %>
+    <%= f.text_field :tags, id: :portfolio_tags %>
   </div>
 
   <div class="field">
-    <%= form.label :thumbnail %>
-    <%= form.file_field :thumbnail, id: :portfolio_thumbnail %>
+    <%= f.label :thumbnail %>
+    <%= f.file_field :thumbnail, id: :portfolio_thumbnail %>
   </div>
 
   <div class="field">
-    <%= form.label :website %>
-    <%= form.text_field :website, id: :portfolio_website %>
+    <%= f.label :website %>
+    <%= f.text_field :website, id: :portfolio_website %>
   </div>
 
   <div class="field">
-    <%= form.label :creation_time %>
-    <%= form.datetime_select :creation_time, id: :portfolio_creation_time %>
+    <%= f.label :creation_time %>
+    <%= f.datetime_select :creation_time, id: :portfolio_creation_time %>
   </div>
 
   <div class="field">
-    <%= form.label :public %>
-    <%= form.check_box :public, id: :portfolio_public %>
+    <%= f.label :public %>
+    <%= f.check_box :public, id: :portfolio_public %>
   </div>
 
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content, id: :content %>
+    <%= f.label :content %>
+    <%= f.text_area :content, id: :content %>
   </div>
 
   <div class="field">
-    <%= form.label :illustrations %>
-    <%= form.file_field :illustrations, id: :portfolio_illustrations, multiple: true %>
+    <%= f.label :illustrations %>
+    <%= f.file_field :illustrations, id: :portfolio_illustrations, multiple: true %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>

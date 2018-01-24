@@ -2,7 +2,15 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get '/contact' => 'home#contact', as: :contact
+  get '/articles' => 'home#articles_index', as: :home_article_index
+  get '/articles/:id' => 'home#article_show', as: :home_article_show
+
+  get '/portfolio' => 'home#portfolio_index', as: :home_portfolio_index
+  get '/project/:id' => 'home#portfolio_show', as: :home_portfolio_show
+
+  get '/contact' => 'home#contact', as: :new_contact
+  post '/contact' => 'home#create', as: :contacts
+
   get '/about' => 'home#about', as: :about
 
   devise_for :users

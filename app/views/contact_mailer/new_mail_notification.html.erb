@@ -1,0 +1,15 @@
+<html>
+<head>
+  <title>Nouveau mail !</title>
+</head>
+<body>
+
+<h3>Nouveau contact depuis le site !</h3>
+
+<p><b>Nom : </b> <%= message.nom %></p>
+<p><b>Email : </b> <%= mail_to message.email, message.email %></p>
+<p><b>Objet : </b> <%= message.objet %></p>
+<p><b>Message : </b><br /> <%= simple_format(message.message) %></p>
+
+</body>
+</html>
