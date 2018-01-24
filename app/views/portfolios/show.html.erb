@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @portfolio.title %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @portfolio.tags %>
+</p>
+
+<p>
+  <strong>Slug:</strong>
+  <%= @portfolio.slug %>
+</p>
+
+<p>
+  <strong>Thumbnail:</strong>
+  <%= @portfolio.thumbnail %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @portfolio.website %>
+</p>
+
+<p>
+  <strong>Creation time:</strong>
+  <%= @portfolio.creation_time %>
+</p>
+
+<p>
+  <strong>Public:</strong>
+  <%= @portfolio.public %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @portfolio.content %>
+</p>
+
+<p>
+  <strong>Illustrations:</strong>
+  <%= @portfolio.illustrations %>
+</p>
+
+<%= link_to 'Edit', edit_portfolio_path(@portfolio) %> |
+<%= link_to 'Back', portfolios_path %>

@@ -1,0 +1,62 @@
+<%= form_with(model: portfolio, local: true) do |form| %>
+  <% if portfolio.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(portfolio.errors.count, "error") %> prohibited this portfolio from being saved:</h2>
+
+      <ul>
+      <% portfolio.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :portfolio_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tags %>
+    <%= form.text_field :tags, id: :portfolio_tags %>
+  </div>
+
+  <div class="field">
+    <%= form.label :slug %>
+    <%= form.text_field :slug, id: :portfolio_slug %>
+  </div>
+
+  <div class="field">
+    <%= form.label :thumbnail %>
+    <%= form.text_field :thumbnail, id: :portfolio_thumbnail %>
+  </div>
+
+  <div class="field">
+    <%= form.label :website %>
+    <%= form.text_field :website, id: :portfolio_website %>
+  </div>
+
+  <div class="field">
+    <%= form.label :creation_time %>
+    <%= form.datetime_select :creation_time, id: :portfolio_creation_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :public %>
+    <%= form.check_box :public, id: :portfolio_public %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, id: :portfolio_content %>
+  </div>
+
+  <div class="field">
+    <%= form.label :illustrations %>
+    <%= form.text_field :illustrations, id: :portfolio_illustrations %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

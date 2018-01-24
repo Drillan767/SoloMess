@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def title
     base_title = Base.first.default_title if Base.exists?
 
