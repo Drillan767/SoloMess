@@ -14,11 +14,11 @@ Rails.application.routes.draw do
 
   get '/admin' => 'home#admin', as: :admin
 
-  # authenticate :user do
-  #   scope '/admin' do
-  #     resources :bases
-  #     resources :portfolios
-  #     resources :articles
-  #   end
-  # end
+  authenticate :user do
+    scope '/admin' do
+      resources :bases
+      resources :portfolios
+      resources :articles
+    end
+  end
 end

@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -7,17 +5,12 @@
 
 <p>
   <strong>Image:</strong>
-  <%= @article.image %>
+  <%= image_tag @article.image %>
 </p>
 
 <p>
   <strong>Tags:</strong>
   <%= @article.tags %>
-</p>
-
-<p>
-  <strong>Slug:</strong>
-  <%= @article.slug %>
 </p>
 
 <p>
