@@ -3,6 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import extractActionName from './lib/extractActionName';
 import {elementForActionName} from './lib/elementForActionName';
+import 'jquery';
+import 'popper.js';
+import 'bootstrap';
 
 let actionName = extractActionName();
 
@@ -12,7 +15,5 @@ let renderElement = function (element, id) {
         document.getElementById(id)
     );
 };
-
-console.log("ouais bonsoir");
 
 renderElement(elementForActionName[actionName], actionName);

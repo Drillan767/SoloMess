@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 20180124092155) do
     t.string "linkedin"
     t.string "viadeo"
     t.boolean "resume"
+    t.string "logo"
+    t.string "landing_image"
+    t.string "landing_text"
+    t.string "landing_background"
+    t.string "landing_body"
+    t.string "landing_articles"
+    t.string "landing_portfolio"
+    t.string "landing_contact"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
