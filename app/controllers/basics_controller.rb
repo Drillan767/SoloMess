@@ -62,13 +62,14 @@ class BasicsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_basic
-      @basic = Basic.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def basic_params
-      params.require(:basic).permit(:base_title, :facebook, :twitter, :github, :linkedin, :viadeo, :resume)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_basic
+    @basic = Basic.first
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def basic_params
+    params.require(:basic).permit(:base_title, :facebook, :twitter, :github, :linkedin, :viadeo, :resume)
+  end
 end

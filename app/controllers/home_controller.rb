@@ -27,11 +27,17 @@ class HomeController < ApplicationController
   end
 
   def portfolio_show
-
+    @portfolio = Portfolio.friendly.find(params[:id])
+    @title = @portfolio.title.to_s
   end
 
   def about
     @title = 'About me'
+  end
+
+  def configuration
+    @configuration = Basic.first if Basic.exists?
+    # abort @configuration.inspect
   end
 
   def contact

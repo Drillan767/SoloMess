@@ -1,0 +1,1 @@
+json.partial! 'home/settings', configuration: @configuration

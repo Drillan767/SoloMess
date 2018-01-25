@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/contact' => 'home#contact', as: :new_contact
   post '/contact' => 'home#create', as: :contacts
 
+  get '/settings' => 'home#configuration', as: :configuration
+
   get '/about' => 'home#about', as: :about
 
   devise_for :users
@@ -24,7 +26,7 @@ Rails.application.routes.draw do
 
   authenticate :user do
     scope '/admin' do
-      resources :bases
+      resource :basics
       resources :portfolios
       resources :articles
     end
