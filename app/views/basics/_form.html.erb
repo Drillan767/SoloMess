@@ -1,4 +1,4 @@
-<%= form_with(model: basic, local: true) do |form| %>
+<%= form_with(model: @basic, local: true, url: basics_path) do |form| %>
   <% if basic.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(basic.errors.count, "error") %> prohibited this basic from being saved:</h2>
@@ -44,6 +44,11 @@
   <div class="field">
     <%= form.label :resume %>
     <%= form.check_box :resume, id: :basic_resume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :logo %>
+    <%= form.file_field :logo, id: :basic_logo %>
   </div>
 
   <div class="actions">

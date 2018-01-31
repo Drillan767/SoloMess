@@ -42,7 +42,7 @@ class BasicsController < ApplicationController
   def update
     respond_to do |format|
       if @basic.update(basic_params)
-        format.html { redirect_to @basic, notice: 'Basic was successfully updated.' }
+        format.html { redirect_to basics_path, notice: 'Basic was successfully updated.' }
         format.json { render :show, status: :ok, location: @basic }
       else
         format.html { render :edit }
@@ -65,11 +65,11 @@ class BasicsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_basic
-    @basic = Basic.first
+    @basic = Basic.first_or_initialize
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def basic_params
-    params.require(:basic).permit(:base_title, :facebook, :twitter, :github, :linkedin, :viadeo, :resume)
+    params.require(:basic).permit(:base_title, :facebook, :twitter, :github, :linkedin, :viadeo, :resume, :logo)
   end
 end
