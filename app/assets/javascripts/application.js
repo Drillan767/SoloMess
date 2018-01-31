@@ -1,8 +1,17 @@
 //= require tinymce/tinymce
 //= require tinymce/themes/modern/theme.min.js
+//= require jquery
+//= require cocoon
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function(){
+    $('#social_networks')
+        .on('cocoon:before-insert', function(e,task_to_be_added) {
+            console.log("nouveau truc");
+    })
+});
 
 tinymce.init({
     selector: '#content',

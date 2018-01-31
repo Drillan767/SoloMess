@@ -9,14 +9,15 @@
 </head>
 
 <body>
-<% if notice %>
-    <p class="notice"><%= notice %></p>
-<% elsif alert %>
-    <p class="alert"><%= alert %></p>
-<% end %>
+<p>[ADMINISTRATION]</p>
+  <% if notice %>
+      <p class="notice"><%= notice %></p>
+  <% elsif alert %>
+      <p class="alert"><%= alert %></p>
+  <% end %>
 
-<%= yield %>
+  <%= yield %>
 
-<%= javascript_pack_tag 'admin' %>
+  <%= javascript_pack_tag 'admin' %>
 </body>
 </html>

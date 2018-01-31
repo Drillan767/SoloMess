@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124092155) do
+ActiveRecord::Schema.define(version: 20180131212432) do
 
   create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title"
@@ -25,11 +25,6 @@ ActiveRecord::Schema.define(version: 20180124092155) do
 
   create_table "basics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "base_title"
-    t.string "facebook"
-    t.string "twitter"
-    t.string "github"
-    t.string "linkedin"
-    t.string "viadeo"
     t.boolean "resume"
     t.string "logo"
     t.string "landing_image"
@@ -65,6 +60,14 @@ ActiveRecord::Schema.define(version: 20180124092155) do
     t.boolean "public"
     t.text "content"
     t.json "illustrations"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "social_networks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "url"
+    t.integer "basic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

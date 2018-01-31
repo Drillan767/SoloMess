@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+
+  layout 'admin'
   before_action :authenticate_user!
   before_action :set_article, only: %i[show edit update destroy]
 

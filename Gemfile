@@ -6,21 +6,23 @@ git_source(:github) do |repo_name|
 end
 
 gem 'carrierwave', '~> 1.0'
-gem 'rails', '~> 5.1.4'
-gem 'mysql2'
-gem 'puma', '~> 3.7'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'webpacker'
-gem 'therubyracer', platforms: :ruby
-gem 'rest-client'
-
-gem 'turbolinks', '~> 5'
+gem 'cocoon'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'figaro'
 gem 'friendly_id', '~> 5.2.0'
 gem 'jbuilder', '~> 2.5'
+gem 'mysql2'
+gem 'puma', '~> 3.7'
+gem 'rails', '~> 5.1.4'
+gem 'rest-client'
+gem 'rubocop'
+gem 'therubyracer', platforms: :ruby
+gem 'turbolinks', '~> 5'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -34,5 +36,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

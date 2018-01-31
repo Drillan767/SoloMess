@@ -1,4 +1,6 @@
 class BasicsController < ApplicationController
+
+  layout 'admin'
   before_action :set_basic, only: [:show, :edit, :update, :destroy]
 
   # GET /basics
@@ -70,6 +72,6 @@ class BasicsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def basic_params
-    params.require(:basic).permit(:base_title, :facebook, :twitter, :github, :linkedin, :viadeo, :resume, :logo)
+    params.require(:basic).permit(:base_title, :resume, :logo, social_networks_attributes: [:id, :name, :url])
   end
 end

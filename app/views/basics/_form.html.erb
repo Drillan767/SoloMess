@@ -1,10 +1,10 @@
-<%= form_with(model: @basic, local: true, url: basics_path) do |form| %>
-  <% if basic.errors.any? %>
+<%= form_with(model: @basic, local: true, url: basics_path) do |f| %>
+  <% if @basic.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(basic.errors.count, "error") %> prohibited this basic from being saved:</h2>
+      <h2><%= pluralize(@basic.errors.count, "error") %> prohibited this basic from being saved:</h2>
 
       <ul>
-      <% basic.errors.full_messages.each do |message| %>
+      <% @basic.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -12,46 +12,31 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :base_title %>
-    <%= form.text_field :base_title, id: :basic_base_title %>
+    <%= f.label :base_title %>
+    <%= f.text_field :base_title, id: :basic_base_title %>
   </div>
 
   <div class="field">
-    <%= form.label :facebook %>
-    <%= form.text_field :facebook, id: :basic_facebook %>
+    <%= f.label :resume %>
+    <%= f.check_box :resume, id: :basic_resume %>
   </div>
 
   <div class="field">
-    <%= form.label :twitter %>
-    <%= form.text_field :twitter, id: :basic_twitter %>
+    <%= f.label :logo %>
+    <%= f.file_field :logo, id: :basic_logo %>
   </div>
 
-  <div class="field">
-    <%= form.label :github %>
-    <%= form.text_field :github, id: :basic_github %>
-  </div>
+  <div id="social_networks">
+    <%= f.fields_for :social_networks do |sn| %>
+      <%= render 'social_networks', f: sn %>
+    <% end %>
 
-  <div class="field">
-    <%= form.label :linkedin %>
-    <%= form.text_field :linkedin, id: :basic_linkedin %>
-  </div>
-
-  <div class="field">
-    <%= form.label :viadeo %>
-    <%= form.text_field :viadeo, id: :basic_viadeo %>
-  </div>
-
-  <div class="field">
-    <%= form.label :resume %>
-    <%= form.check_box :resume, id: :basic_resume %>
-  </div>
-
-  <div class="field">
-    <%= form.label :logo %>
-    <%= form.file_field :logo, id: :basic_logo %>
+    <div class="links">
+      <%= link_to_add_association 'Ajouter', f, :social_networks %>
+    </div>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>

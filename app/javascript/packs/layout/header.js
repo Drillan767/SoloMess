@@ -4,15 +4,6 @@ export default class Header extends React.Component {
     render() {
         let settings = this.props.settings;
 
-        if(settings !== null) {
-            console.log(settings);
-            let socialMedias = Object.keys(settings).map(function(key) {
-                let keys = socialMedias[key];
-                console.log(keys);
-            });
-        }
-
-
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
