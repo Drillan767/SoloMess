@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: rawrxd_dev
+  database: solomess_dev
 
 test:
   <<: *default
-  database: rawrxd_test
+  database: solomess_dev
 
 production:
   <<: *default
-  database: rawrxd_prod
+  database: solomess_dev

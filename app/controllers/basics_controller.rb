@@ -17,6 +17,7 @@ class BasicsController < ApplicationController
   # GET /basics/new
   def new
     @basic = Basic.new
+    @basic.social_networks.build
   end
 
   # GET /basics/1/edit
@@ -67,7 +68,7 @@ class BasicsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_basic
-    @basic = Basic.first_or_initialize
+    @basic = Basic.first
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

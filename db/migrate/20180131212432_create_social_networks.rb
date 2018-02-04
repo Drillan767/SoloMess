@@ -4,7 +4,6 @@ class CreateSocialNetworks < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :url
       t.integer :basic_id
-      t.timestamps
     end
   end
 end
