@@ -6,6 +6,7 @@ import {faFacebook} from '@fortawesome/fontawesome-free-brands'
 export default class Header extends React.Component {
     render() {
         let settings = this.props.settings;
+        console.log(settings);
 
         return (
             <div>
@@ -40,16 +41,7 @@ export default class Header extends React.Component {
                             </li>
 
                         </ul>
-                        <ul className="navbar-nav my-2 my-lg-0">
-                            {
-                                settings !== null &&
-                                <li className="nav-item">
-                                    <FontAwesomeIcon icon={faFacebook} />
-                                </li>
-                            }
-
-                            <Headerlinks settings={settings} />
-                        </ul>
+                        <Headerlinks settings={settings} />
                     </div>
                 </nav>
             </div>

@@ -2,43 +2,39 @@ import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as brands from '@fortawesome/fontawesome-free-brands';
 
-
-/*
-*  On peut accéder à l'élément de son choix en faisant par exemple
-*  brand[socialNetwork['facebook'], ce qui donnera brand.faFacebook
-*/
-
-let settings = this.props.settings;
-
 let socialNetwork = {
-    'facebook': faFacebook,
-    'twitter': faTwitter,
-    'viadeo': faViadeo,
-    'github': faGithub,
-    'linkedin': faLinkedin,
+    'facebook': brands.faFacebook,
+    'twitter': brands.faTwitter,
+    'viadeo': brands.faViadeo,
+    'github': brands.faGithub,
+    'linkedin': brands.faLinkedin,
 };
 
 export default class headerLinks extends React.Component {
 
     render() {
 
+        let settings = this.props.settings;
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         return (
             <ul className="navbar-nav my-2 my-lg-0">
                 {
                     settings !== null &&
                     settings.social_networks.map(function(param, i){
+                        console.log(i);
                         return (
                             <li className="nav-item" key={i}>
-                                <a href={param.url}>
-                                    <FontAwesomeIcon icon={faFacebook} />
-                                    {param.name}
+                                <a href={param.url} target="_blank" className="nav-link">
+                                    <FontAwesomeIcon icon={socialNetwork[param.name]} />
+                                    {capitalize(param.name)}
                                 </a>
-
                             </li>
                         )
-
                     })
-
                 }
             </ul>
         )

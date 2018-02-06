@@ -31,7 +31,7 @@ class BasicsController < ApplicationController
 
     respond_to do |format|
       if @basic.save
-        format.html { redirect_to basics_path, notice: 'Basic was successfully created.' }
+        format.html { redirect_to admin_path, notice: 'Basic was successfully created.' }
         format.json { render :show, status: :created, location: @basic }
       else
         format.html { render :new }

@@ -23,25 +23,8 @@ ActiveRecord::Schema.define(version: 20180131212432) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "bases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "facebook"
-    t.string "twitter"
-    t.string "github"
-    t.string "viadeo"
-    t.string "linkedin"
-    t.boolean "resume"
-    t.string "base_title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "basics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "base_title"
-    t.string "facebook"
-    t.string "twitter"
-    t.string "github"
-    t.string "linkedin"
-    t.string "viadeo"
     t.boolean "resume"
     t.string "logo"
     t.string "landing_image"
