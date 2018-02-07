@@ -1,7 +1,7 @@
 import React from 'react';
 import Headerlinks from '../lib/headerLinks';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import {faFacebook} from '@fortawesome/fontawesome-free-brands'
+import Breadcrumb from './breadcrumb';
+import Notifications from './notifications';
 
 export default class Header extends React.Component {
     render() {
@@ -42,6 +42,9 @@ export default class Header extends React.Component {
                         <Headerlinks settings={settings} />
                     </div>
                 </nav>
+
+                <Breadcrumb />
+                <Notifications />
             </div>
         )
     }

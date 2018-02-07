@@ -1,8 +1,7 @@
 /* eslint no-console:0 */
 import React from 'react';
-import extractActionName from './lib/extractActionName';
 import {elementForActionName} from './lib/elementForActionName';
-import Loader from './lib/loader';
+import utils from './lib/functionsLibrary'
 import 'popper.js';
 import 'bootstrap';
 
@@ -15,13 +14,13 @@ export default class App extends React.Component {
 
     componentDidMount() {
         let self = this;
-        Loader(window.location.origin + '/settings.json', function(settings) {
+        utils.loader(window.location.origin + '/settings.json', function(settings) {
             self.setState({settings: settings});
         });
     }
 
     render() {
-        let actionName = extractActionName();
+        let actionName = utils.extractActionName();
         let Element = elementForActionName[actionName];
 
         return (

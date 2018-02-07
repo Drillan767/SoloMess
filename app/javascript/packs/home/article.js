@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from '../lib/loader';
+import utils from '../lib/functionsLibrary';
 import Header from "../layout/header";
 import Footer from "../layout/footer";
 
@@ -12,7 +12,7 @@ export default class Article extends React.Component {
 
     componentDidMount() {
         let self = this;
-        Loader(window.location.href + '.json', function(article) {
+        utils.loader(window.location.href + '.json', function(article) {
             self.setState({article: article});
         });
     }
@@ -33,7 +33,6 @@ export default class Article extends React.Component {
                     </div>
                 }
                 <div>
-
 
                 </div>
                 <Footer settings={this.props.settings} />

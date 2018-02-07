@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app'; // à changer
-import extractActionName from './lib/extractActionName';
+import App from './app';
+import utils from './lib/functionsLibrary';
 
-let actionname = extractActionName();
+let actionname = utils.extractActionName();
 
 ReactDOM.render(
     <App/>,
