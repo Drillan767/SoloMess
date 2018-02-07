@@ -16,24 +16,6 @@
       <p class="alert"><%= alert %></p>
   <% end %>
 
-  <ul>
-    <li>
-      <%= link_to 'Accueil', root_path %>
-    </li>
-    <li>
-      <%= link_to 'Articles', home_article_index_path %>
-    </li>
-    <li>
-      <%= link_to 'Portfolio', home_portfolio_index_path %>
-    </li>
-    <li>
-      <%= link_to 'A propos de ma gueule', root_path %>
-    </li>
-    <li>
-      <%= link_to 'Contact', new_contact_path %>
-    </li>
-  </ul>
-
   <%= yield %>
 
   <%= javascript_pack_tag 'front' %>

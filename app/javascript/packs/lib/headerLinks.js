@@ -25,7 +25,6 @@ export default class headerLinks extends React.Component {
                 {
                     settings !== null &&
                     settings.social_networks.map(function(param, i){
-                        console.log(i);
                         return (
                             <li className="nav-item" key={i}>
                                 <a href={param.url} target="_blank" className="nav-link">

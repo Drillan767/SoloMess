@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  before_action :set_basis, except: :admin
   before_action :authenticate_user!, only: :admin
 
   def index
@@ -13,7 +12,7 @@ class HomeController < ApplicationController
 
   def articles_index
     @title = 'All articles'
-    @articles = Articles.all
+    @articles = Article.all
   end
 
   def article_show
@@ -37,7 +36,7 @@ class HomeController < ApplicationController
 
   def configuration
     @configuration = Basic.first if Basic.exists?
-    # abort @configuration.inspect
+    @configuration.logged_in = true if current_user
   end
 
   def contact
@@ -53,11 +52,5 @@ class HomeController < ApplicationController
     else
       render :contact
     end
-  end
-
-  private
-
-  def set_basis
-    @basis = Basic.first if Basic.exists?
   end
 end

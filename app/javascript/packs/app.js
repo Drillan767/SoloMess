@@ -2,7 +2,7 @@
 import React from 'react';
 import extractActionName from './lib/extractActionName';
 import {elementForActionName} from './lib/elementForActionName';
-import $ from 'jquery';
+import Loader from './lib/loader';
 import 'popper.js';
 import 'bootstrap';
 
@@ -14,9 +14,10 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        $.getJSON(window.location.href + '/settings.json', (data) => {
-            this.setState({settings: data});
-        })
+        let self = this;
+        Loader(window.location.origin + '/settings.json', function(settings) {
+            self.setState({settings: settings});
+        });
     }
 
     render() {

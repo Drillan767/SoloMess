@@ -1,0 +1,1 @@
+json.extract! @article, :title, :image, :tags, :slug, :public, :content, :alert

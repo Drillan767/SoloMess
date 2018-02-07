@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get '/articles' => 'home#articles_index', as: :home_article_index
-  get '/articles/:id' => 'home#article_show', as: :home_article_show
+  get '/article/:id' => 'home#article_show', as: :home_article_show
 
   get '/portfolio' => 'home#portfolio_index', as: :home_portfolio_index
   get '/project/:id' => 'home#portfolio_show', as: :home_portfolio_show

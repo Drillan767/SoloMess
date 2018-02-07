@@ -6,7 +6,6 @@ import {faFacebook} from '@fortawesome/fontawesome-free-brands'
 export default class Header extends React.Component {
     render() {
         let settings = this.props.settings;
-        console.log(settings);
 
         return (
             <div>
@@ -15,10 +14,9 @@ export default class Header extends React.Component {
                         {
                         settings !== null &&
                             [
-                                <img src={settings.logo.url} width="30" height="30" alt="" />,
+                                <img src={settings.logo.url} key={1} width="30" height="30" alt="" />,
                                 settings.base_title
                             ]
-
                         }
                     </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
