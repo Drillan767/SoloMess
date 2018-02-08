@@ -7,7 +7,7 @@ export default class Contact extends React.Component {
     render() {
         return(
             <div>
-                <Header settings={this.props.settings} />
+                <Header settings={this.props.settings} location="contact" />
                 <div>
                     <h1>Contact</h1>
                     <form className="form-horizontal" id="new_contact" action="/contact" acceptCharset="UTF-8" method="post">

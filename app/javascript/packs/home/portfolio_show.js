@@ -19,10 +19,9 @@ export default class Portfolio extends React.Component {
     render() {
         let portfolio = this.state.portfolio;
 
-        console.log(portfolio);
         return (
             <div>
-                <Header settings={this.props.settings} />
+                <Header settings={this.props.settings} location="portfolio" shown={portfolio !== null ? portfolio.title : null} />
                 {
                     portfolio !== null &&
                     <div>

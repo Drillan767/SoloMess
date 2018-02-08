@@ -22,7 +22,7 @@ export default class Article extends React.Component {
 
         return (
             <div>
-                <Header settings={this.props.settings} />
+                <Header settings={this.props.settings} location="articles" shown={article !== null ? article.title : null} />
                 {
                     article !== null &&
                     <div>

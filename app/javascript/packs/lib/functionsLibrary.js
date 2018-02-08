@@ -25,6 +25,12 @@ const functions = {
 
     getCSRF() {
         return $('meta[name="csrf-token"]').attr('content');
+    },
+
+    capitalize(string) {
+        if (string !== undefined && string !== null) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
     }
 };
 

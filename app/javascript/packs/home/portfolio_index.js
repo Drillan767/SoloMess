@@ -22,7 +22,7 @@ export default class Portfolios extends React.Component {
 
         return (
             <div>
-                <Header settings={this.props.settings}/>
+                <Header settings={this.props.settings} location="portfolio" />
                 <div className="container">
                     <div className="row">
                         {

@@ -41,7 +41,7 @@ class HomeController < ApplicationController
 
   def contact
     @contact = Contact.new
-    @titre = 'Contact'
+    @title = 'Contact'
   end
 
   def create

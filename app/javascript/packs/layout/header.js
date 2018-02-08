@@ -6,6 +6,7 @@ import Notifications from './notifications';
 export default class Header extends React.Component {
     render() {
         let settings = this.props.settings;
+        let location = this.props.location;
 
         return (
             <div>
@@ -25,16 +26,17 @@ export default class Header extends React.Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
+                            <li className={"nav-item " + (location == 'article' && 'active') }>
+                                {/*{"btn-group pull-right " + (this.props.showBulkActions ? 'show' : 'hidden')}*/}
                                 <a className="nav-link" href="/articles">Articles</a>
                             </li>
-                            <li className="nav-item">
+                            <li className={"nav-item " + (location == 'portfolio' && 'active') }>
                                 <a className="nav-link" href="/portfolio">Portfolio</a>
                             </li>
-                            <li className="nav-item">
+                            <li className={"nav-item "}>
                                 <a className="nav-link" href="#">A propos de moi</a>
                             </li>
-                            <li className="nav-item">
+                            <li className={"nav-item " + (location == 'contact' && 'active') }>
                                 <a className="nav-link" href="/contact">Contact</a>
                             </li>
 
@@ -43,7 +45,7 @@ export default class Header extends React.Component {
                     </div>
                 </nav>
 
-                <Breadcrumb />
+                <Breadcrumb location={location} shown={this.props.shown}/>
                 <Notifications />
             </div>
         )
