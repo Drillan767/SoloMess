@@ -5,6 +5,8 @@ import Articles from '../home/articles';
 import Article from '../home/article';
 import Portfolios from '../home/portfolio_index';
 import Portfolio from '../home/portfolio_show';
+import SessionNew from '../admin/sessions/new';
+import HomeAdmin from '../admin/home/index';
 
 export const elementForActionName = {
     'index': Homeindex,
@@ -13,4 +15,9 @@ export const elementForActionName = {
     'article_show': Article,
     'portfolio_index': Portfolios,
     'portfolio_show': Portfolio
+};
+
+export const adminElementsForActionName = {
+    'sessions_new': SessionNew,
+    'home_admin': HomeAdmin,
 };

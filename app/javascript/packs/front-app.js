@@ -24,7 +24,7 @@ export default class App extends React.Component {
         let Element = elementForActionName[actionName];
 
         return (
-            <Element settings={this.state.settings} value="Bjour" />
+            <Element settings={this.state.settings} />
         )
     }
 }

@@ -23,6 +23,10 @@ const functions = {
         return document.body.className.split(' ').pop();
     },
 
+    extractAdminActionName() {
+        return document.body.className.split(' ').join('_');
+    },
+
     getCSRF() {
         return $('meta[name="csrf-token"]').attr('content');
     },

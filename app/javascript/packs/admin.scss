@@ -1,3 +1,17 @@
-h1{
-  color: red;
+#sessions_new {
+
+  .login {
+    &-grid {
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    &-paper {
+      padding: 2% 0;
+    }
+
+    &-links {
+
+    }
+  }
 }

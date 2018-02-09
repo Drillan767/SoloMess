@@ -3,21 +3,11 @@
 <head>
   <title><%= title %></title>
   <%= csrf_meta_tags %>
-
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application' %>
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
-  <% if notice %>
-      <p class="notice"><%= notice %></p>
-  <% elsif alert %>
-      <p class="alert"><%= alert %></p>
-  <% end %>
-
   <%= yield %>
-
-  <%= javascript_pack_tag 'front' %>
+  <%= javascript_pack_tag 'front-office' %>
 </body>
 </html>
