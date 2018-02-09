@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20180131212432) do
 
   create_table "basics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "base_title"
-    t.boolean "resume"
+    t.string "front_page"
     t.string "logo"
     t.string "landing_image"
     t.string "landing_text"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20180131212432) do
     t.string "first_name"
     t.string "last_name"
     t.datetime "birthday"
+    t.string "picture"
+    t.string "title"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

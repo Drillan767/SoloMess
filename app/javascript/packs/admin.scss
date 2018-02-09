@@ -15,3 +15,17 @@
     }
   }
 }
+
+.sidebar {
+  &-head {
+    height: 64px;
+  }
+
+  &-title {
+    flex: 1
+  }
+
+  &-backtomain {
+    color: inherit;
+  }
+}

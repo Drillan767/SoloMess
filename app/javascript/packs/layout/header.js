@@ -45,10 +45,10 @@ export default class Header extends React.Component {
                                             <a className="nav-link disabled">|</a>
                                         </li>,
                                         <li className={"nav-item "} key={1}>
-                                            <a className="nav-link" href="/admin">Administration</a>
+                                            <a className="nav-link" href="/admin">Dashboard</a>
                                         </li>,
                                         <li className={"nav-item "} key={2}>
-                                            <a className="nav-link" href="/logout">Déconnexion</a>
+                                            <a className="nav-link" href="/logout">Logout</a>
                                         </li>
                                     ]
                             }

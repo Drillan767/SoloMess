@@ -2,7 +2,7 @@ class CreateBasics < ActiveRecord::Migration[5.1]
   def change
     create_table :basics do |t|
       t.string :base_title
-      t.boolean :resume
+      t.string :front_page
       t.string :logo
 
       # Image inside the text on landing

@@ -1,14 +1,17 @@
 import React from 'react';
-import Header from '../component/header';
 import utils from "../../lib/functionsLibrary";
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import { FormControlLabel } from 'material-ui/Form';
-import Switch from 'material-ui/Switch';
-import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import List, {ListItem, ListItemText} from 'material-ui/List';
+import {
+    Button,
+    FormControlLabel,
+    Grid,
+    List,
+    ListItem,
+    ListItemText,
+    Paper,
+    Switch,
+    Typography,
+    TextField,
+} from 'material-ui'
 
 export default class New extends React.Component {
 
@@ -19,7 +22,6 @@ export default class New extends React.Component {
     render() {
         return (
             <div>
-                <Header settings={this.props.settings} title="Login"/>
                 <Grid item xs={12} sm={6} className="login-grid">
                     <Paper elevation={4} className="login-paper">
                         <Typography variant="headline" component="h1">

@@ -18,6 +18,12 @@ export const elementForActionName = {
 };
 
 export const adminElementsForActionName = {
-    'sessions_new': SessionNew,
-    'home_admin': HomeAdmin,
+    'sessions_new': {
+        'object': SessionNew,
+        'title': 'Login'
+    },
+    'home_admin': {
+        'object': HomeAdmin,
+        'title': 'Dashboard'
+    },
 };

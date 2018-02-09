@@ -6,6 +6,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :first_name
       t.string :last_name
       t.datetime :birthday
+      t.string :picture
+      t.string :title # web designer, writer, web developper...
 
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at

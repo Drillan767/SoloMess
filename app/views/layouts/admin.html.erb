@@ -7,11 +7,6 @@
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
-  <% if notice %>
-      <p class="notice"><%= notice %></p>
-  <% elsif alert %>
-      <p class="alert"><%= alert %></p>
-  <% end %>
 
   <%= yield %>
 

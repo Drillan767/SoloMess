@@ -29,6 +29,8 @@ Rails.application.routes.draw do
       resource :basics
       resources :portfolios
       resources :articles
+      # devise_for :users, excepted: :session
+      # resource :user, only: %w[show edit update]
     end
   end
 end

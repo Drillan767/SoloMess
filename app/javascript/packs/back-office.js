@@ -5,8 +5,6 @@ import utils from './lib/functionsLibrary';
 
 let actionName = utils.extractAdminActionName();
 
-console.log(actionName);
-
 ReactDOM.render(
     <App />,
     document.getElementById(actionName)

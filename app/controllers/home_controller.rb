@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   end
 
   def admin
-    @title = 'Administration'
+    @title = 'Dashboard'
     render layout: 'admin'
   end
 
@@ -36,6 +36,7 @@ class HomeController < ApplicationController
 
   def configuration
     @configuration = Basic.first if Basic.exists?
+    @configuration.user = User.first if User.exists?
     @configuration.logged_in = true if current_user
   end
 
