@@ -3,12 +3,10 @@
 <head>
   <title><%= title %></title>
   <%= csrf_meta_tags %>
-
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'admin' %>
 </head>
 
-<body>
+<body class="<%= controller_name %> <%= action_name %>">
 <p>[ADMINISTRATION]</p>
   <% if notice %>
       <p class="notice"><%= notice %></p>
@@ -18,6 +16,6 @@
 
   <%= yield %>
 
-  <%= javascript_pack_tag 'admin' %>
+  <%= javascript_pack_tag 'back-office' %>
 </body>
 </html>

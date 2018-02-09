@@ -41,16 +41,19 @@ class HomeController < ApplicationController
 
   def contact
     @contact = Contact.new
+    @contact.notice = true if cookies['valid']
+    @contact.alert = cookies['alert'] if cookies['alert']
     @title = 'Contact'
   end
 
   def create
     @contact = Contact.new params[:contact]
     if @contact.valid?
-      ContactMailer.contact_form(@contact).deliver
-      redirect_to contacts_path, notice: "Thank you! I'll reach you in a short while"
+      # ContactMailer.contact_form(@contact).deliver
+      cookies['valid'] = { value: true, expires: 3.seconds.from_now }
     else
-      render :contact
+      cookies['alert'] = { value: @contact.errors.full_messages, expires: 3.seconds.from_now }
     end
+    redirect_to @contact
   end
 end
