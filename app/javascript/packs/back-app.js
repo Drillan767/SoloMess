@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {adminElementsForActionName} from './lib/elementForActionName';
-import utils from './lib/functionsLibrary'
-import { withStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import Hidden from 'material-ui/Hidden';
-import MenuIcon from 'material-ui-icons/Menu';
-import Reboot from 'material-ui/Reboot';
-import Tooltip from 'material-ui/Tooltip';
-import ExitToApp from 'material-ui-icons/ExitToApp';
-import Close from 'material-ui-icons/Close';
 import SideBarContent from './admin/component/sideBarContent';
+import utils from './lib/functionsLibrary'
+
+import {
+    AppBar, Drawer,Grid, Hidden, IconButton, Paper,
+    Reboot, Toolbar, Tooltip, Typography, withStyles
+} from 'material-ui'
+
+import { Menu, ExitToApp, Close } from 'material-ui-icons'
 
 const drawerWidth = 240;
 
@@ -105,7 +100,7 @@ class ResponsiveDrawer extends React.Component {
                                     onClick={this.handleDrawerToggle}
                                     className={classes.navIconHide}
                                 >
-                                    <MenuIcon />
+                                    <Menu />
                                 </IconButton>
                                 <Typography variant="title" color="inherit" noWrap className="sidebar-title">
                                     {title}
@@ -155,7 +150,11 @@ class ResponsiveDrawer extends React.Component {
                             </Drawer>
                         </Hidden>
                         <main className={classes.content}>
-                            <Element settings={this.state.settings} />
+                            <Paper elevation={4} className="dashboard-paper">
+                                <Grid container spacing={24}>
+                                    <Element settings={this.state.settings} />
+                                </Grid>
+                            </Paper>
                         </main>
                     </div>
                 </div>
