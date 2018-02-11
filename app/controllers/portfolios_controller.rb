@@ -4,7 +4,7 @@ class PortfoliosController < ApplicationController
   layout 'admin'
 
   def index
-    @portfolios = Portfolio.all
+    @portfolios = Portfolio.order('created_at DESC')
   end
 
   def show

@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20180131212432) do
   create_table "basics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "base_title"
     t.string "front_page"
+    t.string "theme_color"
+    t.string "titles_color"
     t.string "logo"
     t.string "landing_image"
     t.string "landing_text"

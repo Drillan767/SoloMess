@@ -16,6 +16,28 @@
   }
 }
 
+.dashboard {
+  &-paper, &-typography {
+    padding: 2%;
+  }
+}
+
+.table {
+  &-title {
+    padding: 20px 3%;
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+
+    a {
+      margin: 0 20px;
+    }
+  }
+}
+
 .sidebar {
   &-head {
     height: 64px;

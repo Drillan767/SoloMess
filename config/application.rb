@@ -12,7 +12,7 @@ module SoloMess
     config.load_defaults 5.1
 
     config.to_prepare do
-      Devise::SessionsController.layout 'admin'
+      Devise::SessionsController.layout 'devise'
       Devise::RegistrationsController.layout 'admin'
       # Devise::ConfirmationsController.layout "devise"
       # Devise::UnlocksController.layout "devise"

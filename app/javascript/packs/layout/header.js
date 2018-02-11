@@ -25,7 +25,7 @@ export default class Header extends React.Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
-                            <li className={"nav-item " + (location === 'article' && 'active') }>
+                            <li className={"nav-item " + (location === 'articles' && 'active') }>
                                 {/*{"btn-group pull-right " + (this.props.showBulkActions ? 'show' : 'hidden')}*/}
                                 <a className="nav-link" href="/articles">Articles</a>
                             </li>

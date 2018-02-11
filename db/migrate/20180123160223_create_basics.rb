@@ -3,6 +3,8 @@ class CreateBasics < ActiveRecord::Migration[5.1]
     create_table :basics do |t|
       t.string :base_title
       t.string :front_page
+      t.string :theme_color
+      t.string :titles_color
       t.string :logo
 
       # Image inside the text on landing

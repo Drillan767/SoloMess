@@ -11,9 +11,9 @@ import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import MenuIcon from 'material-ui-icons/Menu';
 import Reboot from 'material-ui/Reboot';
-import Button from 'material-ui/Button';
 import Tooltip from 'material-ui/Tooltip';
 import ExitToApp from 'material-ui-icons/ExitToApp';
+import Close from 'material-ui-icons/Close';
 import SideBarContent from './admin/component/sideBarContent';
 
 const drawerWidth = 240;
@@ -34,6 +34,7 @@ const styles = theme => ({
         position: 'absolute',
         marginLeft: drawerWidth,
         [theme.breakpoints.up('md')]: {
+            // TODO: Agir ici
             width: `calc(100% - ${drawerWidth}px)`,
         },
     },
@@ -109,8 +110,15 @@ class ResponsiveDrawer extends React.Component {
                                 <Typography variant="title" color="inherit" noWrap className="sidebar-title">
                                     {title}
                                 </Typography>
-                                <Tooltip id="tooltip-left" title="Back to website" placement="left">
+                                <Tooltip id="tooltip-left" title="Back to website" placement="bottom">
                                     <a href="/" className="sidebar-backtomain">
+                                        <IconButton color="inherit" >
+                                            <Close />
+                                        </IconButton>
+                                    </a>
+                                </Tooltip>
+                                <Tooltip id="tooltip-left" title="Logout" placement="bottom">
+                                    <a href="/logout" className="sidebar-backtomain">
                                         <IconButton color="inherit" >
                                             <ExitToApp />
                                         </IconButton>
@@ -120,6 +128,7 @@ class ResponsiveDrawer extends React.Component {
                         </AppBar>
                         <Hidden mdUp>
                             <Drawer
+                                // TODO: Agir ici
                                 variant="temporary"
                                 open={this.state.mobileOpen}
                                 classes={{
@@ -135,6 +144,7 @@ class ResponsiveDrawer extends React.Component {
                         </Hidden>
                         <Hidden smDown implementation="css">
                             <Drawer
+                                // TODO: Agir ici
                                 variant="permanent"
                                 open
                                 classes={{

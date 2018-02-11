@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_pack_tag 'admin' %>
+</head>
+
+<body class="<%= controller_name %> <%= action_name %>">
+
+<%= yield %>
+
+<%= javascript_pack_tag 'devise' %>
+</body>
+</html>

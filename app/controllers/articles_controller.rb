@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
 
   def index
     @title = 'All articles'
-    @articles = Article.all
+    @articles = Article.order('created_at DESC')
   end
 
   def show
