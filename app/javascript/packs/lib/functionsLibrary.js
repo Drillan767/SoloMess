@@ -1,4 +1,5 @@
 import $ from "jquery";
+import moment from 'moment'
 
 const functions = {
     truncate(string, nbchar) {
@@ -7,15 +8,18 @@ const functions = {
         else return string;
     },
 
-    toRealDate(value) {
-        let date = new Date(value);
-        return date.getDate() + ' / ' + (date.getMonth()+1) + ' / ' + date.getFullYear();
+    toRealDate(value, hms = false) {
+        let date = moment(value);
+        if(!hms) {
+            return date.format('DD / MM / YYYY');
+        } else {
+            return date.format('DD / MM / YYYY - HH:mm:ss');
+        }
     },
 
     loader(url, callback) {
         $.getJSON(url, (data) => {
-            let response = data;
-            callback(response);
+            callback(data);
         });
     },
 

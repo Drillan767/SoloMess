@@ -5,8 +5,8 @@ import Articles from '../home/articles';
 import Article from '../home/article';
 import Portfolios from '../home/portfolio_index';
 import Portfolio from '../home/portfolio_show';
-import SessionNew from '../admin/sessions/new';
 import HomeAdmin from '../admin/home/index';
+import ArticlesIndex from '../admin/articles/index';
 
 export const elementForActionName = {
     'index': Homeindex,
@@ -17,9 +17,13 @@ export const elementForActionName = {
     'portfolio_show': Portfolio
 };
 
-export const adminElementsForActionName = {
+export const adminElements = {
     'home_admin': {
-        'object': HomeAdmin,
-        'title': 'Dashboard'
+        object: HomeAdmin,
+        title: 'Dashboard'
     },
+    'articles_index': {
+        object: ArticlesIndex,
+        title: 'Articles'
+    }
 };

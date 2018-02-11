@@ -1,8 +1,6 @@
 import React from 'react';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
-import InboxIcon from 'material-ui-icons/Inbox';
 import { withStyles } from 'material-ui/styles';
-import DraftsIcon from 'material-ui-icons/Drafts';
 import Collapse from 'material-ui/transitions/Collapse'
 import Divider from 'material-ui/Divider';
 

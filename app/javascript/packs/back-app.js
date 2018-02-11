@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {adminElementsForActionName} from './lib/elementForActionName';
+import {adminElements} from './lib/elementForActionName';
 import SideBarContent from './admin/component/sideBarContent';
 import utils from './lib/functionsLibrary'
 
@@ -84,8 +84,8 @@ class ResponsiveDrawer extends React.Component {
     render() {
         const { classes, theme } = this.props;
         let actionName = utils.extractAdminActionName();
-        let Element = adminElementsForActionName[actionName]['object'];
-        let title = adminElementsForActionName[actionName]['title'];
+        let Element = adminElements[actionName].object;
+        let title = adminElements[actionName].title;
 
         return (
             <div>
