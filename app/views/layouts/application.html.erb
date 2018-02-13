@@ -7,6 +7,12 @@
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
+<% if alert %>
+  <div class="hidden" title="solomess-alert"><%= alert %></div>
+<% end %>
+<% if notice %>
+  <div class="hidden" title="solomess-notice"><%= notice %></div>
+<% end %>
   <%= yield %>
   <%= javascript_pack_tag 'front-office' %>
 </body>

@@ -72,9 +72,9 @@ class ResponsiveDrawer extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.origin + '/settings.json', function(settings) {
+        utils.getSettings(function (settings) {
             self.setState({settings: settings});
-        });
+        })
     }
 
     handleDrawerToggle = () => {
@@ -86,6 +86,7 @@ class ResponsiveDrawer extends React.Component {
         let actionName = utils.extractAdminActionName();
         let Element = adminElements[actionName].object;
         let title = adminElements[actionName].title;
+        console.log(this.state.settings);
 
         return (
             <div>

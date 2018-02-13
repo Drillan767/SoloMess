@@ -15,25 +15,20 @@ Rails.application.routes.draw do
 
   get '/about' => 'home#about', as: :about
 
-  devise_for :users, only: %w['sessions#new session#destroy']
-
-  as :user do
-    get 'login' => 'devise/sessions#new', as: :login
-    get 'logout' => 'devise/sessions#destroy', as: :logout
-  end
-
   get '/admin' => 'home#admin', as: :admin
 
-  authenticate :user do
-    scope '/admin' do
+  devise_for :users, skip: %w[registration password]
+
+  scope '/admin' do
+    authenticate :user do
       resource :basics
       resources :portfolios, except: %w[show new edit]
       get '/project/:id' => 'portfolios#show'
       get '/project/new' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
       resources :articles
-      devise_for :users, except: %w['sessions#new session#destroy']
-      # resource :user, only: %w[show edit update]
     end
+
+    devise_for :users, skip: [:sessions]
   end
 end

@@ -14,15 +14,15 @@ export default class App extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.origin + '/settings.json', function(settings) {
+        utils.getSettings(function (settings) {
             self.setState({settings: settings});
-        });
+        })
     }
 
     render() {
         let actionName = utils.extractActionName();
         let Element = elementForActionName[actionName];
-
+        console.log(this.state.settings);
         return (
             <Element settings={this.state.settings} />
         )

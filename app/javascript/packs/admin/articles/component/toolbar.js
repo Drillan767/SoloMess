@@ -1,0 +1,83 @@
+import React from 'react';
+import PropTypes from "prop-types";
+import classNames from 'classnames';
+import { Toolbar, Typography, Tooltip, IconButton} from 'material-ui'
+import {lighten} from "material-ui/styles/colorManipulator";
+import {withStyles} from "material-ui/styles/index";
+import {Delete, AssignmentLate, AssignmentTurnedIn } from 'material-ui-icons';
+
+
+const styles = theme => ({
+    root: {
+        paddingRight: theme.spacing.unit,
+    },
+    highlight:
+        theme.palette.type === 'light'
+            ? {
+                color: theme.palette.secondary.dark,
+                backgroundColor: lighten(theme.palette.primary.light, 0.4),
+            }
+            : {
+                color: lighten(theme.palette.secondary.light, 0.4),
+                backgroundColor: theme.palette.primary.dark,
+            },
+    spacer: {
+        flex: '1 1 auto',
+    },
+    actions: {
+        color: theme.palette.text.secondary,
+    },
+    title: {
+        flex: '0 0 auto',
+    },
+});
+
+class EnhancedTableToolbar extends React.Component {
+    render() {
+        const {numSelected, classes} = this.props;
+
+        return (
+            <Toolbar
+                className={classNames(classes.root, {
+                    [classes.highlight]: numSelected > 0,
+                })}
+            >
+                <div className={classes.title}>
+                    {numSelected > 0 ? (
+                        <Typography variant="subheading">{numSelected} selected</Typography>
+                    ) : (
+                        <Typography variant="title">All articles</Typography>
+                    )}
+                </div>
+                <div className={classes.spacer}/>
+                <div className={classes.actions}>
+                    {numSelected > 0 && [
+                        <Tooltip title="Publish selected" key={1}>
+                            <IconButton aria-label="Delete">
+                                <AssignmentTurnedIn/>
+
+                            </IconButton>
+                        </Tooltip>,
+                        <Tooltip title="Unpublish selected" key={2}>
+                            <IconButton aria-label="Delete">
+                                <AssignmentLate/>
+                            </IconButton>
+                        </Tooltip>,
+                        <Tooltip title="Delete selected" key={3}>
+                            <IconButton aria-label="Delete">
+                            <Delete/>
+                            </IconButton>
+                        </Tooltip>
+                    ]}
+                </div>
+            </Toolbar>
+        );
+    }
+}
+
+EnhancedTableToolbar.propTypes = {
+    classes: PropTypes.object.isRequired,
+    numSelected: PropTypes.number.isRequired,
+};
+
+export default withStyles(styles)(EnhancedTableToolbar);

@@ -35,6 +35,15 @@ const functions = {
         return $('meta[name="csrf-token"]').attr('content');
     },
 
+    getSettings(callback) {
+        $.getJSON(window.location.origin + '/settings.json', (data) => {
+            let settings = data;
+            settings.notice = $("div[title='solomess-notice']").text();
+            settings.alert = $("div[title='solomess-alert']").text();
+            callback(settings);
+        });
+    },
+
     capitalize(string) {
         if (string !== undefined && string !== null) {
             return string.charAt(0).toUpperCase() + string.slice(1);

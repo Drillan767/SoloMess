@@ -1,161 +1,23 @@
 import React from 'react';
 import utils from '../../lib/functionsLibrary';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import Chip from 'material-ui/Chip';
 import { withStyles } from 'material-ui/styles';
 import Table, {
     TableBody,
     TableCell,
     TableFooter,
-    TableHead,
     TablePagination,
     TableRow,
-    TableSortLabel,
 } from 'material-ui/Table';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid'
 import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from 'material-ui-icons/Delete';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
-
-const columnData = [
-    { id: 'title', allowOrder: true, disablePadding: true, label: 'Title' },
-    { id: 'tags', allowOrder: false, disablePadding: false, label: 'Tags' },
-    { id: 'status', allowOrder: true, disablePadding: false, label: 'Status' },
-    { id: 'content', allowOrder: true, disablePadding: false, label: 'Content' },
-    { id: 'created_at', allowOrder: true, disablePadding: false, label: 'Created at' },
-    { id: 'updated_at', allowOrder: true, disablePadding: false, label: 'Updated at' },
-    { id: 'actions', allowOrder: false, disablePadding: true, label: 'Actions' },
-];
-
-class EnhancedTableHead extends React.Component {
-
-    createSortHandler = property => event => {
-        this.props.onRequestSort(event, property);
-    };
-
-    render() {
-        const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
-
-        return (
-            <TableHead>
-                <TableRow>
-                    <TableCell padding="checkbox">
-                        <Checkbox
-                            indeterminate={numSelected > 0 && numSelected < rowCount}
-                            checked={numSelected === rowCount}
-                            onChange={onSelectAllClick}
-                        />
-                    </TableCell>
-                    {columnData.map(column => {
-                        return (
-                            <TableCell
-                                key={column.id}
-                                padding={column.disablePadding ? 'none' : 'default'}
-                                sortDirection={orderBy === column.id ? order : false}
-                            >
-                                <Tooltip
-                                    title="Sort"
-                                    placement={column.numeric ? 'bottom-end' : 'bottom-start'}
-                                    enterDelay={300}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === column.id}
-                                        direction={order}
-                                        onClick={column.allowOrder ? this.createSortHandler(column.id) : undefined}
-                                    >
-                                        {column.label}
-                                    </TableSortLabel>
-                                </Tooltip>
-                            </TableCell>
-                        );
-                    }, this)}
-                </TableRow>
-            </TableHead>
-        );
-    }
-}
-
-EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.string.isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-};
-
-const toolbarStyles = theme => ({
-    root: {
-        paddingRight: theme.spacing.unit,
-    },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.dark,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.4),
-            }
-            : {
-                color: lighten(theme.palette.secondary.light, 0.4),
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    spacer: {
-        flex: '1 1 100%',
-    },
-    actions: {
-        color: theme.palette.text.secondary,
-    },
-    title: {
-        flex: '0 0 auto',
-    },
-});
-
-let EnhancedTableToolbar = props => {
-    const { numSelected, classes } = props;
-
-    return (
-        <Toolbar
-            className={classNames(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            <div className={classes.title}>
-                {numSelected > 0 ? (
-                    <Typography variant="subheading">{numSelected} selected</Typography>
-                ) : (
-                    <Typography variant="title">All articles</Typography>
-                )}
-            </div>
-            <div className={classes.spacer} />
-            <div className={classes.actions}>
-                {numSelected > 0 ? (
-                    <Tooltip title="Delete">
-                        <IconButton aria-label="Delete">
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                ) : (
-                    <Tooltip title="Filter list">
-                        <IconButton aria-label="Filter list">
-                            <FilterListIcon />
-                        </IconButton>
-                    </Tooltip>
-                )}
-            </div>
-        </Toolbar>
-    );
-};
-
-EnhancedTableToolbar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
+import Delete from 'material-ui-icons/Delete';
+import ModeEdit from 'material-ui-icons/ModeEdit'
+import Button from 'material-ui/Button';
+import {green, orange} from 'material-ui/colors';
+import EnhancedTableHead from './component/tableHead';
+import EnhancedTableToolbar from './component/toolbar';
 
 const styles = theme => ({
     root: {
@@ -168,6 +30,20 @@ const styles = theme => ({
     tableWrapper: {
         overflowX: 'auto',
     },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    cells: {
+        padding: '4px 24px'
+    },
+    chipValid: {
+        backgroundColor: green[400],
+        color: '#fff'
+    },
+    chipPending: {
+        backgroundColor: orange[400],
+        color: '#fff'
+    }
 });
 
 class EnhancedTable extends React.Component {
@@ -255,6 +131,7 @@ class EnhancedTable extends React.Component {
         const { classes } = this.props;
         const { articles, order, orderBy, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (articles !== null && articles.length) - page * rowsPerPage);
+        let base = "/admin/articles/";
 
         return (
             <Grid item xs={12}>
@@ -284,28 +161,69 @@ class EnhancedTable extends React.Component {
                                             key={a.id}
                                             selected={isSelected}
                                         >
-                                            <TableCell padding="checkbox">
+                                            <TableCell padding="checkbox" className={classes.cells}>
                                                 <Checkbox checked={isSelected} />
-                                            </TableCell> {/* tags public content created updated */}
-                                            <TableCell padding="none">{a.title}</TableCell>
-                                            <TableCell>{a.tags}</TableCell>
-                                            <TableCell>{a.public ? 'Oui': 'Non'}</TableCell>
-                                            <TableCell>{utils.truncate(a.content, 50)}</TableCell>
-                                            <TableCell>{utils.toRealDate(a.created_at, true)}</TableCell>
-                                            <TableCell>{utils.toRealDate(a.updated_at, true)}</TableCell>
+                                                {/* tags public content created updated */}
+                                            </TableCell>
+                                            <TableCell padding="none" className={classes.cells}>
+                                                <a href={base + a.slug}>
+                                                    {a.title}
+                                                </a>
+                                            </TableCell>
+                                            <TableCell className={classes.cells}>
+                                                {a.tags}
+                                            </TableCell>
+                                            <TableCell className={classes.cells}>
+                                                {
+                                                    a.public
+                                                    ? <Chip className={classes.chipValid} label="Published" />
+                                                    : <Chip className={classes.chipPending} label="Draft" />
+                                                }
+                                            </TableCell>
+                                            <TableCell className={classes.cells}>
+                                                {utils.truncate(a.content, 50)}
+                                            </TableCell>
+                                            <TableCell className={classes.cells}>
+                                                {utils.toRealDate(a.created_at, true)}
+                                            </TableCell>
+                                            <TableCell className={classes.cells}>
+                                                {utils.toRealDate(a.updated_at, true)}
+                                            </TableCell>
+                                            <TableCell className={classes.cells}>
+                                                <Button
+                                                    variant="fab"
+                                                    mini
+                                                    color="primary"
+                                                    aria-label="add"
+                                                    className={classes.button}
+                                                    href={base + a.slug + "/edit"}
+                                                >
+                                                    <ModeEdit />
+                                                </Button>
+                                                <Button
+                                                    variant="fab"
+                                                    mini
+                                                    color="primary"
+                                                    aria-label="add"
+                                                    className={classes.button}
+                                                    href={base + a.slug + "/delete"}
+                                                >
+                                                    <Delete />
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
                                 {emptyRows > 0 && (
                                     <TableRow style={{ height: 49 * emptyRows }}>
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={8} />
                                     </TableRow>
                                 )}
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination
-                                        colSpan={6}
+                                        colSpan={8}
                                         count={articles.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}

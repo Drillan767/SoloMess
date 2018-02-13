@@ -7,6 +7,7 @@ import Portfolios from '../home/portfolio_index';
 import Portfolio from '../home/portfolio_show';
 import HomeAdmin from '../admin/home/index';
 import ArticlesIndex from '../admin/articles/index';
+import ArticleShow from '../admin/articles/show';
 
 export const elementForActionName = {
     'index': Homeindex,
@@ -25,5 +26,11 @@ export const adminElements = {
     'articles_index': {
         object: ArticlesIndex,
         title: 'Articles'
-    }
+    },
+    'articles_show': {
+        object: ArticleShow,
+        title: 'Articles'
+    },
+
+
 };
