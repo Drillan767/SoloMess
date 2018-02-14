@@ -37,10 +37,9 @@ const functions = {
 
     getSettings(callback) {
         $.getJSON(window.location.origin + '/settings.json', (data) => {
-            let settings = data;
-            settings.notice = $("div[title='solomess-notice']").text();
-            settings.alert = $("div[title='solomess-alert']").text();
-            callback(settings);
+            /*settings.notice = $("div[title='solomess-notice']").text();
+            settings.alert = $("div[title='solomess-alert']").text();*/
+            callback(data);
         });
     },
 

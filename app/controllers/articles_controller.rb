@@ -3,6 +3,8 @@ class ArticlesController < ApplicationController
   layout 'admin'
   before_action :authenticate_user!
   before_action :set_article, only: %i[show edit update destroy]
+  before_action :clean_notifications
+  before_action :update_notifications, except: %w[create update destroy]
 
   def index
     @title = 'All articles'
@@ -25,26 +27,20 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
 
-    respond_to do |format|
-      if @article.save
-        format.html { redirect_to @article, notice: 'Article was successfully created.' }
-        format.json { render :show, status: :created, location: @article }
-      else
-        format.html { render :new }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
-      end
+    if @article.save(article_params)
+      Basic.update(1, {notice: 'Eveything was good thank you so much omg', seen: false})
+      redirect_to @article
+    else
+      Basic.update(1, {alert: @article.errors.full_messages, seen: false})
     end
   end
 
   def update
-    respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to @article, notice: 'Article was successfully updated.' }
-        format.json { render json: 'Hey salut' }
-      else
-        format.html { render :edit }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
-      end
+    if @article.update(article_params)
+      Basic.update_all(1, notice: 'Eveything was good thank you so much omg', seen: false)
+      redirect_to articles_path
+    else
+      Basic.update_all(1, alert: @article.errors.full_messages, seen: false)
     end
   end
 
@@ -60,6 +56,17 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article = Article.friendly.find(params[:id])
+  end
+
+  def clean_notifications
+    @settings = Basic.first
+    if (@settings.alert || @settings.notice) && @settings.seen
+      @settings.update(notice: '', alert: '', seen: false)
+    end
+  end
+
+  def update_notifications
+    Basic.update(1, seen: true) unless Basic.first.notice.blank? && Basic.first.alert.blank?
   end
 
   def article_params

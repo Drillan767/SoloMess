@@ -6,6 +6,9 @@ class CreateBasics < ActiveRecord::Migration[5.1]
       t.string :theme_color
       t.string :titles_color
       t.string :logo
+      t.string :notice
+      t.string :alert
+      t.boolean :seen
 
       # Image inside the text on landing
       t.string :landing_image

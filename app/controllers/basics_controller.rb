@@ -73,6 +73,6 @@ class BasicsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def basic_params
-    params.require(:basic).permit(:base_title, :front_page, :logo, social_networks_attributes: [:id, :name, :url])
+    params.require(:basic).permit(:base_title, :alert, :notice, :seen, :front_page, :logo, social_networks_attributes: [:id, :name, :url])
   end
 end
