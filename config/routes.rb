@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       get '/project/new' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
       resources :articles
+
+      get '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
+      get '/portfolio/multiple/:actions/:data' => 'portfolios#multiple_actions'
     end
 
     devise_for :users, skip: [:sessions]

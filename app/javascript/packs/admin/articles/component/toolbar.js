@@ -33,8 +33,10 @@ const styles = theme => ({
 });
 
 class EnhancedTableToolbar extends React.Component {
+
     render() {
-        const {numSelected, classes} = this.props;
+        const {selected, classes} = this.props;
+        let numSelected = selected.length;
 
         return (
             <Toolbar
@@ -53,18 +55,17 @@ class EnhancedTableToolbar extends React.Component {
                 <div className={classes.actions}>
                     {numSelected > 0 && [
                         <Tooltip title="Publish selected" key={1}>
-                            <IconButton aria-label="Delete">
+                            <IconButton aria-label="Delete" onClick={() => this.props.handleMultipleActions('publish', selected)}>
                                 <AssignmentTurnedIn/>
-
                             </IconButton>
                         </Tooltip>,
                         <Tooltip title="Unpublish selected" key={2}>
-                            <IconButton aria-label="Delete">
+                            <IconButton aria-label="Delete" onClick={() => this.props.handleMultipleActions('unpublish', selected)}>
                                 <AssignmentLate/>
                             </IconButton>
                         </Tooltip>,
                         <Tooltip title="Delete selected" key={3}>
-                            <IconButton aria-label="Delete">
+                            <IconButton aria-label="Delete" onClick={() => this.props.handleMultipleActions('delete', selected)}>
                             <Delete/>
                             </IconButton>
                         </Tooltip>
@@ -77,7 +78,7 @@ class EnhancedTableToolbar extends React.Component {
 
 EnhancedTableToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
+    selected: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(EnhancedTableToolbar);

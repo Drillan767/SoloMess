@@ -1,5 +1,4 @@
 class ArticlesController < ApplicationController
-
   layout 'admin'
   before_action :authenticate_user!
   before_action :set_article, only: %i[show edit update destroy]
@@ -26,21 +25,20 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-
     if @article.save(article_params)
-      Basic.update(1, {notice: 'Eveything was good thank you so much omg', seen: false})
+      Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to @article
     else
-      Basic.update(1, {alert: @article.errors.full_messages, seen: false})
+      Basic.update(1, alert: @article.errors.full_messages)
     end
   end
 
   def update
     if @article.update(article_params)
-      Basic.update_all(1, notice: 'Eveything was good thank you so much omg', seen: false)
+      Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to articles_path
     else
-      Basic.update_all(1, alert: @article.errors.full_messages, seen: false)
+      Basic.update(1, alert: @article.errors.full_messages)
     end
   end
 
@@ -50,6 +48,24 @@ class ArticlesController < ApplicationController
       format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def multiple_actions
+
+    params[:data].split(',').each do |id|
+      case params[:actions]
+      when 'publish'
+        Article.update(id, public: true)
+      when 'unpublish'
+        Article.update(id, public: false)
+      when 'delete'
+        Article.find(id).destroy
+      else
+        return 'error'
+      end
+    end
+
+    @articles = Article.all
   end
 
   private

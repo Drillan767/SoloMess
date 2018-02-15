@@ -18,11 +18,18 @@ import Button from 'material-ui/Button';
 import {green, orange} from 'material-ui/colors';
 import EnhancedTableHead from './component/tableHead';
 import EnhancedTableToolbar from './component/toolbar';
+import $ from "jquery";
+import TableTop from './component/tableTop';
 
 const styles = theme => ({
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
+    },
+    tag: {
+        paddingLeft: '6px',
+        paddingRight: '6px',
+        marginRight: '2px'
     },
     table: {
         minWidth: 800,
@@ -58,6 +65,7 @@ class EnhancedTable extends React.Component {
             settings: null,
             articles: null,
             page: 0,
+            input: null,
             rowsPerPage: 5,
         };
     }
@@ -95,6 +103,24 @@ class EnhancedTable extends React.Component {
         }
         this.setState({ selected: [] });
     };
+
+    handleMultipleActions(action, payload) {
+        let self = this;
+        $.ajax({ url: '/admin/articles/multiple/' + action + '/' + payload,
+            type: 'GET',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
+            data: payload,
+            success: function(response) {
+                self.setState({articles: response});
+            },
+        });
+    }
+
+    handleFilterInput(value) {
+        this.setState({input: value}, () => {
+            // Mettre le filtre ici
+        });
+    }
 
     handleClick = (event, id) => {
         const { selected } = this.state;
@@ -135,7 +161,8 @@ class EnhancedTable extends React.Component {
 
         return (
             <Grid item xs={12}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <TableTop handleFilterInput={this.handleFilterInput.bind(this)}/>
+                <EnhancedTableToolbar selected={selected} handleMultipleActions={this.handleMultipleActions.bind(this)}/>
                 {
                     articles !== null &&
                     <div className={classes.tableWrapper}>
@@ -163,7 +190,6 @@ class EnhancedTable extends React.Component {
                                         >
                                             <TableCell padding="checkbox" className={classes.cells}>
                                                 <Checkbox checked={isSelected} />
-                                                {/* tags public content created updated */}
                                             </TableCell>
                                             <TableCell padding="none" className={classes.cells}>
                                                 <a href={base + a.slug}>
@@ -171,7 +197,17 @@ class EnhancedTable extends React.Component {
                                                 </a>
                                             </TableCell>
                                             <TableCell className={classes.cells}>
-                                                {a.tags}
+                                                {
+                                                    a.tags.split(',').map(function(tag, i) {
+                                                        return (
+                                                            <Chip
+                                                                label={tag}
+                                                                key={i}
+                                                                className={classes.tag}
+                                                            />
+                                                        )
+                                                    })
+                                                }
                                             </TableCell>
                                             <TableCell className={classes.cells}>
                                                 {

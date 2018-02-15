@@ -1,10 +1,13 @@
 class PortfoliosController < ApplicationController
   before_action :set_portfolio, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :clean_notifications
+  before_action :update_notifications, except: %w[create update destroy]
   layout 'admin'
 
   def index
     @portfolios = Portfolio.order('created_at DESC')
+    @title = 'All projects'
   end
 
   def show
@@ -13,34 +16,29 @@ class PortfoliosController < ApplicationController
 
   def new
     @portfolio = Portfolio.new
+    @title = 'New project'
   end
 
   def edit
+    @title = 'Edit ' + @portfolio.title.to_s
   end
 
   def create
     @portfolio = Portfolio.new(portfolio_params)
-
-    respond_to do |format|
-      if @portfolio.save
-        format.html { redirect_to @portfolio, notice: 'Portfolio was successfully created.' }
-        format.json { render :show, status: :created, location: @portfolio }
-      else
-        format.html { render :new }
-        format.json { render json: @portfolio.errors, status: :unprocessable_entity }
-      end
+    if @portfolio.save
+      Basic.update(1, notice: 'Eveything was good thank you so much omg')
+      redirect_to @portfolio
+    else
+      Basic.update(1, alert: @portfolio.errors.full_messages)
     end
   end
 
   def update
-    respond_to do |format|
-      if @portfolio.update(portfolio_params)
-        format.html { redirect_to @portfolio, notice: 'Portfolio was successfully updated.' }
-        format.json { render :show, status: :ok, location: @portfolio }
-      else
-        format.html { render :edit }
-        format.json { render json: @portfolio.errors, status: :unprocessable_entity }
-      end
+    if @portfolio.update(portfolio_params)
+      Basic.update(1, notice: 'Eveything was good thank you so much omg')
+      redirect_to @portfolio
+    else
+      Basic.update(1, alert: @portfolio.errors.full_messages)
     end
   end
 
@@ -50,6 +48,10 @@ class PortfoliosController < ApplicationController
       format.html { redirect_to portfolios_url, notice: 'Portfolio was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def multiple_actions
+    return 'Bjr'
   end
 
   private
@@ -62,5 +64,16 @@ class PortfoliosController < ApplicationController
     params.require(:portfolio).permit(:title, :creation_time,
                                       :public, :content, { illustrations: [] },
                                       :slug, :thumbnail, :website, :tags)
+  end
+
+  def clean_notifications
+    @settings = Basic.first
+    if (@settings.alert || @settings.notice) && @settings.seen
+      @settings.update(notice: '', alert: '', seen: false)
+    end
+  end
+
+  def update_notifications
+    Basic.update(1, seen: true) unless Basic.first.notice.blank? && Basic.first.alert.blank?
   end
 end

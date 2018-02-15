@@ -86,7 +86,6 @@ class ResponsiveDrawer extends React.Component {
         let actionName = utils.extractAdminActionName();
         let Element = adminElements[actionName].object;
         let title = adminElements[actionName].title;
-        console.log(this.state.settings);
 
         return (
             <div>
