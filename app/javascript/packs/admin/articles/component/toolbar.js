@@ -55,12 +55,12 @@ class EnhancedTableToolbar extends React.Component {
                 <div className={classes.actions}>
                     {numSelected > 0 && [
                         <Tooltip title="Publish selected" key={1}>
-                            <IconButton aria-label="Delete" onClick={() => this.props.handleMultipleActions('publish', selected)}>
+                            <IconButton aria-label="Publish" onClick={() => this.props.handleMultipleActions('publish', selected)}>
                                 <AssignmentTurnedIn/>
                             </IconButton>
                         </Tooltip>,
                         <Tooltip title="Unpublish selected" key={2}>
-                            <IconButton aria-label="Delete" onClick={() => this.props.handleMultipleActions('unpublish', selected)}>
+                            <IconButton aria-label="unpublish" onClick={() => this.props.handleMultipleActions('unpublish', selected)}>
                                 <AssignmentLate/>
                             </IconButton>
                         </Tooltip>,

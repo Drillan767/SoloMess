@@ -20,6 +20,7 @@ import EnhancedTableHead from './component/tableHead';
 import EnhancedTableToolbar from './component/toolbar';
 import $ from "jquery";
 import TableTop from './component/tableTop';
+import swal from 'sweetalert2';
 
 const styles = theme => ({
     root: {
@@ -27,9 +28,10 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
     },
     tag: {
-        paddingLeft: '6px',
-        paddingRight: '6px',
-        marginRight: '2px'
+        backgroundColor: 'lightgrey',
+        padding: '5px 6px',
+        marginRight: '5px',
+        borderRadius: '16px'
     },
     table: {
         minWidth: 800,
@@ -65,7 +67,8 @@ class EnhancedTable extends React.Component {
             settings: null,
             articles: null,
             page: 0,
-            input: null,
+            input: '',
+            filteredArticles: null,
             rowsPerPage: 5,
         };
     }
@@ -106,19 +109,70 @@ class EnhancedTable extends React.Component {
 
     handleMultipleActions(action, payload) {
         let self = this;
-        $.ajax({ url: '/admin/articles/multiple/' + action + '/' + payload,
-            type: 'GET',
-            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
-            data: payload,
-            success: function(response) {
-                self.setState({articles: response});
-            },
+        swal({
+            title: 'Confirm action?',
+            text: "You are about to " + action + " " + payload.length + " element(s). Confirm?" ,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            preConfirm: function () {
+               return new Promise(function(resolve) {
+                   $.ajax({ url: '/admin/articles/multiple/' + action + '/' + payload,
+                       type: 'POST',
+                       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
+                       data: payload,
+
+                   }).done(function(response) {
+                       swal(
+                           'Done!',
+                           payload.length + ' element(s) have successfully been ' + action + 'ed',
+                           'success'
+                       );
+                       self.setState({articles: response});
+                   });
+               })
+            }
         });
     }
 
     handleFilterInput(value) {
-        this.setState({input: value}, () => {
-            // Mettre le filtre ici
+        this.setState({input: value});
+        const { articles, input } = this.state;
+        let filtered = articles.filter(
+            (article) => {
+                return article.title.toLowerCase().indexOf(input.toLowerCase()) !== -1;
+            }
+        );
+        this.setState({filteredArticles: filtered});
+    }
+
+    deleteItem(id, title) {
+        let self = this;
+        swal({
+            title: 'Confirm action?',
+            text: 'You are about to delete "'+ title +'". Confirm?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            preConfirm: function () {
+                return new Promise(function(resolve) {
+                    $.ajax({ url: '/admin/articles/'+ id +'/ajax_delete',
+                        type: 'POST',
+                        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
+                    }).done(function(response) {
+                        swal(
+                            'Done!',
+                            '"' + title + '" have successfully been deleted',
+                            'success'
+                        );
+                        self.setState({articles: response});
+                    });
+                })
+            }
         });
     }
 
@@ -155,16 +209,18 @@ class EnhancedTable extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { articles, order, orderBy, selected, rowsPerPage, page } = this.state;
+        const { articles, order, orderBy, selected, rowsPerPage, page, filteredArticles } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (articles !== null && articles.length) - page * rowsPerPage);
         let base = "/admin/articles/";
+
+        let data = this.state.input ? filteredArticles : articles;
 
         return (
             <Grid item xs={12}>
                 <TableTop handleFilterInput={this.handleFilterInput.bind(this)}/>
                 <EnhancedTableToolbar selected={selected} handleMultipleActions={this.handleMultipleActions.bind(this)}/>
                 {
-                    articles !== null &&
+                    data !== null &&
                     <div className={classes.tableWrapper}>
                         <Table className={classes.table}>
                             <EnhancedTableHead
@@ -173,10 +229,10 @@ class EnhancedTable extends React.Component {
                                 orderBy={orderBy}
                                 onSelectAllClick={this.handleSelectAllClick}
                                 onRequestSort={this.handleRequestSort}
-                                rowCount={articles.length}
+                                rowCount={data.length}
                             />
                             <TableBody>
-                                {articles.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(a => {
+                                {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(a => {
                                     const isSelected = this.isSelected(a.id);
                                     return (
                                         <TableRow
@@ -200,11 +256,9 @@ class EnhancedTable extends React.Component {
                                                 {
                                                     a.tags.split(',').map(function(tag, i) {
                                                         return (
-                                                            <Chip
-                                                                label={tag}
-                                                                key={i}
-                                                                className={classes.tag}
-                                                            />
+                                                            <span className={classes.tag} key={i}>
+                                                                {tag}
+                                                            </span>
                                                         )
                                                     })
                                                 }
@@ -242,7 +296,8 @@ class EnhancedTable extends React.Component {
                                                     color="primary"
                                                     aria-label="add"
                                                     className={classes.button}
-                                                    href={base + a.slug + "/delete"}
+                                                    onClick={() => this.deleteItem(a.id, a.title)}
+                                                    // href={base + a.slug + "/delete"}
                                                 >
                                                     <Delete />
                                                 </Button>
@@ -260,7 +315,7 @@ class EnhancedTable extends React.Component {
                                 <TableRow>
                                     <TablePagination
                                         colSpan={8}
-                                        count={articles.length}
+                                        count={data.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         backIconButtonProps={{

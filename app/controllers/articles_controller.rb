@@ -44,10 +44,12 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    Basic.update(1, notice: 'Article was successfully deleted')
+  end
+
+  def ajax_delete
+    Article.find(params[:id]).destroy
+    @articles = Article.all
   end
 
   def multiple_actions

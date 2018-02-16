@@ -28,7 +28,8 @@ Rails.application.routes.draw do
       get '/project/:id/edit' => 'portfolios#edit'
       resources :articles
 
-      get '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
+      post '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
+      post '/articles/:id/ajax_delete' => 'articles#ajax_delete'
       get '/portfolio/multiple/:actions/:data' => 'portfolios#multiple_actions'
     end
 

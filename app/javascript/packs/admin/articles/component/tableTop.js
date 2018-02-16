@@ -18,7 +18,6 @@ const styles = theme => ({
 class TableTop extends React.Component {
 
     onFieldChange(event) {
-        console.log(event.target.value);
         this.props.handleFilterInput(event.target.value);
     }
 

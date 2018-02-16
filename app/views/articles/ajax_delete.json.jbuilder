@@ -1,0 +1,1 @@
+json.array! @articles, :id, :slug, :title, :image, :tags, :public, :content, :created_at, :updated_at

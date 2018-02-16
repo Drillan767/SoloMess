@@ -18,6 +18,7 @@
     "react": "^16.2.0",
     "react-color": "^2.13.8",
     "react-dom": "^16.2.0",
+    "sweetalert2": "^7.12.3",
     "tinymce": "^4.7.5",
     "typeface-roboto": "^0.0.54"
   },
