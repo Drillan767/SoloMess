@@ -142,7 +142,14 @@ class EnhancedTable extends React.Component {
         const { articles, input } = this.state;
         let filtered = articles.filter(
             (article) => {
-                return article.title.toLowerCase().indexOf(input.toLowerCase()) !== -1;
+                return (
+                    article.title.toLowerCase().indexOf(input.toLowerCase()) !== -1; ||
+                    utils.toRealDate(a.created_at, true).indexOf(input.toLowerCase()) !== -1;
+                    utils.toRealDate(a.updated_at, true).indexOf(input.toLowerCase()) !== -1;
+                    article.tags.split(',').map(function(tag) {
+                        tag.toLowerCase().indexOf(input.toLowerCase()) != -1;
+                    }
+                )
             }
         );
         this.setState({filteredArticles: filtered});
