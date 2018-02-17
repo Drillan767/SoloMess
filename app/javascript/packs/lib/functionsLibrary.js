@@ -47,6 +47,10 @@ const functions = {
         if (string !== undefined && string !== null) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
+    },
+
+    keepFileName(string) {
+        return string.split(/[\\/]/).pop();
     }
 };
 

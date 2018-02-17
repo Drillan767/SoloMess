@@ -133,7 +133,7 @@ class SideBarContent extends React.Component {
                             <ListItemText inset primary="Back to website" />
                         </ListItem>
                     </a>
-                    <a href="/logout" className={classes.links}>
+                    <a href="/users/sign_out" className={classes.links}>
                         <ListItem button>
                             <ListItemIcon>
                                 <ExitToApp />

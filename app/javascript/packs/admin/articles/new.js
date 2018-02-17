@@ -1,0 +1,176 @@
+import React from 'react';
+import utils from '../../lib/functionsLibrary';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button'
+import Input, { InputAdornment } from 'material-ui/Input';
+import { FormHelperText } from 'material-ui/Form';
+import Tooltip from 'material-ui/Tooltip';
+import AttachFile from 'material-ui-icons/AttachFile';
+import IconButton from 'material-ui/IconButton';
+import ReactQuill from 'react-quill';
+
+const styles = themes => ({
+    root: {
+        margin: 'auto'
+    },
+    file: {
+        margin: '5px auto 30px auto'
+    },
+    actions: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        padding: '10px'
+    },
+    buttons: {
+        margin: '0 7px'
+    },
+    textarea: {
+        display: 'none'
+    }
+});
+
+class ArticleNew extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: '',
+            text: ''
+        }
+    }
+
+    handleUpload(e) {
+        this.setState({value: utils.keepFileName(e.target.value)});
+    }
+
+    handleChange(value) {
+        this.setState({text: value})
+    }
+
+    render() {
+        const { classes } =this.props;
+        console.log(this.props.settings);
+        console.log(this.state.text);
+
+/*
+        let toolbarOptions = {
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+
+            ['clean']                                         // remove formatting button
+        };
+*/
+
+        return (
+            <Grid item xs={12} sm={6} className={classes.root}>
+                <Paper elevation={4}>
+                    <form encType="multipart/form-data" action="/admin/articles" acceptCharset="UTF-8" method="post">
+                        <input name="utf8" type="hidden" value="✓" />
+                        <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
+                        <Grid item xs={12} sm={8} className={classes.root}>
+                            <TextField
+                                id="article_title"
+                                label="Title"
+                                name="article[title]"
+                                fullWidth
+                                className={classes.textField}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8} className={classes.root}>
+                            <TextField
+                                label="Tags"
+                                id="article_tags"
+                                name="article[tags]"
+                                fullWidth
+                                helperText="Separate each tag with a comma"
+                                className={classes.textField}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8} className={classes.file}>
+                            <Input
+                                readOnly
+                                value={this.state.value}
+                                fullWidth
+                                placeholder="File"
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton>
+                                            <Tooltip title="Upload a file">
+                                                <label htmlFor="file_upload">
+                                                    <AttachFile/>
+                                                </label>
+                                            </Tooltip>
+                                            <input
+                                                id="file_upload"
+                                                name="article[image]"
+                                                type="file"
+                                                onChange={this.handleUpload.bind(this)}
+                                                style={{display: 'none'}}
+                                            />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                            <FormHelperText id="weight-helper-text">Supported format: jpg png jpeg</FormHelperText>
+                        </Grid>
+
+                        <textarea
+                            id="content"
+                            name="article[content]"
+                            className={classes.textarea}
+                            value={this.state.text}
+                        />
+
+                        <ReactQuill
+                            value={this.state.text}
+                            onChange={this.handleChange.bind(this)}
+                            // modules={toolbarOptions}
+                        />
+                        <div className={classes.actions}>
+                            <Tooltip title="Save without publish">
+                                <Button
+                                    variant="raised"
+                                    className={classes.buttons}
+                                    name="save"
+                                    type="submit"
+                                >
+                                    Save
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title="Save and publish">
+                                <Button
+                                    variant="raised"
+                                    color="primary"
+                                    className={classes.buttons}
+                                    name="publish"
+                                    type="submit"
+                                >
+                                    Publish
+                                </Button>
+                            </Tooltip>
+                        </div>
+
+                    </form>
+                </Paper>
+            </Grid>
+        )
+    }
+}
+
+export default withStyles(styles)(ArticleNew)

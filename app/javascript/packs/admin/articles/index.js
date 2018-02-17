@@ -67,7 +67,6 @@ class EnhancedTable extends React.Component {
             settings: null,
             articles: null,
             page: 0,
-            input: '',
             filteredArticles: null,
             rowsPerPage: 5,
         };
@@ -138,21 +137,23 @@ class EnhancedTable extends React.Component {
     }
 
     handleFilterInput(value) {
-        this.setState({input: value});
-        const { articles, input } = this.state;
+        const { articles } = this.state;
         let filtered = articles.filter(
             (article) => {
                 return (
-                    article.title.toLowerCase().indexOf(input.toLowerCase()) !== -1; ||
-                    utils.toRealDate(a.created_at, true).indexOf(input.toLowerCase()) !== -1;
-                    utils.toRealDate(a.updated_at, true).indexOf(input.toLowerCase()) !== -1;
+                    article.title.toLowerCase().indexOf(value.toLowerCase()) !== -1
+
+                    /*||
+                    utils.toRealDate(article.created_at, true).indexOf(input.toLowerCase()) !== -1 ||
+                    utils.toRealDate(article.updated_at, true).indexOf(input.toLowerCase()) !== -1 ||
                     article.tags.split(',').map(function(tag) {
                         tag.toLowerCase().indexOf(input.toLowerCase()) != -1;
-                    }
+                    })*/
                 )
             }
         );
         this.setState({filteredArticles: filtered});
+        console.log(filtered);
     }
 
     deleteItem(id, title) {

@@ -4,4 +4,5 @@ class Article < ApplicationRecord
   friendly_id :title, use: :slugged
   mount_uploader :image, ArticleUploader
   validates_presence_of :title, :content, :image, :tags
+  validates_uniqueness_of :tags
 end

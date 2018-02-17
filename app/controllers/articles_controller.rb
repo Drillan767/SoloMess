@@ -25,6 +25,13 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+
+    if params[:publish]
+      @article.public = true
+    elsif params[:save]
+      @article.public = false
+    end
+
     if @article.save(article_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to @article

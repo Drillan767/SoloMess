@@ -8,6 +8,7 @@ import Portfolio from '../home/portfolio_show';
 import HomeAdmin from '../admin/home/index';
 import ArticlesIndex from '../admin/articles/index';
 import ArticleShow from '../admin/articles/show';
+import ArticleNew from '../admin/articles/new';
 
 export const elementForActionName = {
     'index': Homeindex,
@@ -31,6 +32,10 @@ export const adminElements = {
         object: ArticleShow,
         title: 'Articles'
     },
+    'articles_new': {
+        object: ArticleNew,
+        title: 'New article'
+    }
 
 
 };
