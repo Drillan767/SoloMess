@@ -4,8 +4,8 @@ import moment from 'moment'
 const functions = {
     truncate(string, nbchar) {
         if (string.length > nbchar)
-            return string.substring(0,nbchar)+'...';
-        else return string;
+            return string.substring(0,nbchar).replace(/<(?:.|\n)*?>/gm, '') + '...';
+        else return string.replace(/<(?:.|\n)*?>/gm, '');
     },
 
     toRealDate(value, hms = false) {

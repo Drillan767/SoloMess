@@ -279,9 +279,6 @@ class EnhancedTable extends React.Component {
                                                 }
                                             </TableCell>
                                             <TableCell className={classes.cells}>
-                                                {utils.truncate(a.content, 50)}
-                                            </TableCell>
-                                            <TableCell className={classes.cells}>
                                                 {utils.toRealDate(a.created_at, true)}
                                             </TableCell>
                                             <TableCell className={classes.cells}>
@@ -305,7 +302,6 @@ class EnhancedTable extends React.Component {
                                                     aria-label="add"
                                                     className={classes.button}
                                                     onClick={() => this.deleteItem(a.id, a.title)}
-                                                    // href={base + a.slug + "/delete"}
                                                 >
                                                     <Delete />
                                                 </Button>
