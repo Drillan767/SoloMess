@@ -12,6 +12,7 @@ import AttachFile from 'material-ui-icons/AttachFile';
 import IconButton from 'material-ui/IconButton';
 import ReactQuill from 'react-quill';
 import Dialog from 'material-ui/Dialog'
+import { DatePicker } from 'material-ui-pickers'
 
 const styles = {
     root: {
@@ -45,7 +46,7 @@ ReactQuill.modules = {
     },
 };
 
-class ArticleNew extends React.Component {
+class PortfolioNew extends React.Component {
 
     constructor(props) {
         super(props);
@@ -54,7 +55,8 @@ class ArticleNew extends React.Component {
             text: '',
             file: '',
             filename: '',
-            open: false
+            open: false,
+            selectedDate: new Date(),
         };
     }
 
@@ -63,6 +65,10 @@ class ArticleNew extends React.Component {
             this.setState({open: true});
             document.activeElement.blur();
         }
+    }
+
+    handleDateChange = date => {
+        this.setState({ selectedDate: date })
     }
 
     hideImage() {
@@ -87,6 +93,7 @@ class ArticleNew extends React.Component {
 
     render() {
         const { classes } =this.props;
+        const { selectedDate, selectedTime, selectedDateTime } = this.state;
 
         return (
             <Grid item xs={12} sm={6} className={classes.root}>
@@ -151,6 +158,25 @@ class ArticleNew extends React.Component {
                             </Dialog>
                         </Grid>
 
+                        <Grid item xs={12} sm={8} className={classes.root}>
+                            <TextField
+                                label="Website"
+                                name="article[tags]"
+                                fullWidth
+                                helperText="Separate each tag with a comma"
+                                className={classes.textField}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} sm={8} className={classes.root}>
+                            <DatePicker
+                                fullWidth
+                                label="Project's creation time"
+                                value={selectedDate}
+                                onChange={this.handleDateChange}
+                            />
+                        </Grid>
+
                         <textarea
                             id="content"
                             name="article[content]"
@@ -195,4 +221,4 @@ class ArticleNew extends React.Component {
     }
 }
 
-export default withStyles(styles)(ArticleNew)
+export default withStyles(styles)(PortfolioNew)
