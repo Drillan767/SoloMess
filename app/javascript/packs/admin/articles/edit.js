@@ -122,7 +122,7 @@ class ArticleEdit extends React.Component {
                     <Typography component="p">{settings.alert}</Typography>
                 }
                 <Paper elevation={4}>
-                    <form encType="multipart/form-data" action="/admin/articles/bonjour-ceci-est-assez-fou" acceptCharset="UTF-8" method="patch">
+                    <form encType="multipart/form-data" action="/admin/articles/bonjour-ceci-est-assez-fou" acceptCharset="UTF-8" method="POST">
                         <input name="utf8" type="hidden" value="✓" />
                         <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
                         <Grid item xs={12} sm={8} className={classes.root}>
@@ -203,7 +203,7 @@ class ArticleEdit extends React.Component {
                             ref={(el) => this.quillRef = el}
                         />
                         <div className={classes.actions}>
-                            <Tooltip title="Save without publish">
+                            <Tooltip title="Update and unpublish">
                                 <Button
                                     variant="raised"
                                     className={classes.buttons}
@@ -213,7 +213,7 @@ class ArticleEdit extends React.Component {
                                     Save
                                 </Button>
                             </Tooltip>
-                            <Tooltip title="Save and publish">
+                            <Tooltip title="Update and publish">
                                 <Button
                                     variant="raised"
                                     color="primary"
