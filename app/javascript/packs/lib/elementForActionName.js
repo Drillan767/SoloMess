@@ -9,6 +9,7 @@ import HomeAdmin from '../admin/home/index';
 import ArticlesIndex from '../admin/articles/index';
 import ArticleShow from '../admin/articles/show';
 import ArticleNew from '../admin/articles/new';
+import ArticleEdit from '../admin/articles/edit';
 
 export const elementForActionName = {
     'index': Homeindex,
@@ -35,6 +36,10 @@ export const adminElements = {
     'articles_new': {
         object: ArticleNew,
         title: 'New article'
+    },
+    'articles_edit': {
+        object: ArticleEdit,
+        title: 'Editing Article'
     }
 
 
