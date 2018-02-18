@@ -21,7 +21,7 @@ const styles = themes => ({
     },
     actions: {
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         padding: '10px'
     },
     buttons: {
@@ -32,14 +32,29 @@ const styles = themes => ({
     }
 });
 
+ReactQuill.modules = {
+    toolbar: [
+        [{size: []}],
+        [{ 'font': [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code'],
+        [{'list': 'ordered'}, {'list': 'bullet'},
+            {'indent': '-1'}, {'indent': '+1'}],
+        ['link', 'image', 'video'],
+        ['clean']
+    ],
+        clipboard: {
+        matchVisual: false,
+    }
+};
+
 class ArticleNew extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             value: '',
-            text: ''
-        }
+            text: '',
+        };
     }
 
     handleUpload(e) {
@@ -52,30 +67,6 @@ class ArticleNew extends React.Component {
 
     render() {
         const { classes } =this.props;
-        console.log(this.props.settings);
-        console.log(this.state.text);
-
-/*
-        let toolbarOptions = {
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
-
-            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
-
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean']                                         // remove formatting button
-        };
-*/
 
         return (
             <Grid item xs={12} sm={6} className={classes.root}>
@@ -140,7 +131,8 @@ class ArticleNew extends React.Component {
                         <ReactQuill
                             value={this.state.text}
                             onChange={this.handleChange.bind(this)}
-                            // modules={toolbarOptions}
+                            modules={ReactQuill.modules}
+                            formats={ReactQuill.formats}
                         />
                         <div className={classes.actions}>
                             <Tooltip title="Save without publish">
