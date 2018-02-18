@@ -12,7 +12,7 @@ import AttachFile from 'material-ui-icons/AttachFile';
 import IconButton from 'material-ui/IconButton';
 import ReactQuill from 'react-quill';
 
-const styles = themes => ({
+const styles = {
     root: {
         margin: 'auto'
     },
@@ -30,7 +30,7 @@ const styles = themes => ({
     textarea: {
         display: 'none'
     }
-});
+};
 
 ReactQuill.modules = {
     toolbar: {
@@ -40,10 +40,7 @@ ReactQuill.modules = {
             [{'list': 'ordered'}, {'list': 'bullet'},
                 {'indent': '-1'}, {'indent': '+1'}],
             ['clean'],
-        ],
-        handlers: {
-            'image': this.imageHandler
-        }
+        ]
     },
 };
 
@@ -60,14 +57,6 @@ class ArticleNew extends React.Component {
     handleUpload(e) {
         this.setState({value: utils.keepFileName(e.target.value)});
     }
-
-    imageHandler = (image, callback) => {
-        let range = this.quillRef.getEditor().getSelection();
-        let value = prompt('What is the image URL');
-        if(value) {
-            this.quillRef.getEditor().insertEmbed(range.index, 'image', value, "user");
-        }
-    };
 
     handleChange(value) {
         this.setState({text: value})
@@ -166,7 +155,6 @@ class ArticleNew extends React.Component {
                                 </Button>
                             </Tooltip>
                         </div>
-
                     </form>
                 </Paper>
             </Grid>
