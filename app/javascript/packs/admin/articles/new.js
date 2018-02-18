@@ -11,6 +11,7 @@ import Tooltip from 'material-ui/Tooltip';
 import AttachFile from 'material-ui-icons/AttachFile';
 import IconButton from 'material-ui/IconButton';
 import ReactQuill from 'react-quill';
+import Dialog from 'material-ui/Dialog'
 
 const styles = {
     root: {
@@ -51,11 +52,33 @@ class ArticleNew extends React.Component {
         this.state = {
             value: '',
             text: '',
+            file: '',
+            filename: '',
+            open: false
         };
     }
 
-    handleUpload(e) {
-        this.setState({value: utils.keepFileName(e.target.value)});
+    displayImage(e) {
+        if(e.target.type === 'text') {
+            this.setState({open: true});
+            document.activeElement.blur();
+        }
+    }
+
+    hideImage() {
+        this.setState({open: false});
+    }
+
+    handleUpload() {
+        let reader = new FileReader();
+        let file = document.getElementById("file_upload").files[0];
+        let url = reader.readAsDataURL(file);
+        reader.onloadend = function(){
+            this.setState({
+                file: [reader.result],
+                filename: file.name
+            });
+        }.bind(this);
     }
 
     handleChange(value) {
@@ -93,7 +116,8 @@ class ArticleNew extends React.Component {
                         <Grid item xs={12} sm={8} className={classes.file}>
                             <Input
                                 readOnly
-                                value={this.state.value}
+                                value={this.state.filename}
+                                onFocus={this.displayImage.bind(this)}
                                 fullWidth
                                 placeholder="File"
                                 endAdornment={
@@ -116,6 +140,15 @@ class ArticleNew extends React.Component {
                                 }
                             />
                             <FormHelperText id="weight-helper-text">Supported format: jpg png jpeg</FormHelperText>
+                            <Dialog
+                                open={this.state.open}
+                                keepMounted
+                                onClose={this.hideImage.bind(this)}
+                                aria-labelledby="alert-dialog-slide-title"
+                                aria-describedby="alert-dialog-slide-description"
+                            >
+                                <img src={this.state.file} alt=""/>
+                            </Dialog>
                         </Grid>
 
                         <textarea

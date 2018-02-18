@@ -79,7 +79,6 @@ class ArticleEdit extends React.Component {
         let reader = new FileReader();
         let file = document.getElementById("file_upload").files[0];
         let url = reader.readAsDataURL(file);
-        console.log(url);
         reader.onloadend = function(){
             this.setState({
                 file: [reader.result],
@@ -122,7 +121,7 @@ class ArticleEdit extends React.Component {
                     <Typography component="p">{settings.alert}</Typography>
                 }
                 <Paper elevation={4}>
-                    <form encType="multipart/form-data" action="/admin/articles/bonjour-ceci-est-assez-fou" acceptCharset="UTF-8" method="POST">
+                    <form encType="multipart/form-data" action={window.location.href.replace('/edit', '')} acceptCharset="UTF-8" method="POST">
                         <input name="utf8" type="hidden" value="✓" />
                         <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
                         <Grid item xs={12} sm={8} className={classes.root}>

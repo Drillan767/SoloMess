@@ -40,7 +40,7 @@ class TableTop extends React.Component {
                     <Button
                         variant="raised"
                         color="primary"
-                        href={window.location.href + "/new"}
+                        href="/admin/new/article"
                     >
                     New article
                     <Add className={classes.rightIcon} />

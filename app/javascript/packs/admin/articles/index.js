@@ -69,6 +69,7 @@ class EnhancedTable extends React.Component {
             page: 0,
             filteredArticles: null,
             rowsPerPage: 5,
+            search: ''
         };
     }
 
@@ -137,6 +138,7 @@ class EnhancedTable extends React.Component {
     }
 
     handleFilterInput(value) {
+        this.setState({input: value});
         const { articles } = this.state;
         let filtered = articles.filter(
             (article) => {

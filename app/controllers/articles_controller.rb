@@ -41,7 +41,13 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    # abort article_params.inspect
+
+    if params[:publish]
+      @article.public = true
+    elsif params[:save]
+      @article.public = false
+    end
+
     if @article.update(article_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to articles_path
