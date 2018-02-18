@@ -33,18 +33,18 @@ const styles = themes => ({
 });
 
 ReactQuill.modules = {
-    toolbar: [
-        [{size: []}],
-        [{ 'font': [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code'],
-        [{'list': 'ordered'}, {'list': 'bullet'},
-            {'indent': '-1'}, {'indent': '+1'}],
-        ['link', 'image', 'video'],
-        ['clean']
-    ],
-        clipboard: {
-        matchVisual: false,
-    }
+    toolbar: {
+        container: [
+            [{size: []}, { 'font': [] }],
+            [{'align': []}, 'bold', 'italic', 'underline', 'strike', 'blockquote', 'code', 'link'],
+            [{'list': 'ordered'}, {'list': 'bullet'},
+                {'indent': '-1'}, {'indent': '+1'}],
+            ['clean'],
+        ],
+        handlers: {
+            'image': this.imageHandler
+        }
+    },
 };
 
 class ArticleNew extends React.Component {
@@ -60,6 +60,14 @@ class ArticleNew extends React.Component {
     handleUpload(e) {
         this.setState({value: utils.keepFileName(e.target.value)});
     }
+
+    imageHandler = (image, callback) => {
+        let range = this.quillRef.getEditor().getSelection();
+        let value = prompt('What is the image URL');
+        if(value) {
+            this.quillRef.getEditor().insertEmbed(range.index, 'image', value, "user");
+        }
+    };
 
     handleChange(value) {
         this.setState({text: value})
@@ -133,6 +141,7 @@ class ArticleNew extends React.Component {
                             onChange={this.handleChange.bind(this)}
                             modules={ReactQuill.modules}
                             formats={ReactQuill.formats}
+                            ref={(el) => this.quillRef = el}
                         />
                         <div className={classes.actions}>
                             <Tooltip title="Save without publish">
