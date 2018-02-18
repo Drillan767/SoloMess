@@ -1,5 +1,6 @@
 import React from 'react';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
+import utils from '../../lib/functionsLibrary';
 import { withStyles } from 'material-ui/styles';
 import Collapse from 'material-ui/transitions/Collapse'
 import Divider from 'material-ui/Divider';
@@ -15,16 +16,31 @@ const styles = theme => ({
         paddingLeft: theme.spacing.unit * 4,
     },
     links: {
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: '#3f51b5'
+    },
+    active: {
+        color: '#3f51b5'
     }
 });
 
 class SideBarContent extends React.Component {
 
-    state = {
-        portfolio: false,
-        articles: false
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            portfolio: false,
+            articles: false
+        }
+    }
+
+    componentWillMount() {
+        let location = utils.basename(window.location.pathname);
+        this.setState({
+            articles: (location === "article" || location === "articles"),
+            portfolio: (location === "portfolio" || location === "project")
+        })
+    }
 
     collapseArticle = () => {
         this.setState({ articles: !this.state.articles });
@@ -37,6 +53,7 @@ class SideBarContent extends React.Component {
     render() {
         const { classes } = this.props;
         const { articles, portfolio } = this.state;
+        let pathname = window.location.pathname;
 
         return (
             <div>
@@ -48,9 +65,13 @@ class SideBarContent extends React.Component {
                     <a href="/admin" className={classes.links}>
                         <ListItem button>
                             <ListItemIcon>
-                                <Dashboard />
+                                <Dashboard className={pathname === '/admin' ? classes.active : ''}/>
                             </ListItemIcon>
-                            <ListItemText inset primary="Dashboard" />
+                            <ListItemText
+                                inset
+                                primary="Dashboard"
+                                classes={pathname === '/admin' ? {primary: classes.active} : {}}
+                            />
                         </ListItem>
                     </a>
                     <ListItem button onClick={this.collapseArticle}>
@@ -62,20 +83,28 @@ class SideBarContent extends React.Component {
                     </ListItem>
                     <Collapse in={articles} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <a href="/admin/articles/new" className={classes.links}>
+                            <a href="/admin/new/article" className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
-                                        <Add />
+                                        <Add className={pathname === '/admin/new/article' ? classes.active : ''} />
                                     </ListItemIcon>
-                                    <ListItemText inset primary="New article" />
+                                    <ListItemText
+                                        inset
+                                        classes={pathname === '/admin/new/article' ? {primary: classes.active} : {}}
+                                        primary="New article"
+                                    />
                                 </ListItem>
                             </a>
                             <a href="/admin/articles" className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
-                                        <ViewList />
+                                        <ViewList className={pathname === '/admin/articles' ? classes.active : ''} />
                                     </ListItemIcon>
-                                    <ListItemText inset primary="All articles" />
+                                    <ListItemText
+                                        inset
+                                        classes={pathname === '/admin/articles' ? {primary: classes.active} : {}}
+                                        primary="All articles"
+                                    />
                                 </ListItem>
                             </a>
                         </List>
@@ -89,20 +118,28 @@ class SideBarContent extends React.Component {
                     </ListItem>
                     <Collapse in={portfolio} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <a href="/admin/project/new" className={classes.links}>
+                            <a href="/admin/new/project" className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
-                                        <Add />
+                                        <Add className={pathname === '/admin/new/project' ? classes.active : ''}/>
                                     </ListItemIcon>
-                                    <ListItemText inset primary="New project" />
+                                    <ListItemText
+                                        inset
+                                        primary="New project"
+                                        classes={pathname === '/admin/new/project' ? {primary: classes.active} : {}}
+                                    />
                                 </ListItem>
                             </a>
                             <a href="/admin/portfolio" className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
-                                        <ViewList />
+                                        <ViewList className={pathname === '/admin/portfolio' ? classes.active : ''}/>
                                     </ListItemIcon>
-                                    <ListItemText inset primary="All projects" />
+                                    <ListItemText
+                                        inset
+                                        primary="All projects"
+                                        classes={pathname === '/admin/portfolio' ? {primary: classes.active} : {}}
+                                    />
                                 </ListItem>
                             </a>
                         </List>
@@ -142,6 +179,7 @@ class SideBarContent extends React.Component {
                         </ListItem>
                     </a>
                 </List>
+                <Divider />
             </div>
         )
     }

@@ -49,7 +49,7 @@ const functions = {
         }
     },
 
-    keepFileName(string) {
+    basename(string) {
         return string.split(/[\\/]/).pop();
     }
 };

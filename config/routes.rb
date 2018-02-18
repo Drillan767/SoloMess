@@ -24,9 +24,10 @@ Rails.application.routes.draw do
       resource :basics
       resources :portfolios, except: %w[show new edit]
       get '/project/:id' => 'portfolios#show'
-      get '/project/new' => 'portfolios#new'
+      get '/new/project' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
-      resources :articles
+      resources :articles, except: :new
+      get '/new/article' => 'articles#new'
 
       post '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
       post '/articles/:id/ajax_delete' => 'articles#ajax_delete'
