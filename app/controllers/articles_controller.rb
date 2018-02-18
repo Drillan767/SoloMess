@@ -41,10 +41,12 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    # abort article_params.inspect
     if @article.update(article_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to articles_path
     else
+      abort @article.errors.inspect
       Basic.update(1, alert: @article.errors.full_messages)
     end
   end

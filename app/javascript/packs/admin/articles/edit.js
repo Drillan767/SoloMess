@@ -12,6 +12,7 @@ import AttachFile from 'material-ui-icons/AttachFile';
 import IconButton from 'material-ui/IconButton';
 import ReactQuill from 'react-quill';
 import Dialog from 'material-ui/Dialog';
+import Typography from 'material-ui/Typography';
 
 const styles = {
     root: {
@@ -65,7 +66,8 @@ class ArticleEdit extends React.Component {
             self.setState({
                 article: article,
                 filename: utils.basename(article.image.url),
-                file: article.image.url
+                file: article.image.url,
+                text: article.content
             });
         });
         utils.getSettings(function (settings) {
@@ -86,13 +88,8 @@ class ArticleEdit extends React.Component {
         }.bind(this);
     }
 
-    handleChange(value) {
+    handleQuill(value) {
         this.setState({text: value})
-    }
-
-    handleQuill() {
-        this.handleChange();
-        this.handleChangeFor('content');
     }
 
     displayImage(e) {
@@ -104,7 +101,6 @@ class ArticleEdit extends React.Component {
 
     hideImage() {
         this.setState({open: false});
-
     }
 
     handleChangeFor = (propertyName) => (event) => {
@@ -116,12 +112,17 @@ class ArticleEdit extends React.Component {
     render() {
         const { classes } =this.props;
         const { article, settings } = this.state;
+        console.log(settings);
 
         return (
             article !== null &&
             <Grid item xs={12} sm={6} className={classes.root}>
+                {
+                    settings !== null && settings.alert !== null &&
+                    <Typography component="p">{settings.alert}</Typography>
+                }
                 <Paper elevation={4}>
-                    <form encType="multipart/form-data" action="/admin/articles" acceptCharset="UTF-8" method="post">
+                    <form encType="multipart/form-data" action="/admin/articles/bonjour-ceci-est-assez-fou" acceptCharset="UTF-8" method="patch">
                         <input name="utf8" type="hidden" value="✓" />
                         <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
                         <Grid item xs={12} sm={8} className={classes.root}>
@@ -191,11 +192,11 @@ class ArticleEdit extends React.Component {
                             readOnly
                             name="article[content]"
                             className={classes.textarea}
-                            value={article.content || this.state.text}
+                            value={this.state.text}
                         />
 
                         <ReactQuill
-                            value={article.content || this.state.text}
+                            value={this.state.text}
                             onChange={this.handleQuill.bind(this)}
                             modules={ReactQuill.modules}
                             formats={ReactQuill.formats}
