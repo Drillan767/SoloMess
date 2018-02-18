@@ -33,7 +33,9 @@ Rails.application.routes.draw do
 
       post '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
       post '/articles/:id/ajax_delete' => 'articles#ajax_delete'
-      get '/portfolio/multiple/:actions/:data' => 'portfolios#multiple_actions'
+
+      post '/portfolio/multiple/:actions/:data' => 'portfolios#multiple_actions'
+      post '/portfolio/:id/ajax_delete' => 'portfolios#ajax_delete'
     end
 
     devise_for :users, skip: [:sessions]

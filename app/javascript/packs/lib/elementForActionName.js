@@ -1,5 +1,5 @@
 import React from 'react';
-import Homeindex from '../home/home';
+import HomeIndex from '../home/home';
 import Contact from '../home/contact';
 import Articles from '../home/articles';
 import Article from '../home/article';
@@ -10,9 +10,10 @@ import ArticlesIndex from '../admin/articles/index';
 import ArticleShow from '../admin/articles/show';
 import ArticleNew from '../admin/articles/new';
 import ArticleEdit from '../admin/articles/edit';
+import PortfolioIndex from '../admin/portfolio/index';
 
 export const elementForActionName = {
-    'index': Homeindex,
+    'index': HomeIndex,
     'contact': Contact,
     'articles_index': Articles,
     'article_show': Article,
@@ -40,6 +41,10 @@ export const adminElements = {
     'articles_edit': {
         object: ArticleEdit,
         title: 'Editing Article'
+    },
+    'portfolios_index': {
+        object: PortfolioIndex,
+        title: 'Portfolio'
     }
 
 

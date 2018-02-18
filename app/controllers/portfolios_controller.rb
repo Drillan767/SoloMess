@@ -50,8 +50,27 @@ class PortfoliosController < ApplicationController
     end
   end
 
+  def ajax_delete
+    Portfolio.find(params[:id]).destroy
+    @portfolios = Portfolio.all
+  end
+
   def multiple_actions
-    return 'Bjr'
+
+    params[:data].split(',').each do |id|
+      case params[:actions]
+      when 'publish'
+        Portfolio.update(id, public: true)
+      when 'unpublish'
+        Portfolio.update(id, public: false)
+      when 'delete'
+        Portfolio.find(id).destroy
+      else
+        return 'error'
+      end
+    end
+
+    @portfolios = Portfolio.all
   end
 
   private
