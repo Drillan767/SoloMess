@@ -13,6 +13,7 @@ import IconButton from 'material-ui/IconButton';
 import ReactQuill from 'react-quill';
 import Dialog from 'material-ui/Dialog'
 import { DatePicker } from 'material-ui-pickers'
+import moment from 'moment';
 
 const styles = {
     root: {
