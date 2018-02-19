@@ -13,8 +13,8 @@ import IconButton from 'material-ui/IconButton';
 import ReactQuill from 'react-quill';
 import Dialog from 'material-ui/Dialog'
 import { DatePicker } from 'material-ui-pickers'
-import moment from 'moment';
 import MultiUpload from './component/multiUpload';
+import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 
 const styles = {
     root: {
@@ -31,7 +31,7 @@ const styles = {
     buttons: {
         margin: '0 7px'
     },
-    textarea: {
+    hide: {
         display: 'none'
     }
 };
@@ -57,6 +57,8 @@ class PortfolioNew extends React.Component {
             text: '',
             file: '',
             filename: '',
+            m_file: [],
+            m_filename: [],
             open: false,
             selectedDate: new Date(),
         };
@@ -80,7 +82,7 @@ class PortfolioNew extends React.Component {
     handleUpload() {
         let reader = new FileReader();
         let file = document.getElementById("file_upload").files[0];
-        let url = reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
         reader.onloadend = function(){
             this.setState({
                 file: [reader.result],
@@ -89,13 +91,35 @@ class PortfolioNew extends React.Component {
         }.bind(this);
     }
 
+    handleMultiUpload() {
+
+        let files = document.getElementById('multiple_files_upload');
+        let files_result = [];
+        let files_name = [];
+
+        for(let i = 0; i < files.files.length; i++) {
+            let reader = new FileReader();
+            reader.readAsDataURL(files.files[i]);
+            reader.onloadend = function() {
+                // console.log(reader.result);
+                files_result.push(reader.result);
+                files_name.push(files.files[i].name);
+            }
+        }
+
+        this.setState({
+            m_file: files_result,
+            m_filename: files_name,
+        });
+    }
+
     handleChange(value) {
         this.setState({text: value})
     }
 
     render() {
         const { classes } =this.props;
-        const { selectedDate, selectedTime, selectedDateTime } = this.state;
+        const { selectedDate, m_filename, m_file } = this.state;
 
         return (
             <Grid item xs={12} sm={6} className={classes.root}>
@@ -142,7 +166,7 @@ class PortfolioNew extends React.Component {
                                                 name="article[image]"
                                                 type="file"
                                                 onChange={this.handleUpload.bind(this)}
-                                                style={{display: 'none'}}
+                                                className={classes.hide}
                                             />
                                         </IconButton>
                                     </InputAdornment>
@@ -161,37 +185,57 @@ class PortfolioNew extends React.Component {
                         </Grid>
 
                         <Grid item xs={12} sm={8} className={classes.root}>
-                            <TextField
-                                label="Website"
-                                name="article[tags]"
-                                fullWidth
-                                helperText="Separate each tag with a comma"
-                                className={classes.textField}
-                            />
+                            <Paper>
+                                <GridList cellHeight="auto" spacing={1} className={classes.gridList}>
+                                    {m_file.map(tile => (
+                                        <GridListTile key={tile.img}>
+                                            <img src={tile.img} alt={tile.title} />
+                                            <GridListTileBar
+                                                title={tile.title}
+                                                titlePosition="top"
+                                                actionIcon={
+                                                    <IconButton className={classes.icon}>
+                                                        <StarBorderIcon />
+                                                    </IconButton>
+                                                }
+                                                actionPosition="left"
+                                                className={classes.titleBar}
+                                            />
+                                        </GridListTile>
+                                    ))}
+                                </GridList>
+                                <Button>
+                                    <label htmlFor="multiple_files_upload">
+                                        Select files
+                                    </label>
+                                </Button>
+
+                                <input
+                                    type="file"
+                                    multiple="multiple"
+                                    className={classes.hide}
+                                    id="multiple_files_upload"
+                                    onChange={this.handleMultiUpload.bind(this)}
+                                />
+                            </Paper>
                         </Grid>
+
 
                         <Grid item xs={12} sm={8} className={classes.root}>
                             <DatePicker
                                 fullWidth
                                 label="Project's creation time"
                                 format="D/M/YYYY"
+                                autoOk={true}
                                 value={selectedDate}
                                 onChange={this.handleDateChange}
                             />
                         </Grid>
-                        {/*<MultiUpload
-                            name="portfolios[illustrations]"
-                            // Liste des fichiers récupéré du input type file
-                            // files={this.state.files}
-                            // Action quand on enlève un élément
-                            // onChange={this.onChange}
-
-                        />*/}
 
                         <textarea
                             id="content"
                             name="article[content]"
-                            className={classes.textarea}
+                            className={classes.hide}
                             value={this.state.text}
                         />
 
@@ -202,8 +246,19 @@ class PortfolioNew extends React.Component {
                             formats={ReactQuill.formats}
                             ref={(el) => this.quillRef = el}
                         />
+
+                        <Grid item xs={12} sm={8} className={classes.root}>
+                            <TextField
+                                label="Project's url"
+                                name="article[tags]"
+                                placeholder="Insert your project's url (Github, website...)"
+                                fullWidth
+                                helperText="Separate each tag with a comma"
+                            />
+                        </Grid>
+
                         <div className={classes.actions}>
-                            <Tooltip title="Save without publish">
+                            <Tooltip title="Save without publishing">
                                 <Button
                                     variant="raised"
                                     className={classes.buttons}

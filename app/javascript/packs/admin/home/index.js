@@ -41,7 +41,7 @@ class HomeIndex extends React.Component {
             self.setState({articles: articles});
         });
 
-        utils.loader(window.location.href + '/portfolios.json', function(portfolio) {
+        utils.loader(window.location.href + '/portfolio.json', function(portfolio) {
             self.setState({portfolio: portfolio});
         });
     }
@@ -51,6 +51,7 @@ class HomeIndex extends React.Component {
         const { portfolio, articles } = this.state;
         let p_prefix = '/admin/project/';
         let a_prefix = '/admin/articles/';
+        console.log(articles);
 
         return (
             [
@@ -78,7 +79,6 @@ class HomeIndex extends React.Component {
                                     articles !== null &&
                                     articles.map(a => {
                                     return (
-                                        a.id <= 5 &&
                                         <TableRow key={a.id}>
                                             <TableCell><a href={a_prefix + a.slug}>{a.title}</a></TableCell>
                                             <TableCell>{a.tags}</TableCell>
@@ -86,7 +86,7 @@ class HomeIndex extends React.Component {
                                                 {
                                                     a.public ?
                                                     <Chip label="Published" className={classes.chipValid} /> :
-                                                    <Chip label="Unpublished" className={classes.chipPending} />
+                                                    <Chip label="Draft" className={classes.chipPending} />
                                                 }
                                             </TableCell>
 
@@ -177,7 +177,7 @@ class HomeIndex extends React.Component {
                                                 {
                                                     p.public ?
                                                         <Chip label="Published" className={classes.chipValid}/> :
-                                                        <Chip label="Unpublished" className={classes.chipPending} />
+                                                        <Chip label="Draft" className={classes.chipPending} />
                                                 }
                                             </TableCell>
                                             <TableCell>{utils.toRealDate(p.created_at)}</TableCell>

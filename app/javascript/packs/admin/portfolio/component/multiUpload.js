@@ -15,7 +15,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper,
     },
     gridList: {
-        width: 500,
+        // width: 500,
         height: 450,
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
@@ -32,31 +32,31 @@ const styles = theme => ({
 
 const tiles = [
     {
-        img: '../../uploads/portfolio/1/Capture_du_2017-07-28_22-57-04.png',
+        img: 'http://lorempixel.com/g/400/200',
         title: 'Image',
         author: 'author',
         featured: true,
     },
     {
-        img: '../../uploads/portfolio/1/Capture_du_2017-11-22_09-35-07.png',
+        img: 'http://lorempixel.com/g/400/200',
         title: 'Image',
         author: 'author',
         featured: true,
     },
     {
-        img: '../../uploads/portfolio/1/Capture_du_2017-11-22_14-02-03.png',
+        img: 'http://lorempixel.com/g/400/200',
         title: 'Image',
         author: 'author',
         featured: true,
     },
     {
-        img: '../../uploads/portfolio/1/Capture_du_2017-11-24_14-02-42.png',
+        img: 'http://lorempixel.com/g/400/200',
         title: 'Image',
         author: 'author',
         featured: true,
     },
     {
-        img: '../../uploads/portfolio/1/Capture_du_2017-12-20_11-13-00.png',
+        img: 'http://lorempixel.com/g/400/200',
         title: 'Image',
         author: 'author',
         featured: true,
@@ -83,9 +83,9 @@ class MultiUpload extends React.Component{
         return (
             <div className={classes.root}>
                 <Paper>
-                    <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+                    <GridList cellHeight="auto" spacing={1} className={classes.gridList}>
                         {files.map(tile => (
-                            <GridListTile key={tile.img} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
+                            <GridListTile key={tile.img}>
                                 <img src={tile.img} alt={tile.title} />
                                 <GridListTileBar
                                     title={tile.title}

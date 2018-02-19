@@ -34,3 +34,9 @@ A contact form linked directly to my own private mail account will be available 
   * When the MailGun account is created and the correct fields are filled, a contact form is visible.
 
 * The user should be able to setup some background images like Jaeger's curent website.
+
+# Self TODO:
+
+### Articles & Portofolio:
+
+* If no file was ready to upload, trigger a tooltip that says what to do

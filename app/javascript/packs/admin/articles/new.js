@@ -72,7 +72,6 @@ class ArticleNew extends React.Component {
     handleUpload() {
         let reader = new FileReader();
         let file = document.getElementById("file_upload").files[0];
-        let url = reader.readAsDataURL(file);
         reader.onloadend = function(){
             this.setState({
                 file: [reader.result],
@@ -166,7 +165,7 @@ class ArticleNew extends React.Component {
                             ref={(el) => this.quillRef = el}
                         />
                         <div className={classes.actions}>
-                            <Tooltip title="Save without publish">
+                            <Tooltip title="Save without publishing">
                                 <Button
                                     variant="raised"
                                     className={classes.buttons}
