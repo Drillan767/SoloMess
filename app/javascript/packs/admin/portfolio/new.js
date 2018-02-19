@@ -14,6 +14,7 @@ import ReactQuill from 'react-quill';
 import Dialog from 'material-ui/Dialog'
 import { DatePicker } from 'material-ui-pickers'
 import moment from 'moment';
+import MultiUpload from './component/multiUpload';
 
 const styles = {
     root: {
@@ -70,7 +71,7 @@ class PortfolioNew extends React.Component {
 
     handleDateChange = date => {
         this.setState({ selectedDate: date })
-    }
+    };
 
     hideImage() {
         this.setState({open: false});
@@ -173,10 +174,19 @@ class PortfolioNew extends React.Component {
                             <DatePicker
                                 fullWidth
                                 label="Project's creation time"
+                                format="D/M/YYYY"
                                 value={selectedDate}
                                 onChange={this.handleDateChange}
                             />
                         </Grid>
+                        {/*<MultiUpload
+                            name="portfolios[illustrations]"
+                            // Liste des fichiers récupéré du input type file
+                            // files={this.state.files}
+                            // Action quand on enlève un élément
+                            // onChange={this.onChange}
+
+                        />*/}
 
                         <textarea
                             id="content"

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   get '/admin' => 'home#admin', as: :admin
 
-  devise_for :users, skip: %w[registration password]
+  devise_for :users, skip: [:password]
 
   scope '/admin' do
     authenticate :user do
