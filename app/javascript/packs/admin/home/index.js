@@ -55,7 +55,7 @@ class HomeIndex extends React.Component {
 
         return (
             [
-                <Grid item xs={12} sm={6} key={1}>
+                <Grid item md={12} sm={6} key={1}>
                     <Paper elevation={8}>
                         <Typography
                             variant="headline"
@@ -141,7 +141,7 @@ class HomeIndex extends React.Component {
                         </div>
                     </Paper>
                 </Grid>,
-                <Grid item xs={12} sm={6} key={2}>
+                <Grid item md={12} sm={6} key={2}>
                     <Paper elevation={8}>
                         <Typography
                             variant="headline"

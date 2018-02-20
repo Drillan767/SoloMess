@@ -39,4 +39,5 @@ A contact form linked directly to my own private mail account will be available 
 
 ### Articles & Portofolio:
 
-* If no file was ready to upload, trigger a tooltip that says what to do
+* If no file was ready to upload, trigger explorer window
+* Adding new files in portfolio while others have been selected should not remove them

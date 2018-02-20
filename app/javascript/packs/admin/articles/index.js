@@ -222,6 +222,7 @@ class EnhancedTable extends React.Component {
         const { articles, order, orderBy, selected, rowsPerPage, page, filteredArticles } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (articles !== null && articles.length) - page * rowsPerPage);
         let base = "/admin/articles/";
+        console.log(articles);
 
         let data = this.state.input ? filteredArticles : articles;
 
