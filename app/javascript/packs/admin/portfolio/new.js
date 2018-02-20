@@ -14,7 +14,6 @@ import ReactQuill from 'react-quill';
 import Dialog from 'material-ui/Dialog'
 import { DatePicker } from 'material-ui-pickers'
 import StarBorderIcon from 'material-ui-icons/StarBorder'
-import MultiUpload from './component/multiUpload';
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 
 const styles = {
@@ -34,7 +33,11 @@ const styles = {
     },
     hide: {
         display: 'none'
-    }
+    },
+    gridList: {
+        height: 450,
+        overflowY: 'auto',
+    },
 };
 
 ReactQuill.modules = {
@@ -133,9 +136,7 @@ class PortfolioNew extends React.Component {
         const { classes } =this.props;
         const { selectedDate, m_file } = this.state;
         let files = [];
-        m_file.map(function(file) {
-            files.push(file.img)
-        });
+        let self = this;
 
         return (
             <Grid item xs={12} sm={6} className={classes.root}>
@@ -188,15 +189,20 @@ class PortfolioNew extends React.Component {
                                     </InputAdornment>
                                 }
                             />
-                            <input
-                                type="hidden"
-                                value={
-                                    m_file.map(function(file) {
-                                        return file.img
-                                    })
-                                }
+                            {
+                                m_file.length > 0 &&
+                                m_file.map(function(file, i) {
+                                    return (
+                                        <input
+                                            key={i}
+                                            type="hidden"
+                                            value={file.img}
+                                            name="portfolio[illustrations][]"
+                                        />
+                                    )
+                                })
+                            }
 
-                                name="portfolio[illustrations]"/>
                             <FormHelperText id="weight-helper-text">Supported format: jpg png jpeg</FormHelperText>
                             <Dialog
                                 open={this.state.open}
@@ -224,7 +230,7 @@ class PortfolioNew extends React.Component {
                                                         actionIcon={
                                                             <IconButton
                                                                 className={classes.icon}
-                                                                onClick={() => this.handleSingleDelete(tile.id)}
+                                                                onClick={() => console.log(self.state.file)}
                                                             >
                                                                 <StarBorderIcon />
                                                             </IconButton>
@@ -262,12 +268,6 @@ class PortfolioNew extends React.Component {
                                 />
                             </Paper>
                         </Grid>
-
-                        <input
-                            type="hidden"
-                            value={files}
-                            name="portfolio[illustrations][]"
-                        />
 
                         <Grid item xs={12} sm={8} className={classes.root}>
                             <DatePicker

@@ -24,7 +24,6 @@ class PortfoliosController < ApplicationController
   end
 
   def create
-    abort params.inspect
     @portfolio = Portfolio.new(portfolio_params)
     if @portfolio.save
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
@@ -32,6 +31,9 @@ class PortfoliosController < ApplicationController
     else
       Basic.update(1, alert: @portfolio.errors.full_messages)
     end
+
+  ensure
+    clean_tempfile
   end
 
   def update
@@ -81,9 +83,33 @@ class PortfoliosController < ApplicationController
   end
 
   def portfolio_params
-    params.require(:portfolio).permit(:title, :creation_time,
+    port_params = params.require(:portfolio).permit(:title, :creation_time,
                                       :public, :content, { illustrations: [] },
                                       :slug, :thumbnail, :website, :tags)
+    port_params[:illustrations] = parse_image_data(port_params[:illustrations]) if port_params[:illustrations]
+    port_params
+  end
+
+  def parse_image_data(base64)
+    filename = "portfolio-file"
+    base64.each do |b|
+      in_content_type, encoding, string = b.split(/[:;,]/)[1..3]
+      @tempfile = Tempfile.new(filename)
+      @tempfile.binmode
+      @tempfile.write Base64.decode64(string)
+      @tempfile.rewind
+
+      content_type = `file --mime -b #{@tempfile.path}`.split(";")[0]
+
+      extension = content_type.match(/gif|jpeg|png/).to_s
+      filename += ".#{extension}" if extension
+
+      ActionDispatch::Http::UploadedFile.new(
+         tempfile: @tempfile,
+         content_type: content_type,
+         filename: filename
+      )
+    end
   end
 
   def clean_notifications
@@ -95,5 +121,12 @@ class PortfoliosController < ApplicationController
 
   def update_notifications
     Basic.update(1, seen: true) unless Basic.first.notice.blank? && Basic.first.alert.blank?
+  end
+
+  def clean_tempfile
+    if @tempfile
+      @tempfile.close
+      @tempfile.unlink
+    end
   end
 end

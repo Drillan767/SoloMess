@@ -4,5 +4,5 @@ class Portfolio < ApplicationRecord
 
   friendly_id :title, use: :slugged
   mount_uploader :thumbnail, ThumbnailUploader
-  mount_uploaders :illustrations, IlllustrationsUploader
+  # mount_uploaders :illustrations, IlllustrationsUploader
 end
