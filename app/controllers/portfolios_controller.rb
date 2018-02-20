@@ -93,22 +93,10 @@ class PortfoliosController < ApplicationController
   def parse_image_data(base64)
     filename = "portfolio-file"
     base64.each do |b|
-      in_content_type, encoding, string = b.split(/[:;,]/)[1..3]
-      @tempfile = Tempfile.new(filename)
-      @tempfile.binmode
-      @tempfile.write Base64.decode64(string)
-      @tempfile.rewind
-
-      content_type = `file --mime -b #{@tempfile.path}`.split(";")[0]
-
-      extension = content_type.match(/gif|jpeg|png/).to_s
-      filename += ".#{extension}" if extension
-
-      ActionDispatch::Http::UploadedFile.new(
-         tempfile: @tempfile,
-         content_type: content_type,
-         filename: filename
-      )
+      in_content_type, format, encoding, string = b.split(/[:\/;,]/)[1..4]
+      File.open(filename + '.' + format, 'wb') do |f|
+        f.write(Base64.decode64(b))
+      end
     end
   end
 
