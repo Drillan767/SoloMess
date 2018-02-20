@@ -24,6 +24,7 @@ class PortfoliosController < ApplicationController
   end
 
   def create
+    abort params.inspect
     @portfolio = Portfolio.new(portfolio_params)
     if @portfolio.save
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
