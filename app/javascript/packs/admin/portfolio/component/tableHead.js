@@ -35,6 +35,7 @@ class EnhancedTableHead extends React.Component {
                             indeterminate={numSelected > 0 && numSelected < rowCount}
                             checked={numSelected === rowCount}
                             onChange={onSelectAllClick}
+                            color="primary"
                         />
                     </TableCell>
                     {columnData.map(column => {

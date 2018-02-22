@@ -256,7 +256,7 @@ class EnhancedTable extends React.Component {
                                             selected={isSelected}
                                         >
                                             <TableCell padding="checkbox" className={classes.cells}>
-                                                <Checkbox checked={isSelected} />
+                                                <Checkbox checked={isSelected} color="primary"/>
                                             </TableCell>
                                             <TableCell padding="none" className={classes.cells}>
                                                 <a href={base + a.slug}>

@@ -25,21 +25,32 @@ class PortfoliosController < ApplicationController
 
   def create
     @portfolio = Portfolio.new(portfolio_params)
+
+    if params[:publish]
+      @portfolio.public = true
+    elsif params[:save]
+      @portfolio.public = false
+    end
+
     if @portfolio.save
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to portfolio_show_path(@portfolio.slug)
     else
       Basic.update(1, alert: @portfolio.errors.full_messages)
     end
-
-  ensure
-    clean_tempfile
   end
 
   def update
-    if @portfolio.update(portfolio_params)
+
+    if params[:publish]
+      @portfolio.public = true
+    elsif params[:save]
+      @portfolio.public = false
+    end
+
+    if @portfolio.update(update_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
-      redirect_to @portfolio
+      redirect_to portfolio_show_path(@portfolio.slug), notice: 'wp'
     else
       Basic.update(1, alert: @portfolio.errors.full_messages)
     end
@@ -90,6 +101,14 @@ class PortfoliosController < ApplicationController
     port_params
   end
 
+  def update_params
+    port_params = params.require(:portfolio).permit(:title, :creation_time,
+                                                    :public, :content, { illustrations: [] },
+                                                    :slug, :thumbnail, :website, :tags)
+    port_params[:illustrations] = update_image_data(port_params[:illustrations]) if port_params[:illustrations]
+    port_params
+  end
+
   def parse_image_data(base64)
     require 'fileutils'
     filename = 'portfolio-file-'
@@ -112,6 +131,11 @@ class PortfoliosController < ApplicationController
     response
   end
 
+  def update_image_data(base64)
+    require 'fileutils'
+    abort @portfolio.inspect
+  end
+
   def clean_notifications
     @settings = Basic.first
     if (@settings.alert || @settings.notice) && @settings.seen
@@ -121,12 +145,5 @@ class PortfoliosController < ApplicationController
 
   def update_notifications
     Basic.update(1, seen: true) unless Basic.first.notice.blank? && Basic.first.alert.blank?
-  end
-
-  def clean_tempfile
-    if @tempfile
-      @tempfile.close
-      @tempfile.unlink
-    end
   end
 end

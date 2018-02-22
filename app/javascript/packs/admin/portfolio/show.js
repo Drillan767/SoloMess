@@ -3,12 +3,15 @@ import utils from '../../lib/functionsLibrary'
 import Typography from 'material-ui/Typography';
 import Chip from 'material-ui/Chip';
 import {withStyles} from 'material-ui/styles';
+import Paper from 'material-ui/Paper';
+import GridList, { GridListTile } from 'material-ui/GridList';
 import {green, orange} from 'material-ui/colors';
 import Button from 'material-ui/Button';
 import Left from 'material-ui-icons/KeyboardArrowLeft';
 import Edit from 'material-ui-icons/ModeEdit';
-
+import Dialog from 'material-ui/Dialog';
 import Grid from 'material-ui/Grid';
+import moment from 'moment';
 
 const styles = theme => ({
     root: {
@@ -39,9 +42,22 @@ const styles = theme => ({
     leftIcon: {
         marginRight: theme.spacing.unit,
     },
-
+    gridList: {
+        flexWrap: 'nowrap',
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        transform: 'translateZ(0)',
+    },
+    paper: {
+        marginTop: '20px',
+        padding: '10px'
+    },
+    bold: {
+        fontWeight: 'bold'
+    },
+    marginTop: {
+        marginTop: '20px'
+    }
 });
-
 
 class PortfolioShow extends React.Component {
 
@@ -50,6 +66,8 @@ class PortfolioShow extends React.Component {
         this.state = {
             project: null,
             settings: null,
+            dialogImg: false,
+            img: null,
         }
     }
 
@@ -63,6 +81,20 @@ class PortfolioShow extends React.Component {
         })
     }
 
+    openDialog(img) {
+        this.setState({
+            dialogImg: true,
+            img: img
+        })
+    }
+
+    closeDialog() {
+        this.setState({
+            dialogImg: false,
+            img: null
+        })
+    }
+
     render() {
         const { project } = this.state;
         const { classes } = this.props;
@@ -72,7 +104,7 @@ class PortfolioShow extends React.Component {
             <Grid item xs={12} sm={6} className={classes.root}>
                 <Typography variant="title" component="h1">{project.title}</Typography>
                 <Typography variant="subheading">
-                    Créé le {utils.toRealDate(project.created_at, true)} | Mis à jour le {utils.toRealDate(project.updated_at, true)}
+                    Created on {utils.toRealDate(project.created_at, true)} | Updated on {utils.toRealDate(project.updated_at, true)}
                     {
                         project.public ? <Chip className={classes.public} label="Public"/> : <Chip className={classes.draft} label="Draft"/>
                     }
@@ -91,6 +123,45 @@ class PortfolioShow extends React.Component {
                 <div className={classes.illustration}>
                     <img src={project.thumbnail.url} alt={utils.basename(project.thumbnail.url)}/>
                 </div>
+                {
+                    project.illustrations.length > 0 &&
+                    <Paper className={classes.paper}>
+                        <GridList className={classes.gridList} cols={2.5}>
+                            {
+                                project.illustrations.map(function(img, i) {
+                                    return (
+                                        <GridListTile key={i}>
+                                            <img
+                                                src={img}
+                                                alt={utils.basename(img)}
+                                                onClick={() => this.openDialog(img)}
+                                            />
+                                        </GridListTile>
+                                    )
+                                }, this)
+                            }
+                        </GridList>
+                        <Dialog
+                            open={this.state.dialogImg}
+                            keepMounted
+                            onClose={this.closeDialog.bind(this)}
+                            aria-labelledby="alert-dialog-slide-title"
+                            aria-describedby="alert-dialog-slide-description"
+                        >
+                            <img src={this.state.img} alt={this.state.img ? utils.basename(this.state.img) : ''}/>
+                        </Dialog>
+                    </Paper>
+                }
+                <div className={classes.marginTop}>
+                    <Typography variant="body2" gutterBottom>
+                        <span className={classes.bold}>Project's date :</span> {moment(project.creation_time).format('MM/YYYY')}
+                    </Typography>
+                    <Typography>
+                        <span className={classes.bold}>Project's url : </span>
+                        <a href={project.website} target="_blank">{project.website}</a>
+                    </Typography>
+                </div>
+
                 <div className={classes.actions}>
                     <Button variant="raised" href="/admin/portfolio">
                         <Left className={classes.leftIcon}/>
@@ -107,4 +178,3 @@ class PortfolioShow extends React.Component {
 }
 
 export default withStyles(styles)(PortfolioShow);
-
