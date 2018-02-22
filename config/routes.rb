@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-  get '/*path' => 'home#index', except: :admin
+  # get '/*path' => 'home#index', except: :admin
 
-  # get '/articles' => 'home#articles_index', as: :home_article_index
-  # get '/articles/*all' => 'home#articles_index', except: '/admin'
-  # get '/articles/*all' => 'home#articles_index', all: /.*/
-  # get '/article/:id' => 'home#article_show', as: :home_article_show
+  get '/articles' => 'home#articles_index', as: :home_article_index
+  get '/articles/*all' => 'home#articles_index', except: '/admin'
+  get '/articles/*all' => 'home#articles_index', all: /.*/
+  get '/article/:id' => 'home#article_show', as: :home_article_show
 
   get '/portfolio' => 'home#portfolio_index', as: :home_portfolio_index
   get '/project/:id' => 'home#portfolio_show', as: :home_portfolio_show
