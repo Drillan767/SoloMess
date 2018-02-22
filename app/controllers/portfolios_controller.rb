@@ -27,7 +27,7 @@ class PortfoliosController < ApplicationController
     @portfolio = Portfolio.new(portfolio_params)
     if @portfolio.save
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
-      redirect_to @portfolio
+      redirect_to portfolio_show_path(@portfolio.slug)
     else
       Basic.update(1, alert: @portfolio.errors.full_messages)
     end
@@ -91,13 +91,25 @@ class PortfoliosController < ApplicationController
   end
 
   def parse_image_data(base64)
-    filename = "portfolio-file"
-    base64.each do |b|
-      in_content_type, format, encoding, string = b.split(/[:\/;,]/)[1..4]
-      File.open(filename + '.' + format, 'wb') do |f|
-        f.write(Base64.decode64(b))
+    require 'fileutils'
+    filename = 'portfolio-file-'
+    path = 'public/uploads/portfolio/' + Time.now.strftime('%d%m%Y%H%M%S')
+
+    FileUtils.mkdir_p(path) unless File.directory?(path)
+
+    response = []
+
+    base64.each_with_index do |b, i|
+      _in_content_type, format, _encoding, _string = b.split(/[:\/;,]/)[1..4]
+
+      File.open(path + '/' + filename + i.to_s + '.' + format, 'wb') do |f|
+        f.write(Base64.decode64(b.partition('base64,').last))
       end
+
+      response.push(path.sub('public', '') + '/' + filename + i.to_s + '.' + format)
     end
+
+    response
   end
 
   def clean_notifications

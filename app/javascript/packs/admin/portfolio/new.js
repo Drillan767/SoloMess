@@ -1,27 +1,35 @@
 import React from 'react';
 import utils from '../../lib/functionsLibrary';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import ReactQuill from 'react-quill';
 import Button from 'material-ui/Button'
 import Input, { InputAdornment } from 'material-ui/Input';
 import { FormHelperText } from 'material-ui/Form';
 import Tooltip from 'material-ui/Tooltip';
 import AttachFile from 'material-ui-icons/AttachFile';
 import IconButton from 'material-ui/IconButton';
-import ReactQuill from 'react-quill';
-import Dialog from 'material-ui/Dialog'
 import { DatePicker } from 'material-ui-pickers'
-import StarBorderIcon from 'material-ui-icons/StarBorder'
+import Close from 'material-ui-icons/Close'
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+
 
 const styles = {
     root: {
+        margin: 'auto',
+        paddingTop: '10px'
+    },
+    marginTop: {
+        marginTop: '20px'
+    },
+    grid: {
         margin: 'auto'
     },
     file: {
-        margin: '5px auto 30px auto'
+        margin: '0 auto 20px auto',
     },
     actions: {
         display: 'flex',
@@ -34,21 +42,20 @@ const styles = {
     hide: {
         display: 'none'
     },
+    right: {
+        float: 'right'
+    },
     gridList: {
         height: 450,
-        overflowY: 'auto',
+        transform: 'translateZ(0)',
     },
-};
-
-ReactQuill.modules = {
-    toolbar: {
-        container: [
-            [{size: []}, { 'font': [] }],
-            [{'align': []}, 'bold', 'italic', 'underline', 'strike', 'blockquote', 'code', 'link'],
-            [{'list': 'ordered'}, {'list': 'bullet'},
-                {'indent': '-1'}, {'indent': '+1'}],
-            ['clean'],
-        ]
+    titleBar: {
+        background:
+        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    },
+    icon: {
+        color: 'white',
     },
 };
 
@@ -58,29 +65,28 @@ class PortfolioNew extends React.Component {
         super(props);
         this.state = {
             value: '',
-            text: '',
+            textarea: '',
             file: '',
             filename: '',
             m_file: [],
             m_filename: [],
-            open: false,
+            dialog: false,
+            file_tooltip: false,
             selectedDate: new Date(),
         };
-    }
+     }
+
+    /* Handling and displaying the thumbnail preview */
 
     displayImage(e) {
         if(e.target.type === 'text') {
-            this.setState({open: true});
+            this.setState({dialog: true});
             document.activeElement.blur();
         }
     }
 
-    handleDateChange = date => {
-        this.setState({ selectedDate: date })
-    };
-
     hideImage() {
-        this.setState({open: false});
+        this.setState({dialog: false});
     }
 
     handleUpload() {
@@ -95,10 +101,12 @@ class PortfolioNew extends React.Component {
         }.bind(this);
     }
 
+    /* Handling multi upload, multi delete and single delete */
+
     handleMultiUpload() {
 
         let files = document.getElementById('multiple_files_upload');
-        let files_result = [];
+        let files_result = this.state.m_file;
         let self = this;
 
         for(let i = 0; i < files.files.length; i++) {
@@ -106,6 +114,7 @@ class PortfolioNew extends React.Component {
             reader.readAsDataURL(files.files[i]);
             reader.onloadend = function() {
                 files_result.push({
+                    "id": i,
                     "name": files.files[i].name,
                     "img": reader.result
                 });
@@ -117,9 +126,7 @@ class PortfolioNew extends React.Component {
     }
 
     handleSingleDelete(id) {
-        this.setState({
-            m_file: this.state.m_file.filter(e => e.id !== id)
-        })
+        this.setState(prevState => ({m_file: prevState.m_file.filter(e => e.id !== id)}));
     }
 
     handleAllDelete() {
@@ -128,41 +135,58 @@ class PortfolioNew extends React.Component {
         })
     }
 
-    handleChange(value) {
-        this.setState({text: value})
+    /* Handling date */
+
+    handleDateChange = date => {
+        this.setState({ selectedDate: date })
+    };
+
+    /* Handling Quill */
+
+    handleQuill(value) {
+        this.setState({textarea: value})
     }
 
     render() {
-        const { classes } =this.props;
-        const { selectedDate, m_file } = this.state;
-        let files = [];
-        let self = this;
+
+        const { m_file, selectedDate } = this.state;
+        const { classes } = this.props;
 
         return (
             <Grid item xs={12} sm={6} className={classes.root}>
                 <Paper elevation={4}>
-                    <form encType="multipart/form-data" action="/admin/portfolios" acceptCharset="UTF-8" method="post">
+                    <form
+                        encType="multipart/form-data"
+                        action="/admin/portfolios"
+                        acceptCharset="UTF-8"
+                        method="post"
+                    >
                         <input name="utf8" type="hidden" value="✓" />
                         <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
-                        <Grid item xs={12} sm={8} className={classes.root}>
+
+                        {/* Title */}
+                        <Grid item xs={12} sm={8} className={classes.grid}>
                             <TextField
                                 id="portfolio_title"
                                 label="Title"
                                 name="portfolio[title]"
                                 fullWidth
-                                className={classes.textField}
+                                className={classes.marginTop}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={8} className={classes.root}>
+
+                        {/*Tags*/}
+                        <Grid item xs={12} sm={8} className={classes.grid}>
                             <TextField
                                 label="Tags"
                                 id="portfolio_tags"
                                 name="portfolio[tags]"
                                 fullWidth
                                 helperText="Separate each tag with a comma"
-                                className={classes.textField}
                             />
                         </Grid>
+
+                        {/*Thumbnail*/}
                         <Grid item xs={12} sm={8} className={classes.file}>
                             <Input
                                 readOnly
@@ -189,23 +213,10 @@ class PortfolioNew extends React.Component {
                                     </InputAdornment>
                                 }
                             />
-                            {
-                                m_file.length > 0 &&
-                                m_file.map(function(file, i) {
-                                    return (
-                                        <input
-                                            key={i}
-                                            type="hidden"
-                                            value={file.img}
-                                            name="portfolio[illustrations][]"
-                                        />
-                                    )
-                                })
-                            }
 
                             <FormHelperText id="weight-helper-text">Supported format: jpg png jpeg</FormHelperText>
                             <Dialog
-                                open={this.state.open}
+                                open={this.state.dialog}
                                 keepMounted
                                 onClose={this.hideImage.bind(this)}
                                 aria-labelledby="alert-dialog-slide-title"
@@ -215,48 +226,71 @@ class PortfolioNew extends React.Component {
                             </Dialog>
                         </Grid>
 
-                        <Grid item xs={12} sm={10} className={classes.root}>
+                        {/*Multi Upload*/}
+                        <Grid item xs={12} sm={10} className={classes.file}>
                             <Paper>
-                                {
-                                    m_file.length > 0 &&
-                                    <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-                                        {m_file.map(function(tile, i) {
+                                {m_file.length > 0 &&
+                                    <GridList
+                                        cellHeight={200}
+                                        spacing={1}
+                                        className={classes.gridList}
+                                    >
+                                        {m_file.map(function (tile, i) {
                                             return (
-                                                <GridListTile key={i}>
-                                                    <img src={tile.img} alt={tile.title} />
+                                                <GridListTile
+                                                    key={tile.img}
+                                                    cols={i % 3 === 0 ? 2 : 1}
+                                                    rows={1}
+                                                >
+                                                    <img src={tile.img} alt={tile.name}/>
                                                     <GridListTileBar
                                                         title={tile.name}
                                                         titlePosition="top"
                                                         actionIcon={
                                                             <IconButton
                                                                 className={classes.icon}
-                                                                onClick={() => console.log(self.state.file)}
+                                                                onClick={() => this.handleSingleDelete(tile.id)}
                                                             >
-                                                                <StarBorderIcon />
+                                                                <Close />
                                                             </IconButton>
                                                         }
-                                                        actionPosition="left"
+                                                        actionPosition="right"
                                                         className={classes.titleBar}
                                                     />
                                                 </GridListTile>
                                             )
-                                        })}
+                                        }, this)}
                                     </GridList>
                                 }
+                                <div>
+                                    <Button>
+                                        <label htmlFor="multiple_files_upload">
+                                            Select files
+                                        </label>
+                                    </Button>
 
-                                <Button>
-                                    <label htmlFor="multiple_files_upload">
-                                        Select files
-                                    </label>
-                                </Button>
-
+                                    {
+                                        m_file.length > 0 &&
+                                        <Button
+                                            onClick={this.handleAllDelete.bind(this)}
+                                            className={classes.right}
+                                        >
+                                            Remove all
+                                        </Button>
+                                    }
+                                </div>
                                 {
                                     m_file.length > 0 &&
-                                    <Button
-                                        onClick={this.handleAllDelete.bind(this)}
-                                    >
-                                        Remove all
-                                    </Button>
+                                    m_file.map(function(file, i) {
+                                        return (
+                                            <input
+                                                key={i}
+                                                type="hidden"
+                                                value={file.img}
+                                                name="portfolio[illustrations][]"
+                                            />
+                                        )
+                                    })
                                 }
 
                                 <input
@@ -269,11 +303,12 @@ class PortfolioNew extends React.Component {
                             </Paper>
                         </Grid>
 
-                        <Grid item xs={12} sm={8} className={classes.root}>
+                        {/*Date picker*/}
+                        <Grid item xs={12} sm={8} className={classes.grid}>
                             <DatePicker
                                 fullWidth
                                 label="Project's creation time"
-                                format="D/M/YYYY"
+                                format="M/YYYY"
                                 name="portfolio[creation_time]"
                                 autoOk={true}
                                 value={selectedDate}
@@ -285,23 +320,27 @@ class PortfolioNew extends React.Component {
                             id="content"
                             name="portfolio[content]"
                             className={classes.hide}
-                            value={this.state.text}
+                            value={this.state.textarea}
                         />
 
+                        {/*Textarea*/}
                         <ReactQuill
-                            value={this.state.text}
-                            onChange={this.handleChange.bind(this)}
+                            value={this.state.textarea}
+                            onChange={this.handleQuill.bind(this)}
+                            className={classes.marginTop}
                             modules={ReactQuill.modules}
                             formats={ReactQuill.formats}
                             ref={(el) => this.quillRef = el}
                         />
 
-                        <Grid item xs={12} sm={8} className={classes.root}>
+                        {/*Project's url*/}
+                        <Grid item xs={12} sm={8} className={classes.grid}>
                             <TextField
                                 label="Project's url"
                                 name="portfolio[website]"
                                 placeholder="Insert your project's url (Github, website...)"
                                 fullWidth
+                                className={classes.marginTop}
                             />
                         </Grid>
 
@@ -333,7 +372,7 @@ class PortfolioNew extends React.Component {
             </Grid>
         )
     }
+
 }
 
 export default withStyles(styles)(PortfolioNew)
-

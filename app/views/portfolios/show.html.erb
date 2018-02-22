@@ -44,3 +44,7 @@
   <strong>Illustrations:</strong>
   <%= @portfolio.illustrations %>
 </p>
+
+<% @portfolio.illustrations.each do |p| %>
+  <img src="<%= p %>" alt="">
+<% end %>

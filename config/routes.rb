@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resource :basics
       resources :portfolios, except: %w[show new edit index]
       get '/portfolio' => 'portfolios#index'
-      get '/project/:id' => 'portfolios#show'
+      get '/project/:id' => 'portfolios#show', as: :portfolio_show
       get '/new/project' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
       resources :articles, except: %i[new update]
