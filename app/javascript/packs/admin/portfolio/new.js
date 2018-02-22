@@ -1,21 +1,16 @@
 import React from 'react';
 import utils from '../../lib/functionsLibrary';
 import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import ReactQuill from 'react-quill';
-import Button from 'material-ui/Button'
-import Input, { InputAdornment } from 'material-ui/Input';
-import { FormHelperText } from 'material-ui/Form';
-import Tooltip from 'material-ui/Tooltip';
-import AttachFile from 'material-ui-icons/AttachFile';
-import IconButton from 'material-ui/IconButton';
-import { DatePicker } from 'material-ui-pickers'
-import Close from 'material-ui-icons/Close'
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+import {
+    Grid, Paper, Dialog, TextField, Button,
+    Input, InputAdornment, FormHelperText,
+    Tooltip, IconButton, GridList, GridListTile,
+    GridListTileBar
+} from 'material-ui';
 
+import { Close, AttachFile } from 'material-ui-icons';
+import ReactQuill from 'react-quill';
+import { DatePicker } from 'material-ui-pickers'
 
 const styles = {
     root: {

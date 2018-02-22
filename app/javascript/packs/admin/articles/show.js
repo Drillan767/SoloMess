@@ -58,7 +58,6 @@ class ArticleShow extends React.Component {
     }
 
     render() {
-        console.log(this.state.article);
         const { article } = this.state;
         const { classes } = this.props;
         return (
