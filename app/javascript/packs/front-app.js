@@ -1,11 +1,13 @@
-/* eslint no-console:0 */
 import React from 'react';
 import {elementForActionName} from './lib/elementForActionName';
 import utils from './lib/functionsLibrary'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import HomeIndex from './home/home';
+import { Route, Switch } from "react-router-dom";
 import Header from './layout/header';
 import Footer from './layout/footer';
+import HomeIndex from './home/home';
+import Articles from './home/articles';
+import Portfolio from './home/portfolio_index';
+import Contact from './home/contact';
 import 'popper.js';
 import 'bootstrap';
 
@@ -13,7 +15,9 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {settings: null};
+        this.state = {
+            settings: null
+        };
     }
 
     componentDidMount() {
@@ -24,21 +28,18 @@ export default class App extends React.Component {
     }
 
     render() {
-        let path = utils.getPathName();
-        let Element = elementForActionName[path];
         const { settings } = this.state;
         return (
-            <Router>
-                <div>
-                    <Route path="/" render={
-                        ()=> <div>
-                                <Header settings={settings}/>
-                                <HomeIndex settings={settings}/>
-                                <Footer settings={settings}/>
-                            </div>
-                    }/>
-                </div>
-            </Router>
+            <main>
+                <Header settings={settings}/>
+                <Switch>
+                    <Route exact path='/' component={HomeIndex} settings={settings}/>
+                    <Route exact path='/articles' component={Articles} settings={settings}/>
+                    <Route exact path='/portfolio' component={Portfolio} settings={settings}/>
+                    <Route exact path='/contact' component={Contact} settings={settings}/>
+                </Switch>
+                <Footer settings={settings}/>
+            </main>
         )
     }
 }

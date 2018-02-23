@@ -20,29 +20,23 @@ export default class Portfolio extends React.Component {
         let portfolio = this.state.portfolio;
 
         return (
+            portfolio !== null &&
             <div>
-                <Header settings={this.props.settings} location="portfolio" shown={portfolio !== null ? portfolio.title : null} />
+                <h1>{portfolio.title}</h1>
+                <p>Tags: {portfolio.tags}</p>
+                <p>{portfolio.content}</p>
                 {
-                    portfolio !== null &&
-                    <div>
-                        <h1>{portfolio.title}</h1>
-                        <p>Tags: {portfolio.tags}</p>
-                        <p>{portfolio.content}</p>
-                        {
-                            portfolio.illustrations.map(function(illustration, i) {
-                                return (
-                                    <img src={illustration.url} alt="" key={i} height="100" width="100"/>
-                                )
-                            })
-                        }
-                        <br clear="all"/>
-                        <p>Created on {utils.toRealDate(portfolio.creation_time)}</p>
-                        <p>
-                            <a href={portfolio.website} target="_blank">Check the website</a>
-                        </p>
-                    </div>
+                    portfolio.illustrations.map(function(illustration, i) {
+                        return (
+                            <img src={illustration.url} alt="" key={i} height="100" width="100"/>
+                        )
+                    })
                 }
-                <Footer settings={this.props.settings} />
+                <br clear="all"/>
+                <p>Created on {utils.toRealDate(portfolio.creation_time)}</p>
+                <p>
+                    <a href={portfolio.website} target="_blank">Check the website</a>
+                </p>
             </div>
 
         )

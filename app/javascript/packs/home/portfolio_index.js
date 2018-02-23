@@ -21,28 +21,24 @@ export default class Portfolios extends React.Component {
         let portfolios = this.state.portfolios;
 
         return (
-            <div>
-                <Header settings={this.props.settings} location="portfolio" />
-                <div className="container">
-                    <div className="row">
-                        {
-                            portfolios !== null &&
-                            portfolios.map(function(portfolio, i) {
-                                return (
-                                    <div className="col-sm" key={i}>
-                                        <h3>{portfolio.title}</h3>
-                                        <p>Tags : {portfolio.tags}</p>
-                                        <img src={portfolio.thumbnail.url} alt="" width="50" height="50"/>
-                                        <p>
-                                            <a href={window.location.origin + '/project/' + portfolio.slug}>See more</a>
-                                        </p>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+            <div className="container">
+                <div className="row">
+                    {
+                        portfolios !== null &&
+                        portfolios.map(function(portfolio, i) {
+                            return (
+                                <div className="col-sm" key={i}>
+                                    <h3>{portfolio.title}</h3>
+                                    <p>Tags : {portfolio.tags}</p>
+                                    <img src={portfolio.thumbnail.url} alt="" width="50" height="50"/>
+                                    <p>
+                                        <a href={window.location.origin + '/project/' + portfolio.slug}>See more</a>
+                                    </p>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-                <Footer settings={this.props.settings} />
             </div>
         )
     }

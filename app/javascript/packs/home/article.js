@@ -21,21 +21,12 @@ export default class Article extends React.Component {
         let article = this.state.article;
 
         return (
+            article !== null &&
             <div>
-                <Header settings={this.props.settings} location="articles" shown={article !== null ? article.title : null} />
-                {
-                    article !== null &&
-                    <div>
-                        <h1>{article.title}</h1>
-                        <p>Tags: {article.tags}</p>
-                        <p>{article.content}</p>
-                        <img src={article.image.url} alt=""/>
-                    </div>
-                }
-                <div>
-
-                </div>
-                <Footer settings={this.props.settings} />
+                <h1>{article.title}</h1>
+                <p>Tags: {article.tags}</p>
+                <p>{article.content}</p>
+                <img src={article.image.url} alt=""/>
             </div>
 
         )
