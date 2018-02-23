@@ -23,8 +23,8 @@ const functions = {
         });
     },
 
-    extractActionName() {
-        return document.body.className.split(' ').pop();
+    getPathName() {
+        return document.location.pathname;
     },
 
     extractAdminActionName() {

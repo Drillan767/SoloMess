@@ -2,6 +2,10 @@
 import React from 'react';
 import {elementForActionName} from './lib/elementForActionName';
 import utils from './lib/functionsLibrary'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import HomeIndex from './home/home';
+import Header from './layout/header';
+import Footer from './layout/footer';
 import 'popper.js';
 import 'bootstrap';
 
@@ -20,11 +24,21 @@ export default class App extends React.Component {
     }
 
     render() {
-        let actionName = utils.extractActionName();
-        let Element = elementForActionName[actionName];
-        console.log(this.state.settings);
+        let path = utils.getPathName();
+        let Element = elementForActionName[path];
+        const { settings } = this.state;
         return (
-            <Element settings={this.state.settings} />
+            <Router>
+                <div>
+                    <Route path="/" render={
+                        ()=> <div>
+                                <Header settings={settings}/>
+                                <HomeIndex settings={settings}/>
+                                <Footer settings={settings}/>
+                            </div>
+                    }/>
+                </div>
+            </Router>
         )
     }
 }
