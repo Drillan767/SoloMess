@@ -1,5 +1,6 @@
 import React from 'react';
 import utils from '../lib/functionsLibrary';
+import { Link } from "react-router-dom";
 
 export default class Article extends React.Component {
 
@@ -13,31 +14,24 @@ export default class Article extends React.Component {
         utils.loader(window.location.origin + '/all_articles.json', function(articles) {
             self.setState({articles: articles})
         });
-
     }
 
    render() {
         const { articles } = this.state;
        return (
-           articles !== null &&
-           articles.map(function(article, i){
-               return (
-                   <div key={i}>
-                       <ul>
-                           <li>{article.title}</li>
-                           <li>{utils.truncate(article.content, 200)}</li>
-                           <li>Tags : {article.tags}</li>
-                           <li>Written on : {utils.toRealDate(article.created_at)}</li>
-                           <li>
-                               {article.public ? 'Public' : 'Private'}
+           <ul>
+               {
+                   articles !== null &&
+                   articles.map(function(a, i){
+                       return (
+                           <li key={i}>
+                               <Link to={`/article/${a.slug}`}>{a.title}</Link>
                            </li>
-                           <li>
-                               <a href={window.location.origin + '/article/' + article.slug}>Read article</a>
-                           </li>
-                       </ul>
-                   </div>
-               )
-           })
+                       )
+                   })
+               }
+           </ul>
+
        )
     }
 }

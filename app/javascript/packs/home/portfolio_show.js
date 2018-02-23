@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
 import utils from '../lib/functionsLibrary'
 
 export default class Portfolio extends React.Component {
@@ -12,12 +10,14 @@ export default class Portfolio extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.href + '.json', function(portfolio) {
-            self.setState({portfolio: portfolio});
+        utils.loader(window.location.origin + '/all_projects.json', function(portfolio) {
+            self.setState({
+                portfolio: portfolio.find(p => p.slug === self.props.match.params.slug)
+            });
         });
     }
     render() {
-        let portfolio = this.state.portfolio;
+        const { portfolio } = this.state;
 
         return (
             portfolio !== null &&

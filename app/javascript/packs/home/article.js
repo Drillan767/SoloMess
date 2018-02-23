@@ -1,7 +1,5 @@
 import React from 'react';
 import utils from '../lib/functionsLibrary';
-import Header from "../layout/header";
-import Footer from "../layout/footer";
 
 export default class Article extends React.Component {
 
@@ -12,13 +10,13 @@ export default class Article extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.href + '.json', function(article) {
-            self.setState({article: article});
+        utils.loader(window.location.origin + '/all_articles.json', function(article) {
+            self.setState({article: article.find(a => a.slug === self.props.match.params.slug)});
         });
     }
 
     render() {
-        let article = this.state.article;
+        const { article } = this.state;
 
         return (
             article !== null &&

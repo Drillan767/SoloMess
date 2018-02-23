@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-
   get '/*id', to: 'home#index', id: /(?!admin|settings|users|all).*/
 
   # List:

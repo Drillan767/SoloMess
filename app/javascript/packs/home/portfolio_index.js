@@ -14,21 +14,10 @@ export default class Portfolios extends React.Component {
         utils.loader(window.location.origin + '/all_projects.json', function(projects) {
             self.setState({projects: projects})
         });
-
     }
 
     render() {
         const { projects } = this.state;
-
-        const ProjectAPI = {
-            projects: projects,
-            all: function() { return this.projects},
-            get: function(slug) {
-                const project = p => p.slug = slug;
-                return this.projects.find(project)
-            }
-        };
-
 
         return (
             <div className="container">
@@ -36,7 +25,7 @@ export default class Portfolios extends React.Component {
                     <ul>
                         {
                             projects !== null &&
-                            ProjectAPI.all().map(function(p, i) {
+                            projects.map(function(p, i) {
                                 return (
                                     <li key={i}>
                                         <Link to={`/project/${p.slug}`}>{p.title}</Link>
