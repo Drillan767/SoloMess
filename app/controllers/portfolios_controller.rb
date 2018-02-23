@@ -50,7 +50,11 @@ class PortfoliosController < ApplicationController
     end
 
     path = 'public' + @portfolio.illustrations.first
-    FileUtils.rm_rf(path) if File.exist?(path)
+
+    if File.exist?(path)
+      FileUtils.rm_rf(path)
+      @portfolio.illustrations = []
+    end
 
     if @portfolio.update(portfolio_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
