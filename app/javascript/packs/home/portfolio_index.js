@@ -1,43 +1,51 @@
 import React from 'react';
-import Header from "../layout/header";
-import Footer from "../layout/footer";
 import utils from '../lib/functionsLibrary';
+import { Link } from "react-router-dom";
 
 export default class Portfolios extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {portfolios: null};
+        this.state = {projects: null};
     }
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.href + '.json', function(portfolio) {
-            self.setState({portfolios: portfolio});
+        utils.loader(window.location.origin + '/all_projects.json', function(projects) {
+            self.setState({projects: projects})
         });
+
     }
 
     render() {
-        let portfolios = this.state.portfolios;
+        const { projects } = this.state;
+
+        const ProjectAPI = {
+            projects: projects,
+            all: function() { return this.projects},
+            get: function(slug) {
+                const project = p => p.slug = slug;
+                return this.projects.find(project)
+            }
+        };
+
 
         return (
             <div className="container">
                 <div className="row">
-                    {
-                        portfolios !== null &&
-                        portfolios.map(function(portfolio, i) {
-                            return (
-                                <div className="col-sm" key={i}>
-                                    <h3>{portfolio.title}</h3>
-                                    <p>Tags : {portfolio.tags}</p>
-                                    <img src={portfolio.thumbnail.url} alt="" width="50" height="50"/>
-                                    <p>
-                                        <a href={window.location.origin + '/project/' + portfolio.slug}>See more</a>
-                                    </p>
-                                </div>
-                            )
-                        })
-                    }
+                    <ul>
+                        {
+                            projects !== null &&
+                            ProjectAPI.all().map(function(p, i) {
+                                return (
+                                    <li key={i}>
+                                        <Link to={`/project/${p.slug}`}>{p.title}</Link>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+
                 </div>
             </div>
         )

@@ -2,9 +2,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get '/*id', to: 'home#index', id: /(?!admin|settings|users).*/
+  get '/*id', to: 'home#index', id: /(?!admin|settings|users|all).*/
 
-  # List :
+  # List:
   # - /articles
   # - /article/:id
   # - /portfolio
@@ -13,8 +13,16 @@ Rails.application.routes.draw do
   # - /about
   # - some more links such as '/legal-stuff or something'
 
+  # Whitelisted
+  # - admin/*
+  # - /settings.json
+  # - /users/* [ users/sign_in, users/sign_out, users/sign_up]
+  # - /all_articles.json | /all_projects.json
+
   get '/settings' => 'home#configuration', as: :configuration
   get '/admin' => 'home#admin', as: :admin
+  get '/all_articles.json' => 'home#articles_index'
+  get '/all_projects.json' => 'home#portfolio_index'
 
   devise_for :users, skip: [:password]
 
