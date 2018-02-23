@@ -40,4 +40,4 @@ A contact form linked directly to my own private mail account will be available 
 ### Articles & Portofolio:
 
 * If no file was ready to upload, trigger explorer window
-* Check if element exists before adding it to the multiupload, so it doesn't mess with the keys
+* Even though retrieving all the images work, it's not correctly updated. Gotta check it soon
