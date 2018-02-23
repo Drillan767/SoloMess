@@ -210,7 +210,7 @@ class PortfolioEdit extends React.Component {
                 <Paper elevation={4}>
                     <form
                         encType="multipart/form-data"
-                        action="/admin/portfolios"
+                        action={window.location.href.replace('/edit', '')}
                         acceptCharset="UTF-8"
                         method="post"
                     >

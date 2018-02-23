@@ -25,11 +25,12 @@ Rails.application.routes.draw do
   scope '/admin' do
     authenticate :user do
       resource :basics
-      resources :portfolios, except: %w[show new edit index]
+      resources :portfolios, except: %w[show new edit index update]
       get '/portfolio' => 'portfolios#index'
       get '/project/:id' => 'portfolios#show', as: :portfolio_show
       get '/new/project' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
+      post '/project/:id' => 'portfolios#update'
       resources :articles, except: %i[new update]
       get '/new/article' => 'articles#new'
       post '/articles/:id' => 'articles#update'

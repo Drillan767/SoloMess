@@ -41,12 +41,16 @@ class PortfoliosController < ApplicationController
   end
 
   def update
+    require 'fileutils'
 
     if params[:publish]
       @portfolio.public = true
     elsif params[:save]
       @portfolio.public = false
     end
+
+    path = 'public' + @portfolio.illustrations.first
+    FileUtils.rm_rf(path) if File.exist?(path)
 
     if @portfolio.update(portfolio_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')

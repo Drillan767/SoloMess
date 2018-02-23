@@ -4,5 +4,8 @@ class Portfolio < ApplicationRecord
 
   friendly_id :title, use: :slugged
   mount_uploader :thumbnail, ThumbnailUploader
-  # mount_uploaders :illustrations, IlllustrationsUploader
+
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
 end
