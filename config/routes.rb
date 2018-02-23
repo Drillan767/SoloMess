@@ -1,23 +1,19 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-  # get '/*path' => 'home#index', except: :admin
 
-  get '/articles' => 'home#articles_index', as: :home_article_index
-  get '/articles/*all' => 'home#articles_index', except: '/admin'
-  get '/articles/*all' => 'home#articles_index', all: /.*/
-  get '/article/:id' => 'home#article_show', as: :home_article_show
+  get '/*id', to: 'home#index', id: /(?!admin|settings|users).*/
 
-  get '/portfolio' => 'home#portfolio_index', as: :home_portfolio_index
-  get '/project/:id' => 'home#portfolio_show', as: :home_portfolio_show
-
-  get '/contact' => 'home#contact', as: :new_contact
-  post '/contact' => 'home#create', as: :contacts
+  # List :
+  # - /articles
+  # - /article/:id
+  # - /portfolio
+  # - /project/:id
+  # - /contact
+  # - /about
+  # - some more links such as '/legal-stuff or something'
 
   get '/settings' => 'home#configuration', as: :configuration
-
-  get '/about' => 'home#about', as: :about
-
   get '/admin' => 'home#admin', as: :admin
 
   devise_for :users, skip: [:password]
