@@ -48,7 +48,7 @@ class PortfoliosController < ApplicationController
       @portfolio.public = false
     end
 
-    if @portfolio.update(update_params)
+    if @portfolio.update(portfolio_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
       redirect_to portfolio_show_path(@portfolio.slug), notice: 'wp'
     else
@@ -87,6 +87,13 @@ class PortfoliosController < ApplicationController
     @portfolios = Portfolio.all
   end
 
+  def encode_file
+    if File.exists?('public' + params[:url])
+      encoded_string = Base64.encode64(File.open('public' + params[:url], 'r').read)
+      render json: encoded_string
+    end
+  end
+
   private
 
   def set_portfolio
@@ -98,14 +105,6 @@ class PortfoliosController < ApplicationController
                                       :public, :content, { illustrations: [] },
                                       :slug, :thumbnail, :website, :tags)
     port_params[:illustrations] = parse_image_data(port_params[:illustrations]) if port_params[:illustrations]
-    port_params
-  end
-
-  def update_params
-    port_params = params.require(:portfolio).permit(:title, :creation_time,
-                                                    :public, :content, { illustrations: [] },
-                                                    :slug, :thumbnail, :website, :tags)
-    port_params[:illustrations] = update_image_data(port_params[:illustrations]) if port_params[:illustrations]
     port_params
   end
 
@@ -129,11 +128,6 @@ class PortfoliosController < ApplicationController
     end
 
     response
-  end
-
-  def update_image_data(base64)
-    require 'fileutils'
-    abort @portfolio.inspect
   end
 
   def clean_notifications

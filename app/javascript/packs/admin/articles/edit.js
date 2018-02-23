@@ -111,7 +111,6 @@ class ArticleEdit extends React.Component {
     render() {
         const { classes } =this.props;
         const { article, settings } = this.state;
-        console.log(settings);
 
         return (
             article !== null &&

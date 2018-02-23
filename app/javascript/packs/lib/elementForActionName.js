@@ -13,6 +13,7 @@ import ArticleEdit from '../admin/articles/edit';
 import PortfolioIndex from '../admin/portfolio/index';
 import PortfolioNew from '../admin/portfolio/new';
 import PortfolioShow from '../admin/portfolio/show';
+import PortfolioEdit from '../admin/portfolio/edit';
 
 export const elementForActionName = {
     'index': HomeIndex,
@@ -55,7 +56,10 @@ export const adminElements = {
     'portfolios_show': {
         object: PortfolioShow,
         title: 'Project'
+    },
+    'portfolios_edit': {
+        object: PortfolioEdit,
+        title: 'Project'
     }
-
 
 };

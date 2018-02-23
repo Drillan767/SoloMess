@@ -66,10 +66,9 @@ class PortfolioNew extends React.Component {
             m_file: [],
             m_filename: [],
             dialog: false,
-            file_tooltip: false,
             selectedDate: new Date(),
         };
-     }
+    }
 
     /* Handling and displaying the thumbnail preview */
 
