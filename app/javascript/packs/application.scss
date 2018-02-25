@@ -1,9 +1,12 @@
-@import "~bootstrap/scss/bootstrap";
 
-h1 {
-  color: red;
-}
+@import "~bootstrap/scss/bootstrap";
+@import "./home/articles/articles";
 
 .hidden {
   display: none !important;
 }
+
+a, a:hover, a:visited {
+  text-decoration: none;
+}
+

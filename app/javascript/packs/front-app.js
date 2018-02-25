@@ -6,10 +6,11 @@ import Header from './layout/header';
 import Footer from './layout/footer';
 import HomeIndex from './home/home';
 import Articles from './home/articles';
-import Article from './home/article';
+import Article from './home/articles/articles_sidebar';
 import Project from './home/portfolio_show';
 import Portfolio from './home/portfolio_index';
 import Contact from './home/contact';
+import NotFound from './home/404';
 import 'popper.js';
 import 'bootstrap';
 
@@ -32,18 +33,21 @@ export default class App extends React.Component {
     render() {
         const { settings } = this.state;
         return (
-            <main>
-                <Header settings={settings}/>
-                <Switch>
-                    <Route exact path='/' component={HomeIndex} settings={settings}/>
-                    <Route exact path='/articles' component={Articles} settings={settings}/>
-                    <Route path='/article/:slug' component={Article} settings={settings}/>
-                    <Route exact path='/portfolio' component={Portfolio} settings={settings}/>
-                    <Route path='/project/:slug' component={Project} settings={settings}/>
-                    <Route exact path='/contact' component={Contact} settings={settings}/>
-                </Switch>
-                <Footer settings={settings}/>
-            </main>
+            [
+                <Header key={0} settings={settings}/>,
+                <main key={1} className="container">
+                    <Switch>
+                        <Route exact path='/' render={() => <HomeIndex settings={settings} title="Home" /> }/>
+                        <Route exact path='/articles' render={() => <Articles settings={settings} title="Articles" /> }/>
+                        <Route exact path='/article/:slug' render={() => <Article settings={settings} />} />
+                        <Route exact path='/portfolio' render={() => <Portfolio settings={settings} title="Portfolio" /> }/>
+                        <Route path='/project/:slug' component={Project} settings={settings}/>
+                        <Route exact path='/contact' render={() => <Contact settings={settings} title="Contact"/> }/>
+                        <Route component={NotFound} />
+                    </Switch>
+                </main>,
+                <Footer settings={settings} key={2}/>
+            ]
         )
     }
 }

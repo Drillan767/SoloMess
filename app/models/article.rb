@@ -5,6 +5,9 @@ class Article < ApplicationRecord
   validates_presence_of :title, :content, :tags
   validates_uniqueness_of :slug
 
+  has_many :comments
+  accepts_nested_attributes_for :comments, reject_if: :all_blank, allow_destroy: true
+
   def should_generate_new_friendly_id?
     title_changed?
   end

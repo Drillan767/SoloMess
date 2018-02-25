@@ -18,7 +18,6 @@ export default class Portfolios extends React.Component {
 
     render() {
         const { projects } = this.state;
-
         return (
             <div className="container">
                 <div className="row">

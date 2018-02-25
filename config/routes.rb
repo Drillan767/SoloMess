@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-  get '/*id', to: 'home#index', id: /(?!admin|settings|users|all).*/
+  get '/*id', to: 'home#index', id: /(?!admin|settings|users|all|comment).*/
 
   # List:
   # - /articles
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get '/admin' => 'home#admin', as: :admin
   get '/all_articles.json' => 'home#articles_index'
   get '/all_projects.json' => 'home#portfolio_index'
+  post '/comment' => 'home#comment'
 
   devise_for :users, skip: [:password]
 
@@ -34,7 +35,9 @@ Rails.application.routes.draw do
       get '/new/project' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
       post '/project/:id' => 'portfolios#update'
-      resources :articles, except: %i[new update]
+      resources :articles, except: %i[new update] do
+        resources :comments
+      end
       get '/new/article' => 'articles#new'
       post '/articles/:id' => 'articles#update'
 

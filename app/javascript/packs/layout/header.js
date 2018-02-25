@@ -1,20 +1,69 @@
 import React from 'react';
 import Headerlinks from '../lib/headerLinks';
 import Breadcrumb from './breadcrumb';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 
 export default class Header extends React.Component {
     render() {
-        const { settings, location } = this.props;
+        const { settings } = this.props;
         return (
-            <nav>
-                <ul>
-                    <li><Link to='/'>Home</Link></li>
-                    <li><Link to='/articles'>Articles</Link></li>
-                    <li><Link to='/portfolio'>Portfolio</Link></li>
-                    <li><Link to='/contact'>Contact</Link></li>
-                </ul>
-            </nav>
+            <div>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <Link to={'/'} className="navbar-brand">
+                        {
+                            settings !== null &&
+                            [
+                                <img src={settings.logo.url} key={1} width="30" height="30" alt="" />,
+                                settings.base_title
+                            ]
+                        }
+                    </Link>
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon" />
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav mr-auto">
+                            <li className={"nav-item"}>
+                                <Link to='/articles' className="nav-link">Articles</Link>
+                            </li>
+                            <li className={"nav-item"}>
+                                <Link to='/portfolio' className="nav-link">Portfolio</Link>
+                            </li>
+                            <li className={"nav-item"}>
+                                <Link to='/about' className="nav-link">About me</Link>
+                            </li>
+                            <li className={"nav-item"}>
+                                <Link to='/contact' className="nav-link">Contact</Link>
+                            </li>
+                            {
+                                settings !== null && settings.logged_in &&
+                                [
+                                    <li className={"nav-item "} key={0}>
+                                        <a className="nav-link disabled">|</a>
+                                    </li>,
+                                    <li className={"nav-item "} key={1}>
+                                        <a className="nav-link" href="/admin">Dashboard</a>
+                                    </li>,
+                                    <li className={"nav-item "} key={2}>
+                                        <a className="nav-link" href="/logout">Logout</a>
+                                    </li>
+                                ]
+                            }
+
+                        </ul>
+                        <Headerlinks settings={settings} />
+                    </div>
+                </nav>
+            </div>
 
         )
 
@@ -23,56 +72,5 @@ export default class Header extends React.Component {
 
 /*
 return (
-    <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="/">
-                {
-                    settings !== null &&
-                    [
-                        <img src={settings.logo.url} key={1} width="30" height="30" alt="" />,
-                        settings.base_title
-                    ]
-                }
-            </a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon" />
-            </button>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
-                    <li className={"nav-item " + (location === 'articles' && 'active') }>
-                        {/!*{"btn-group pull-right " + (this.props.showBulkActions ? 'show' : 'hidden')}*!/}
-                        <a className="nav-link" href="/articles">Articles</a>
-                    </li>
-                    <li className={"nav-item " + (location === 'portfolio' && 'active') }>
-                        <a className="nav-link" href="/portfolio">Portfolio</a>
-                    </li>
-                    <li className={"nav-item "}>
-                        <a className="nav-link" href="#">A propos de moi</a>
-                    </li>
-                    <li className={"nav-item " + (location === 'contact' && 'active') }>
-                        <a className="nav-link" href="/contact">Contact</a>
-                    </li>
-                    {
-                        settings !== null && settings.logged_in &&
-                        [
-                            <li className={"nav-item "} key={0}>
-                                <a className="nav-link disabled">|</a>
-                            </li>,
-                            <li className={"nav-item "} key={1}>
-                                <a className="nav-link" href="/admin">Dashboard</a>
-                            </li>,
-                            <li className={"nav-item "} key={2}>
-                                <a className="nav-link" href="/logout">Logout</a>
-                            </li>
-                        ]
-                    }
-
-                </ul>
-                <Headerlinks settings={settings} />
-            </div>
-        </nav>
-
-        <Breadcrumb location={location} shown={this.props.shown}/>
-    </div>
 )*/

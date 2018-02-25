@@ -20,7 +20,6 @@ export default class Contact extends React.Component {
     render() {
 
         let contact = this.state.contact;
-
         return(
             <div>
                 <Notifications message={contact}/>

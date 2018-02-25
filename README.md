@@ -32,12 +32,14 @@ A contact form linked directly to my own private mail account will be available 
  
 * The user won't have a contact form by default. He can either add an address and/or a mail, or create a MailGun account
   * When the MailGun account is created and the correct fields are filled, a contact form is visible.
+  * **Hmm, looks like the "mail" gem doesn't need anything, gotta check this out QUICK**
 
-* The user should be able to setup some background images like Jaeger's curent website.
+* The user should be able to setup some background images like Jaeger's current website.
 
 # Self TODO:
 
 ### Articles & Portofolio:
 
 * If no file was ready to upload, trigger explorer window
+* Set properly viewport title when articles display (it doesn't get updated)
 * Even though retrieving all the images work, it's not correctly updated. Gotta check it soon

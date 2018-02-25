@@ -11,27 +11,11 @@ class HomeController < ApplicationController
   end
 
   def articles_index
-    @title = 'All articles'
     @articles = Article.all
   end
 
-  def article_show
-    @article = Article.friendly.find(params[:id])
-    @title = @article.title.to_s
-  end
-
   def portfolio_index
-    @title = 'All the projects'
     @portfolios = Portfolio.all
-  end
-
-  def portfolio_show
-    @portfolio = Portfolio.friendly.find(params[:id])
-    @title = @portfolio.title.to_s
-  end
-
-  def about
-    @title = 'About me'
   end
 
   def configuration
@@ -57,4 +41,10 @@ class HomeController < ApplicationController
     end
     redirect_to @contact
   end
+
+    private
+
+    def comment_params
+      params.require(:comment).permit(:email, :pseudo, :content)
+    end
 end
