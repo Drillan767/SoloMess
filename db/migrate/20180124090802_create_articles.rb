@@ -3,6 +3,7 @@ class CreateArticles < ActiveRecord::Migration[5.1]
     create_table :articles do |t|
       t.string :title
       t.string :image
+      t.string :intro
       t.string :tags
       t.string :slug
       t.boolean :public

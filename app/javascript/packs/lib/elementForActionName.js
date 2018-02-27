@@ -1,4 +1,5 @@
 import React from 'react';
+import Settings from '../admin/settings';
 import HomeAdmin from '../admin/home/index';
 import ArticlesIndex from '../admin/articles/index';
 import ArticleShow from '../admin/articles/show';
@@ -14,6 +15,7 @@ export const adminElements = {
         object: HomeAdmin,
         title: 'Dashboard'
     },
+    /*
     'articles_index': {
         object: ArticlesIndex,
         title: 'Articles'
@@ -45,6 +47,11 @@ export const adminElements = {
     'portfolios_edit': {
         object: PortfolioEdit,
         title: 'Project'
+    },
+    */
+    'basics_edit': {
+        object: Settings,
+        title: 'Edit settings'
     }
 
 };

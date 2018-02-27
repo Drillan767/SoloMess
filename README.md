@@ -43,3 +43,13 @@ A contact form linked directly to my own private mail account will be available 
 * If no file was ready to upload, trigger explorer window
 * Set properly viewport title when articles display (it doesn't get updated)
 * Even though retrieving all the images work, it's not correctly updated. Gotta check it soon
+
+
+### SETTINGS
+
+* Add json for links (Fontawesome in Navbar)
+
+### USER
+
+* Add json for skills (1/2/3)
+* Clean all "has-many" stuff that's now useless

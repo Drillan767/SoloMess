@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20180224212103) do
   create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title"
     t.string "image"
+    t.string "intro"
     t.string "tags"
     t.string "slug"
     t.boolean "public"

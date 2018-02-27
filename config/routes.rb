@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   scope '/admin' do
     authenticate :user do
-      resource :basics
+      resource :basics, path: :settings
       resources :portfolios, except: %w[show new edit index update]
       get '/portfolio' => 'portfolios#index'
       get '/project/:id' => 'portfolios#show', as: :portfolio_show
