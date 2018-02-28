@@ -42,8 +42,8 @@ class LastArticles extends React.Component {
                             i <= 5 && 
                             <TableRow key={i}>
                                 <TableCell>
-                                    <a href={a.a_prefix + article.slug}>
-                                        {a.title}
+                                    <a href={article.a_prefix + article.slug}>
+                                        {article.title}
                                     </a>
                                 </TableCell>
                                 <TableCell>
