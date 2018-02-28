@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SideBarContent from './layout/admin/sideBarContent';
 import Top from './layout/admin/appbar';
 import utils from './lib/functionsLibrary'
 import { Route, Switch } from 'react-router-dom';
-import {
-    AppBar, Drawer,Grid, Hidden, IconButton, Paper,
-    Reboot, Toolbar, Tooltip, Typography, withStyles
-} from 'material-ui'
-import { Menu, ExitToApp, Close } from 'material-ui-icons'
+import { Grid, Paper, Reboot, withStyles } from 'material-ui'
 import AdminIndex from './admin/home/index';
 
 const drawerWidth = 240;

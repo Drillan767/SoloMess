@@ -12,7 +12,7 @@ const styles = {
         backgroundColor: orange[400],
         color: '#fff'
     }
-}
+};
 
 class TotalArticles extends React.Component {
         

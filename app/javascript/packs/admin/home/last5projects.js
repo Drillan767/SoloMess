@@ -12,19 +12,16 @@ const styles = {
         backgroundColor: orange[400],
         color: '#fff'
     }
-}
+};
 
 class LastProjects extends React.Component {
 
     shouldComponentUpdate(nextProps) {
-        if(this.props.portfolio !== nextProps.portfolio) {
+        if(this.props.portfolio !== nextProps.portfolio ||
+            this.props.classes !== nextProps.classes
+        ) {
             return true;
         }
-
-        if(this.props.classes !== nextProps.classes) {
-            return true;
-        }
-
         return false;
     }
 
@@ -42,7 +39,7 @@ class LastProjects extends React.Component {
                             i <= 5 && 
                             <TableRow key={i}>
                                 <TableCell>
-                                    <a href={project.p_prefix + project.slug}>
+                                    <a href={p_prefix + project.slug}>
                                         {project.title}
                                     </a>
                                 </TableCell>

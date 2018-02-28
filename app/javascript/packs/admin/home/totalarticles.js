@@ -12,16 +12,13 @@ const styles = {
         backgroundColor: orange[400],
         color: '#fff'
     }
-}
+};
 
 class TotalArticles extends React.Component {
         
     shouldComponentUpdate(nextProps) {
-        if(this.props.articles !== nextProps.articles) {
-            return true;
-        }
-
-        if(this.props.classes !== nextProps.classes) {
+        if(this.props.articles !== nextProps.articles ||
+            this.props.classes !== nextProps.classes) {
             return true;
         }
 
