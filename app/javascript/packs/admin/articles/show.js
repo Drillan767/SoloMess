@@ -1,13 +1,9 @@
 import React from 'react';
 import utils from '../../lib/functionsLibrary'
-import Typography from 'material-ui/Typography';
-import Chip from 'material-ui/Chip';
-import {withStyles} from 'material-ui/styles';
+import { Typography, Chip, withStyles, Button, Grid} from 'material-ui';
 import {green, orange} from 'material-ui/colors';
-import Button from 'material-ui/Button';
 import Left from 'material-ui-icons/KeyboardArrowLeft';
 import Edit from 'material-ui-icons/ModeEdit';
-import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
     root: {
