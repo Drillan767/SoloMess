@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-  get '/*id', to: 'home#index', id: /(?!admin|settings|users|all|comment).*/
+  get '/*id' => 'home#index', id: /(?!admin|settings|users|all|comment).*/
 
   # List:
   # - /articles
@@ -27,8 +27,19 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:password]
 
   scope '/admin' do
+
     authenticate :user do
-      resource :basics, path: :settings
+      
+    end
+    devise_for :users, skip: [:sessions]
+
+    get '*path' => 'home#admin'
+  end
+end
+
+
+=begin
+ resource :basics, path: :settings
       resources :portfolios, except: %w[show new edit index update]
       get '/portfolio' => 'portfolios#index'
       get '/project/:id' => 'portfolios#show', as: :portfolio_show
@@ -47,8 +58,6 @@ Rails.application.routes.draw do
       post '/portfolio/multiple/:actions/:data' => 'portfolios#multiple_actions'
       post '/portfolio/:id/ajax_delete' => 'portfolios#ajax_delete'
       post '/portfolio/encode_file' => 'portfolios#encode_file'
-    end
+      
 
-    devise_for :users, skip: [:sessions]
-  end
-end
+=end

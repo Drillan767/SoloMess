@@ -49,6 +49,16 @@ const functions = {
 
     basename(string) {
         return string.split(/[\\/]/).pop();
+    },
+
+    getTitle(pathname) {
+
+        let titles = {
+            '/admin': 'Dashboard',
+            '/admin/portfolio': 'Portfolio'
+        }
+
+        return titles[pathname];
     }
 };
 

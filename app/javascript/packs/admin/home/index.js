@@ -6,6 +6,10 @@ import Button from 'material-ui/Button';
 import Chip from 'material-ui/Chip';
 import Typography from 'material-ui/Typography';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
+import LastArticles from './last5articles';
+import TotalArticles from './totalarticles';
+import LastProjects from './last5projects';
+import TotalProjects from './totalprojects';
 import utils from '../../lib/functionsLibrary';
 import {green, orange} from 'material-ui/colors';
 
@@ -37,25 +41,37 @@ class HomeIndex extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.href + '/articles.json', function(articles) {
+        utils.loader(window.location.origin + '/all_articles.json', function(articles) {
             self.setState({articles: articles});
         });
 
-        utils.loader(window.location.href + '/portfolio.json', function(portfolio) {
+        utils.loader(window.location.origin + '/all_projects.json', function(portfolio) {
             self.setState({portfolio: portfolio});
         });
+    }
+
+    shouldComponentUpdate(nextState, nextProps) {
+        if(this.state.portfolio !== nextState.portfolio ||
+           this.state.articles !== nextState.articles) {
+        
+            return true;
+        }
+
+        if(this.props.settings !== nextProps.settings ||
+            this.props.classes !== nextProps.classes) {
+            return true;
+        }
+
+        return false;
     }
 
     render() {
         const { classes, settings } = this.props;
         const { portfolio, articles } = this.state;
-        let p_prefix = '/admin/project/';
-        let a_prefix = '/admin/articles/';
-        console.log(articles);
-
+        
         return (
             [
-                <Grid item md={12} sm={6} key={1}>
+                <Grid item lg={6} sm={12} key={1}>
                     <Paper elevation={8}>
                         <Typography
                             variant="headline"
@@ -74,62 +90,13 @@ class HomeIndex extends React.Component {
                                     <TableCell>Creation date</TableCell>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {
-                                    articles !== null &&
-                                    articles.map(a => {
-                                    return (
-                                        <TableRow key={a.id}>
-                                            <TableCell><a href={a_prefix + a.slug}>{a.title}</a></TableCell>
-                                            <TableCell>{a.tags}</TableCell>
-                                            <TableCell>
-                                                {
-                                                    a.public ?
-                                                    <Chip label="Published" className={classes.chipValid} /> :
-                                                    <Chip label="Draft" className={classes.chipPending} />
-                                                }
-                                            </TableCell>
-
-                                            <TableCell>
-                                                {utils.toRealDate(a.created_at)}
-                                            </TableCell>
-                                        </TableRow>
-
-                                    );
-                                })}
-                                <TableRow />
-                            </TableBody>
+                            
                         </Table>
                         <Table className={classes.table}>
-                            <TableBody>
-                                {
-                                    articles !== null &&
-                                    [
-                                        <TableRow key={1}>
-                                            <TableCell>Total articles</TableCell>
-                                            <TableCell><Chip label={articles.length} /></TableCell>
-                                        </TableRow>,
-                                        <TableRow key={2}>
-                                            <TableCell>Published</TableCell>
-                                            <TableCell>
-                                                <Chip
-                                                    className={classes.chipValid}
-                                                    label={articles.filter(articles => articles.public !== false).length}
-                                                />
-                                            </TableCell>
-                                        </TableRow>,
-                                        <TableRow key={3}>
-                                            <TableCell>Unpublished</TableCell>
-                                            <TableCell>
-                                                <Chip
-                                                    className={classes.chipPending}
-                                                    label={articles.filter(articles => articles.public !== true).length}
-                                                />
-                                            </TableCell>
-                                        </TableRow>,
-                                    ]
-                                }
-                            </TableBody>
+                            <LastArticles articles={articles} styles={this.styles} />
+                        </Table>
+                        <Table className={classes.table}>
+                            <TotalArticles articles={articles} />
                         </Table>
                         <div className="table-actions">
                             <Button variant="raised" color="primary" href="/admin/articles">
@@ -141,7 +108,7 @@ class HomeIndex extends React.Component {
                         </div>
                     </Paper>
                 </Grid>,
-                <Grid item md={12} sm={6} key={2}>
+                <Grid item lg={6} sm={12} key={2}>
                     <Paper elevation={8}>
                         <Typography
                             variant="headline"
@@ -160,63 +127,10 @@ class HomeIndex extends React.Component {
                                     <TableCell>Creation date</TableCell>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {
-                                    portfolio !== null &&
-                                    portfolio.map(p => {
-                                    return (
-                                        p.id <= 5 &&
-                                        <TableRow key={p.id}>
-                                            <TableCell>
-                                                <a href={p_prefix + p.slug}>
-                                                    {p.title}
-                                                    </a>
-                                            </TableCell>
-                                            <TableCell>{p.tags}</TableCell>
-                                            <TableCell>
-                                                {
-                                                    p.public ?
-                                                        <Chip label="Published" className={classes.chipValid}/> :
-                                                        <Chip label="Draft" className={classes.chipPending} />
-                                                }
-                                            </TableCell>
-                                            <TableCell>{utils.toRealDate(p.created_at)}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                                <TableRow />
-                            </TableBody>
+                            <LastProjects portfolio={portfolio} />
                         </Table>
                         <Table className={classes.table}>
-                            <TableBody>
-                                {
-                                    portfolio !== null &&
-                                    [
-                                        <TableRow key={1}>
-                                            <TableCell>Total projects</TableCell>
-                                            <TableCell><Chip label={portfolio.length} /></TableCell>
-                                        </TableRow>,
-                                        <TableRow key={2}>
-                                            <TableCell>Published</TableCell>
-                                            <TableCell>
-                                                <Chip
-                                                    className={classes.chipValid}
-                                                    label={portfolio.filter(portfolio => portfolio.public !== false).length}
-                                                />
-                                            </TableCell>
-                                        </TableRow>,
-                                        <TableRow key={3}>
-                                            <TableCell>Unpublished</TableCell>
-                                            <TableCell>
-                                                <Chip
-                                                    className={classes.chipPending}
-                                                    label={portfolio.filter(portfolio => portfolio.public !== true).length}
-                                                />
-                                            </TableCell>
-                                        </TableRow>,
-                                    ]
-                                }
-                            </TableBody>
+                            <TotalProjects portfolio={portfolio} />
                         </Table>
                         <div className="table-actions">
                             <Button variant="raised" color="primary" href="/admin/portfolios">

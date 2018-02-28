@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {adminElements} from './lib/elementForActionName';
-import SideBarContent from './admin/component/sideBarContent';
+import SideBarContent from './layout/admin/sideBarContent';
+import Top from './layout/admin/appbar';
 import utils from './lib/functionsLibrary'
-
+import { Route, Switch } from 'react-router-dom';
 import {
     AppBar, Drawer,Grid, Hidden, IconButton, Paper,
     Reboot, Toolbar, Tooltip, Typography, withStyles
 } from 'material-ui'
-
 import { Menu, ExitToApp, Close } from 'material-ui-icons'
+import AdminIndex from './admin/home/index';
 
 const drawerWidth = 240;
 
@@ -29,7 +29,6 @@ const styles = theme => ({
         position: 'absolute',
         marginLeft: drawerWidth,
         [theme.breakpoints.up('md')]: {
-            // TODO: Agir ici
             width: `calc(100% - ${drawerWidth}px)`,
         },
     },
@@ -61,13 +60,13 @@ const styles = theme => ({
 });
 
 class ResponsiveDrawer extends React.Component {
-    state = {
-        mobileOpen: false,
-    };
 
     constructor(props) {
         super(props);
-        this.state = {settings: null};
+        this.state = {
+            settings: null,
+            mobileOpen: false,
+        };
     }
 
     componentDidMount() {
@@ -83,76 +82,26 @@ class ResponsiveDrawer extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
-        let actionName = utils.extractAdminActionName();
-        let Element = adminElements[actionName].object;
-        let title = adminElements[actionName].title;
+        const { settings, mobileOpen } = this.state;
+        let pathname = window.location.pathname;
+        let title = utils.getTitle(pathname);
 
         return (
             <div>
                 <Reboot />
                 <div className={classes.root}>
                     <div className={classes.appFrame}>
-                        <AppBar className={classes.appBar}>
-                            <Toolbar>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    onClick={this.handleDrawerToggle}
-                                    className={classes.navIconHide}
-                                >
-                                    <Menu />
-                                </IconButton>
-                                <Typography variant="title" color="inherit" noWrap className="sidebar-title">
-                                    {title}
-                                </Typography>
-                                <Tooltip id="tooltip-left" title="Back to website" placement="bottom">
-                                    <a href="/" className="sidebar-backtomain">
-                                        <IconButton color="inherit" >
-                                            <Close />
-                                        </IconButton>
-                                    </a>
-                                </Tooltip>
-                                <Tooltip id="tooltip-left" title="Logout" placement="bottom">
-                                    <a href="/logout" className="sidebar-backtomain">
-                                        <IconButton color="inherit" >
-                                            <ExitToApp />
-                                        </IconButton>
-                                    </a>
-                                </Tooltip>
-                            </Toolbar>
-                        </AppBar>
-                        <Hidden mdUp>
-                            <Drawer
-                                // TODO: Agir ici
-                                variant="temporary"
-                                open={this.state.mobileOpen}
-                                classes={{
-                                    paper: classes.drawerPaper,
-                                }}
-                                onClose={this.handleDrawerToggle}
-                                ModalProps={{
-                                    keepMounted: true, // Better open performance on mobile.
-                                }}
-                            >
-                                <SideBarContent />
-                            </Drawer>
-                        </Hidden>
-                        <Hidden smDown implementation="css">
-                            <Drawer
-                                // TODO: Agir ici
-                                variant="permanent"
-                                open
-                                classes={{
-                                    paper: classes.drawerPaper,
-                                }}
-                            >
-                                <SideBarContent />
-                            </Drawer>
-                        </Hidden>
+                        <Top 
+                            mobileOpen={mobileOpen}
+                            title={title}
+                            handleDrawerToggle={this.handleDrawerToggle}
+                        />
                         <main className={classes.content}>
                             <Paper elevation={4} className="dashboard-paper">
                                 <Grid container spacing={24}>
-                                    <Element settings={this.state.settings} />
+                                    <Switch>
+                                        <Route exact path='/admin' render={() => <AdminIndex settings={settings} title={title} /> }/>
+                                    </Switch>
                                 </Grid>
                             </Paper>
                         </main>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {elementForActionName} from './lib/elementForActionName';
 import utils from './lib/functionsLibrary'
 import { Route, Switch } from 'react-router-dom';
 import Header from './layout/header';
