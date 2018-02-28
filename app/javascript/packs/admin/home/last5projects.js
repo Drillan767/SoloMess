@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../lib/functionsLibrary';
 import { TableBody, TableRow, TableCell, Chip, withStyles} from 'material-ui';
 import {green, orange} from 'material-ui/colors';
+import { Link } from "react-router-dom";
 
 const styles = {
     chipValid: {
@@ -27,7 +28,6 @@ class LastProjects extends React.Component {
 
     render() {
 
-        let p_prefix = '/admin/project/';
         const { classes, portfolio } = this.props;
 
         return (
@@ -39,9 +39,9 @@ class LastProjects extends React.Component {
                             i <= 5 && 
                             <TableRow key={i}>
                                 <TableCell>
-                                    <a href={p_prefix + project.slug}>
+                                    <Link to={'/admin/project/' + project.slug}>
                                         {project.title}
-                                    </a>
+                                    </Link>
                                 </TableCell>
                                 <TableCell>
                                     {project.tags}

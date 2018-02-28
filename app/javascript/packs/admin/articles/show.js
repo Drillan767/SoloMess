@@ -50,16 +50,37 @@ class ArticleShow extends React.Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const { classes, history, location, match, settings, staticContext } = this.props;
+        if (this.state.article !== nextState.article) {
+            return true;
+        }
+
+        if (
+            classes !== nextProps.classes ||
+            history !== nextProps.history ||
+            location !== nextProps.location ||
+            match !== nextProps.match ||
+            settings !== nextProps.settings ||
+            staticContext !== nextProps.staticContext
+        ) {
+            return true;
+        }
+
+        return false
+    }
+
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.href + '.json', function(article) {
-            self.setState({article: article});
+        utils.loader(window.location.origin + '/all_articles.json', function(article) {
+            self.setState({article: article.find(a => a.slug === self.props.match.params.slug)});
         });
     }
 
     render() {
         const { article } = this.state;
         const { classes } = this.props;
+        console.log(this.props);
         return (
             article !== null &&
             <Grid item xs={12} sm={6} className={classes.root}>

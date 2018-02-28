@@ -55,8 +55,10 @@ const functions = {
 
         let titles = {
             '/admin': 'Dashboard',
-            '/admin/portfolio': 'Portfolio'
-        }
+            '/admin/portfolio': 'Portfolio',
+            '/admin/new/article': 'New article'
+
+        };
 
         return titles[pathname];
     }

@@ -5,6 +5,8 @@ import utils from './lib/functionsLibrary'
 import { Route, Switch } from 'react-router-dom';
 import { Grid, Paper, Reboot, withStyles } from 'material-ui'
 import AdminIndex from './admin/home/index';
+import ArticleNew from './admin/articles/new';
+import ArticleShow from './admin/articles/show';
 
 const drawerWidth = 240;
 
@@ -95,7 +97,32 @@ class ResponsiveDrawer extends React.Component {
                             <Paper elevation={4} className="dashboard-paper">
                                 <Grid container spacing={24}>
                                     <Switch>
-                                        <Route exact path='/admin' render={() => <AdminIndex settings={settings} title={title} /> }/>
+                                        <Route
+                                            exact path='/admin'
+                                            render={
+                                                () => <AdminIndex
+                                                        settings={settings}
+                                                        title={title}
+                                                />
+                                            } />
+                                        <Route
+                                            exact path='/admin/new/article'
+                                            render={
+                                                () =><ArticleNew
+                                                        settings={settings}
+                                                        title={title}
+                                                />
+                                            }
+                                        />
+                                        <Route
+                                            path='/admin/article/:slug'
+                                            render={
+                                                (props) =><ArticleShow
+                                                            settings={settings}
+                                                            {...props}
+                                                />
+                                            }
+                                        />
                                     </Switch>
                                 </Grid>
                             </Paper>

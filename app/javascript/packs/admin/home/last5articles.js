@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../lib/functionsLibrary';
 import { TableBody, TableRow, TableCell, Chip, withStyles} from 'material-ui';
 import {green, orange} from 'material-ui/colors';
+import { Link } from "react-router-dom";
 
 const styles = {
     chipValid: {
@@ -30,7 +31,6 @@ class LastArticles extends React.Component {
 
     render() {
 
-        let a_prefix = '/admin/articles/';
         const { articles, classes } = this.props;
 
         return (
@@ -42,9 +42,9 @@ class LastArticles extends React.Component {
                             i <= 5 && 
                             <TableRow key={i}>
                                 <TableCell>
-                                    <a href={article.a_prefix + article.slug}>
+                                    <Link to={'/admin/article/' + article.slug}>
                                         {article.title}
-                                    </a>
+                                    </Link>
                                 </TableCell>
                                 <TableCell>
                                     {article.tags}

@@ -2,6 +2,7 @@ import React from 'react';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
 import utils from '../../lib/functionsLibrary';
 import { withStyles } from 'material-ui/styles';
+import { Link } from "react-router-dom";
 import Collapse from 'material-ui/transitions/Collapse'
 import Divider from 'material-ui/Divider';
 
@@ -59,10 +60,8 @@ class SideBarContent extends React.Component {
             <div>
                 <div className="sidebar-head" />
                 <Divider />
-                <List
-                    component="nav"
-                >
-                    <a href="/admin" className={classes.links}>
+                <List component="nav">
+                    <Link to={'/admin'} className={classes.links}>
                         <ListItem button>
                             <ListItemIcon>
                                 <Dashboard className={pathname === '/admin' ? classes.active : ''}/>
@@ -73,7 +72,7 @@ class SideBarContent extends React.Component {
                                 classes={pathname === '/admin' ? {primary: classes.active} : {}}
                             />
                         </ListItem>
-                    </a>
+                    </Link>
                     <ListItem button onClick={this.collapseArticle}>
                         <ListItemIcon>
                             <Subject />
@@ -83,7 +82,7 @@ class SideBarContent extends React.Component {
                     </ListItem>
                     <Collapse in={articles} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <a href="/admin/new/article" className={classes.links}>
+                            <Link to={'/admin/new/article'} className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <Add className={pathname === '/admin/new/article' ? classes.active : ''} />
@@ -94,8 +93,8 @@ class SideBarContent extends React.Component {
                                         primary="New article"
                                     />
                                 </ListItem>
-                            </a>
-                            <a href="/admin/articles" className={classes.links}>
+                            </Link>
+                            <Link to={'/admin/articles'} className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <ViewList className={pathname === '/admin/articles' ? classes.active : ''} />
@@ -106,7 +105,7 @@ class SideBarContent extends React.Component {
                                         primary="All articles"
                                     />
                                 </ListItem>
-                            </a>
+                            </Link>
                         </List>
                     </Collapse>
                     <ListItem button onClick={this.collapsePortfolio}>
@@ -118,7 +117,7 @@ class SideBarContent extends React.Component {
                     </ListItem>
                     <Collapse in={portfolio} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <a href="/admin/new/project" className={classes.links}>
+                            <Link to={'/admin/new/project'} className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <Add className={pathname === '/admin/new/project' ? classes.active : ''}/>
@@ -129,8 +128,8 @@ class SideBarContent extends React.Component {
                                         classes={pathname === '/admin/new/project' ? {primary: classes.active} : {}}
                                     />
                                 </ListItem>
-                            </a>
-                            <a href="/admin/portfolio" className={classes.links}>
+                            </Link>
+                            <Link to={'/admin/new/project'} className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <ViewList className={pathname === '/admin/portfolio' ? classes.active : ''}/>
@@ -141,7 +140,7 @@ class SideBarContent extends React.Component {
                                         classes={pathname === '/admin/portfolio' ? {primary: classes.active} : {}}
                                     />
                                 </ListItem>
-                            </a>
+                            </Link>
                         </List>
                     </Collapse>
                     <Divider />
