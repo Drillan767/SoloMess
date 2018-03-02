@@ -1,73 +1,45 @@
 import React from 'react';
-import utils from "../../../lib/functionsLibrary";
+import {TableBody, TableRow, TableCell} from 'material-ui';
+import Checkbox from './cell_checkbox';
+import Title from './cell_title';
+import Tags from './cell_tags';
+import Status from './cell_status';
+import CreatedUpdated from './cell_created_updated';
+import Actions from './cell_actions';
 
 export default class ArticlesIndexRow extends React.Component {
     render() {
+        const {data, rowsPerPage, page} = this.props;
+
         return (
-            <TableRow
-                hover
-                onClick={event => this.handleClick(event, a.id)}
-                role="checkbox"
-                aria-checked={isSelected}
-                tabIndex={-1}
-                key={a.id}
-                selected={isSelected}
-            >
-                <TableCell padding="checkbox" className={classes.cells}>
-                    <Checkbox checked={isSelected} color="primary"/>
-                </TableCell>
-                <TableCell padding="none" className={classes.cells}>
-                    <a href={base + a.slug}>
-                        {a.title}
-                    </a>
-                </TableCell>
-                <TableCell className={classes.cells}>
-                    {
-                        a.tags.split(',').map(function(tag, i) {
-                            return (
-                                <span className={classes.tag} key={i}>
-                                                                {tag}
-                                                            </span>
-                            )
-                        })
-                    }
-                </TableCell>
-                <TableCell className={classes.cells}>
-                    {
-                        a.public
-                            ? <Chip className={classes.chipValid} label="Published" />
-                            : <Chip className={classes.chipPending} label="Draft" />
-                    }
-                </TableCell>
-                <TableCell className={classes.cells}>
-                    {utils.toRealDate(a.created_at, true)}
-                </TableCell>
-                <TableCell className={classes.cells}>
-                    {utils.toRealDate(a.updated_at, true)}
-                </TableCell>
-                <TableCell className={classes.cells}>
-                    <Button
-                        variant="fab"
-                        mini
-                        color="primary"
-                        aria-label="add"
-                        className={classes.button}
-                        href={base + a.slug + "/edit"}
-                    >
-                        <ModeEdit />
-                    </Button>
-                    <Button
-                        variant="fab"
-                        mini
-                        color="primary"
-                        aria-label="add"
-                        className={classes.button}
-                        onClick={() => this.deleteItem(a.id, a.title)}
-                    >
-                        <Delete />
-                    </Button>
-                </TableCell>
-            </TableRow>
+            <TableBody>
+                {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(a => {
+                    const isSelected = this.isSelected(a.id);
+                    return (
+                        <TableRow
+                            hover
+                            onClick={event => this.handleClick(event, a.id)}
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={a.id}
+                            selected={isSelected}
+                        >
+                            <Checkbox />
+                            <Title />
+                            <Tags />
+                            <Status />
+                            <CreatedUpdated/>
+                            <Actions />
+                        </TableRow>
+                    );
+                })}
+                {emptyRows > 0 && (
+                    <TableRow style={{ height: 49 * emptyRows }}>
+                        <TableCell colSpan={8} />
+                    </TableRow>
+                )}
+            </TableBody>
         )
     }
 }

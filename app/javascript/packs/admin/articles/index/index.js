@@ -1,20 +1,10 @@
 import React from 'react';
 import utils from '../../../lib/functionsLibrary';
 import PropTypes from 'prop-types';
-import Chip from 'material-ui/Chip';
 import { withStyles } from 'material-ui/styles';
 import Table, {
-    TableBody,
-    TableCell,
-    TableFooter,
-    TablePagination,
-    TableRow,
 } from 'material-ui/Table';
 import Grid from 'material-ui/Grid'
-import Checkbox from 'material-ui/Checkbox';
-import Delete from 'material-ui-icons/Delete';
-import ModeEdit from 'material-ui-icons/ModeEdit'
-import Button from 'material-ui/Button';
 import {green, orange} from 'material-ui/colors';
 import EnhancedTableHead from './tableHead';
 import EnhancedTableToolbar from './toolbar';
@@ -22,6 +12,7 @@ import $ from "jquery";
 import TableTop from './tableTop';
 import swal from 'sweetalert2';
 import Footer from './footer';
+import Row from './row';
 
 const styles = theme => ({
     root: {
@@ -243,8 +234,16 @@ class EnhancedTable extends React.Component {
                                 onRequestSort={this.handleRequestSort}
                                 rowCount={data.length}
                             />
+                            <Row
+                                data={data}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                            />
 
-                            <Footer/>
+                            <Footer
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                            />
                         </Table>
                     </div>
                 }

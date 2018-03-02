@@ -1,6 +1,5 @@
 import React from 'react';
-import { TableFooter, TableRow} from 'material-ui';
-
+import { TableFooter, TablePagination, TableRow} from 'material-ui';
 
 export default class ArticleIndexFooter extends React.Component {
     render() {
