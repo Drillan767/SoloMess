@@ -4,10 +4,11 @@ import { TableCell } from 'material-ui';
 
 export default class CellCreatedUpdated extends React.Component {
     render() {
+        const { article, className } = this.props;
         return (
-            <TableCell className={classes.cells}>
-                {utils.toRealDate(a.created_at, true)} + '<br />' +
-                {utils.toRealDate(a.updated_at, true)}
+            <TableCell className={className}>
+                {utils.toRealDate(article.created_at, true)} + '<br />' +
+                {utils.toRealDate(article.updated_at, true)}
             </TableCell>
         )
     }

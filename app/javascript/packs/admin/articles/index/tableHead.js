@@ -9,7 +9,6 @@ const columnData = [
     { id: 'tags', allowOrder: false, disablePadding: true, label: 'Tags' },
     { id: 'status', allowOrder: true, disablePadding: false, label: 'Status' },
     { id: 'created_at', allowOrder: true, disablePadding: false, label: 'Created at' },
-    { id: 'updated_at', allowOrder: true, disablePadding: false, label: 'Updated at' },
     { id: 'actions', allowOrder: false, disablePadding: false, label: 'Actions' },
 ];
 

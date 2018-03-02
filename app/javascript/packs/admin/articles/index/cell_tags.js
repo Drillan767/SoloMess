@@ -3,12 +3,13 @@ import { TableCell } from 'material-ui';
 
 export default class CellTags extends React.Component {
     render() {
+        const { article, className, tags } = this.props;
         return (
-            <TableCell className={classes.cells}>
+            <TableCell className={className}>
                 {
-                    a.tags.split(',').map(function(tag, i) {
+                    article.tags.split(',').map(function(tag, i) {
                         return (
-                            <span className={classes.tag} key={i}>
+                            <span className={tags} key={i}>
                                 {tag}
                             </span>
                         )
@@ -18,3 +19,4 @@ export default class CellTags extends React.Component {
         )
     }
 }
+

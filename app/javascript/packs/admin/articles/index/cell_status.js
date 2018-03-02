@@ -3,12 +3,13 @@ import { TableCell, Chip } from 'material-ui';
 
 export default class CellStatus extends React.Component {
     render() {
+        const { article, className, pending, valid } = this.props;
         return (
-            <TableCell className={classes.cells}>
+            <TableCell className={className}>
                 {
-                    a.public
-                        ? <Chip className={classes.chipValid} label="Published" />
-                        : <Chip className={classes.chipPending} label="Draft" />
+                    article.public
+                        ? <Chip className={valid} label="Published" />
+                        : <Chip className={pending} label="Draft" />
                 }
             </TableCell>
         )

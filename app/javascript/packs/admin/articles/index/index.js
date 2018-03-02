@@ -19,32 +19,17 @@ const styles = theme => ({
         width: '100%',
         marginTop: theme.spacing.unit * 3,
     },
-    tag: {
-        backgroundColor: 'lightgrey',
-        padding: '5px 6px',
-        marginRight: '5px',
-        borderRadius: '16px'
-    },
+
     table: {
         minWidth: 800,
     },
     tableWrapper: {
         overflowX: 'auto',
     },
-    button: {
-        margin: theme.spacing.unit,
-    },
+
     cells: {
         padding: '4px 24px'
     },
-    chipValid: {
-        backgroundColor: green[400],
-        color: '#fff'
-    },
-    chipPending: {
-        backgroundColor: orange[400],
-        color: '#fff'
-    }
 });
 
 class EnhancedTable extends React.Component {
@@ -70,7 +55,7 @@ class EnhancedTable extends React.Component {
         utils.loader(window.location.origin + '/settings.json', function(settings) {
             self.setState({settings: settings});
         });
-        utils.loader(window.location.href + '.json', function(articles) {
+        utils.loader(window.location.origin + '/all_articles.json', function(articles) {
             self.setState({articles: articles});
         })
     }
@@ -212,9 +197,6 @@ class EnhancedTable extends React.Component {
     render() {
         const { classes } = this.props;
         const { articles, order, orderBy, selected, rowsPerPage, page, filteredArticles } = this.state;
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, (articles !== null && articles.length) - page * rowsPerPage);
-        let base = "/admin/articles/";
-        console.log(articles);
 
         let data = this.state.input ? filteredArticles : articles;
 
@@ -238,11 +220,17 @@ class EnhancedTable extends React.Component {
                                 data={data}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
+                                isSelected={this.isSelected.bind(this)}
+                                deleteItem={() => this.deleteItem}
+                                handleClick={this.handleClick.bind(this)}
                             />
 
                             <Footer
                                 rowsPerPage={rowsPerPage}
                                 page={page}
+                                onChangePage={this.handleChangePage}
+                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                articles={articles}
                             />
                         </Table>
                     </div>

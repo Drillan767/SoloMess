@@ -4,15 +4,16 @@ import {ModeEdit, Delete } from 'material-ui-icons';
 
 export default class CellActions extends React.Component {
     render() {
+        const { className, article, buttons } = this.props;
         return (
-            <TableCell className={classes.cells}>
+            <TableCell className={className}>
                 <Button
                     variant="fab"
                     mini
                     color="primary"
                     aria-label="add"
-                    className={classes.button}
-                    href={base + a.slug + "/edit"}
+                    className={buttons}
+                    href={'/admin/article/' + article.slug + "/edit"}
                 >
                     <ModeEdit />
                 </Button>
@@ -21,8 +22,8 @@ export default class CellActions extends React.Component {
                     mini
                     color="primary"
                     aria-label="add"
-                    className={classes.button}
-                    onClick={() => this.deleteItem(a.id, a.title)}
+                    className={buttons}
+                    onClick={() => this.props.deleteItem(article.id, article.title)}
                 >
                     <Delete />
                 </Button>

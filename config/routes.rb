@@ -29,9 +29,7 @@ Rails.application.routes.draw do
   scope '/admin' do
 
     authenticate :user do
-      resources :articles, except: :update do
-        resources :comments
-      end
+
       post '/articles/:id' => 'articles#update'
     end
     devise_for :users, skip: [:sessions]
@@ -49,6 +47,10 @@ end
       get '/new/project' => 'portfolios#new'
       get '/project/:id/edit' => 'portfolios#edit'
       post '/project/:id' => 'portfolios#update'
+
+      resources :articles, except: :update do
+        resources :comments
+      end
 
 
       post '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
