@@ -1,6 +1,7 @@
 import React from 'react';
 import { TableCell, Button } from 'material-ui';
 import {ModeEdit, Delete } from 'material-ui-icons';
+import { Link } from 'react-router-dom';
 
 export default class CellActions extends React.Component {
     render() {
@@ -13,7 +14,8 @@ export default class CellActions extends React.Component {
                     color="primary"
                     aria-label="add"
                     className={buttons}
-                    href={'/admin/article/' + article.slug + "/edit"}
+                    component={Link}
+                    to={'/admin/article/' + article.slug + '/edit'}
                 >
                     <ModeEdit />
                 </Button>

@@ -85,6 +85,7 @@ class EnhancedTable extends React.Component {
     };
 
     handleMultipleActions(action, payload) {
+        console.log(payload);
         let self = this;
         swal({
             title: 'Confirm action?',
@@ -96,7 +97,8 @@ class EnhancedTable extends React.Component {
             confirmButtonText: 'Confirm',
             preConfirm: function () {
                 return new Promise(function(resolve) {
-                    $.ajax({ url: '/admin/articles/multiple/' + action + '/' + payload,
+                    $.ajax({ url: '/admin/articles/multiple/' + action,
+                        data: {đata: payload},
                         type: 'POST',
                         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
                         data: payload,
@@ -185,6 +187,7 @@ class EnhancedTable extends React.Component {
     };
 
     handleChangePage = (event, page) => {
+        console.log(page);
         this.setState({ page });
     };
 
@@ -203,7 +206,10 @@ class EnhancedTable extends React.Component {
         return (
             <Grid item xs={12}>
                 <TableTop handleFilterInput={this.handleFilterInput.bind(this)}/>
-                <EnhancedTableToolbar selected={selected} handleMultipleActions={this.handleMultipleActions.bind(this)}/>
+                <EnhancedTableToolbar 
+                    selected={selected} 
+                    handleMultipleActions={this.handleMultipleActions.bind(this)}
+                />
                 {
                     data !== null &&
                     <div className={classes.tableWrapper}>
@@ -220,6 +226,7 @@ class EnhancedTable extends React.Component {
                                 data={data}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
+                                selected={selected}
                                 isSelected={this.isSelected.bind(this)}
                                 deleteItem={() => this.deleteItem}
                                 handleClick={this.handleClick.bind(this)}
@@ -228,8 +235,8 @@ class EnhancedTable extends React.Component {
                             <Footer
                                 rowsPerPage={rowsPerPage}
                                 page={page}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                onChangePage={this.handleChangePage.bind(this)}
+                                onChangeRowsPerPage={this.handleChangeRowsPerPage.bind(this)}
                                 articles={articles}
                             />
                         </Table>

@@ -1,9 +1,7 @@
 import React from 'react';
-import Button from 'material-ui/Button';
+import { Button, Toolbar, TextField, withStyles } from 'material-ui';
 import Add from 'material-ui-icons/Add';
-import TextField from 'material-ui/TextField';
-import Toolbar from 'material-ui/Toolbar';
-import {withStyles} from "material-ui/styles/index";
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
 
@@ -40,13 +38,13 @@ class TableTop extends React.Component {
                     <Button
                         variant="raised"
                         color="primary"
-                        href="/admin/new/article"
+                        component={Link}
+                        to='/admin/new/article'
                     >
                     New article
                     <Add className={classes.rightIcon} />
                     </Button>
                 </div>
-
             </Toolbar>
         )
     }

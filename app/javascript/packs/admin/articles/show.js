@@ -4,6 +4,7 @@ import { Typography, Chip, withStyles, Button, Grid} from 'material-ui';
 import {green, orange} from 'material-ui/colors';
 import Left from 'material-ui-icons/KeyboardArrowLeft';
 import Edit from 'material-ui-icons/ModeEdit';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -102,11 +103,11 @@ class ArticleShow extends React.Component {
                     <img src={article.image.url} alt={utils.basename(article.image.url)}/>
                 </div>
                 <div className={classes.actions}>
-                    <Button variant="raised" href="/admin/articles">
+                    <Button variant="raised" component={Link} to='/admin/articles'>
                         <Left className={classes.leftIcon}/>
                         Back
                     </Button>
-                    <Button variant="raised" color="primary" href={window.location.pathname + '/edit'}>
+                    <Button variant="raised" color="primary" component={Link} to={window.location.pathname + '/edit'}>
                         <Edit className={classes.leftIcon}/>
                         Edit
                     </Button>

@@ -33,12 +33,14 @@ const styles = theme => ({
 
 class ArticlesIndexRow extends React.Component {
     render() {
-        const {data, rowsPerPage, page, classes, isSelected } = this.props;
+        const {data, rowsPerPage, page, classes } = this.props;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (data !== null && data.length) - page * rowsPerPage);
+        
         return (
             data !==null &&
             <TableBody>
                 {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(function(a, i) {
+                    const isSelected = this.props.isSelected(a.id);
                     return (
                         <TableRow
                             hover
@@ -59,7 +61,7 @@ class ArticlesIndexRow extends React.Component {
                             />
                             <Tags
                                 className={classes.cells}
-                                tag={classes.tags}
+                                tags={classes.tags}
                                 article={a}
                             />
                             <Status

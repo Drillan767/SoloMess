@@ -20,8 +20,8 @@ export default class ArticleIndexFooter extends React.Component {
                             nextIconButtonProps={{
                                 'aria-label': 'Next Page',
                             }}
-                            onChangePage={this.props.handleChangePage}
-                            onChangeRowsPerPage={this.props.handleChangeRowsPerPage}
+                            onChangePage={event => this.props.handleChangePage(event, page)}
+                            onChangeRowsPerPage={event => this.props.onChangeRowsPerPage(event)}
                         />
                     }
                 </TableRow>
