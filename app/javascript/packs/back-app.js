@@ -7,6 +7,7 @@ import { Grid, Paper, Reboot, withStyles } from 'material-ui'
 import AdminIndex from './admin/home/index';
 import ArticleNew from './admin/articles/new';
 import ArticleShow from './admin/articles/show';
+import ArticlesIndex from './admin/articles/index/';
 
 const drawerWidth = 240;
 
@@ -122,6 +123,13 @@ class ResponsiveDrawer extends React.Component {
                                                             {...props}
                                                 />
                                             }
+                                        />
+                                        <Route exact path='/admin/articles'
+                                           render={() =><ArticlesIndex
+                                                                settings={settings}
+                                                                title={title}
+                                           />
+                                           }
                                         />
                                     </Switch>
                                 </Grid>

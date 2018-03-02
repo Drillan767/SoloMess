@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../lib/functionsLibrary';
+import utils from '../../../lib/functionsLibrary';
 import PropTypes from 'prop-types';
 import Chip from 'material-ui/Chip';
 import { withStyles } from 'material-ui/styles';
@@ -16,11 +16,12 @@ import Delete from 'material-ui-icons/Delete';
 import ModeEdit from 'material-ui-icons/ModeEdit'
 import Button from 'material-ui/Button';
 import {green, orange} from 'material-ui/colors';
-import EnhancedTableHead from './component/tableHead';
-import EnhancedTableToolbar from './component/toolbar';
+import EnhancedTableHead from './tableHead';
+import EnhancedTableToolbar from './toolbar';
 import $ from "jquery";
-import TableTop from './component/tableTop';
+import TableTop from './tableTop';
 import swal from 'sweetalert2';
+import Footer from './footer';
 
 const styles = theme => ({
     root: {
@@ -118,21 +119,21 @@ class EnhancedTable extends React.Component {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirm',
             preConfirm: function () {
-               return new Promise(function(resolve) {
-                   $.ajax({ url: '/admin/articles/multiple/' + action + '/' + payload,
-                       type: 'POST',
-                       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
-                       data: payload,
+                return new Promise(function(resolve) {
+                    $.ajax({ url: '/admin/articles/multiple/' + action + '/' + payload,
+                        type: 'POST',
+                        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
+                        data: payload,
 
-                   }).done(function(response) {
-                       swal(
-                           'Done!',
-                           payload.length + ' element(s) have successfully been ' + action + 'ed',
-                           'success'
-                       );
-                       self.setState({articles: response});
-                   });
-               })
+                    }).done(function(response) {
+                        swal(
+                            'Done!',
+                            payload.length + ' element(s) have successfully been ' + action + 'ed',
+                            'success'
+                        );
+                        self.setState({articles: response});
+                    });
+                })
             }
         });
     }
@@ -242,100 +243,8 @@ class EnhancedTable extends React.Component {
                                 onRequestSort={this.handleRequestSort}
                                 rowCount={data.length}
                             />
-                            <TableBody>
-                                {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(a => {
-                                    const isSelected = this.isSelected(a.id);
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={event => this.handleClick(event, a.id)}
-                                            role="checkbox"
-                                            aria-checked={isSelected}
-                                            tabIndex={-1}
-                                            key={a.id}
-                                            selected={isSelected}
-                                        >
-                                            <TableCell padding="checkbox" className={classes.cells}>
-                                                <Checkbox checked={isSelected} color="primary"/>
-                                            </TableCell>
-                                            <TableCell padding="none" className={classes.cells}>
-                                                <a href={base + a.slug}>
-                                                    {a.title}
-                                                </a>
-                                            </TableCell>
-                                            <TableCell className={classes.cells}>
-                                                {
-                                                    a.tags.split(',').map(function(tag, i) {
-                                                        return (
-                                                            <span className={classes.tag} key={i}>
-                                                                {tag}
-                                                            </span>
-                                                        )
-                                                    })
-                                                }
-                                            </TableCell>
-                                            <TableCell className={classes.cells}>
-                                                {
-                                                    a.public
-                                                    ? <Chip className={classes.chipValid} label="Published" />
-                                                    : <Chip className={classes.chipPending} label="Draft" />
-                                                }
-                                            </TableCell>
-                                            <TableCell className={classes.cells}>
-                                                {utils.toRealDate(a.created_at, true)}
-                                            </TableCell>
-                                            <TableCell className={classes.cells}>
-                                                {utils.toRealDate(a.updated_at, true)}
-                                            </TableCell>
-                                            <TableCell className={classes.cells}>
-                                                <Button
-                                                    variant="fab"
-                                                    mini
-                                                    color="primary"
-                                                    aria-label="add"
-                                                    className={classes.button}
-                                                    href={base + a.slug + "/edit"}
-                                                >
-                                                    <ModeEdit />
-                                                </Button>
-                                                <Button
-                                                    variant="fab"
-                                                    mini
-                                                    color="primary"
-                                                    aria-label="add"
-                                                    className={classes.button}
-                                                    onClick={() => this.deleteItem(a.id, a.title)}
-                                                >
-                                                    <Delete />
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 49 * emptyRows }}>
-                                        <TableCell colSpan={8} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        colSpan={8}
-                                        count={data.length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        backIconButtonProps={{
-                                            'aria-label': 'Previous Page',
-                                        }}
-                                        nextIconButtonProps={{
-                                            'aria-label': 'Next Page',
-                                        }}
-                                        onChangePage={this.handleChangePage}
-                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                    />
-                                </TableRow>
-                            </TableFooter>
+
+                            <Footer/>
                         </Table>
                     </div>
                 }

@@ -1,11 +1,6 @@
 import React from 'react';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import Chip from 'material-ui/Chip';
-import Typography from 'material-ui/Typography';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
+import { Grid, withStyles, Paper, Button, Typography,
+Table, TableCell, TableHead, TableRow } from 'material-ui';
 import LastArticles from './last5articles';
 import TotalArticles from './totalarticles';
 import LastProjects from './last5projects';
