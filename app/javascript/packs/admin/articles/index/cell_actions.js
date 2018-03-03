@@ -4,6 +4,21 @@ import {ModeEdit, Delete } from 'material-ui-icons';
 import { Link } from 'react-router-dom';
 
 export default class CellActions extends React.Component {
+
+    shouldComponentUpdate(nextProps) {
+        const { className, article, buttons } = this.props;
+
+        if (
+            className !== nextProps.className ||
+            article !== nextProps.article ||
+            buttons !== nextProps.buttons
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     render() {
         const { className, article, buttons } = this.props;
         return (

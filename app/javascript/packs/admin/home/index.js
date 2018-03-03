@@ -5,6 +5,7 @@ import LastArticles from './last5articles';
 import TotalArticles from './totalarticles';
 import LastProjects from './last5projects';
 import TotalProjects from './totalprojects';
+import { Link } from 'react-router-dom';
 import utils from '../../lib/functionsLibrary';
 import {green, orange} from 'material-ui/colors';
 
@@ -94,10 +95,20 @@ class HomeIndex extends React.Component {
                             <TotalArticles articles={articles} />
                         </Table>
                         <div className="table-actions">
-                            <Button variant="raised" color="primary" href="/admin/articles">
+                            <Button 
+                                variant="raised" 
+                                color="primary" 
+                                component={Link}
+                                to='/admin/articles'
+                            >
                                 See all
                             </Button>
-                            <Button variant="raised" color="primary" href="/admin/articles/new">
+                            <Button 
+                                variant="raised" 
+                                color="primary"
+                                component={Link}
+                                to='/admin/new/article'
+                            >
                                 New
                             </Button>
                         </div>
@@ -128,10 +139,20 @@ class HomeIndex extends React.Component {
                             <TotalProjects portfolio={portfolio} />
                         </Table>
                         <div className="table-actions">
-                            <Button variant="raised" color="primary" href="/admin/portfolios">
+                            <Button 
+                                variant="raised" 
+                                color="primary" 
+                                component={Link}
+                                to='/admin/portfolios'
+                            >
                                 See all
                             </Button>
-                            <Button variant="raised" color="primary" href="/admin/project/new">
+                            <Button 
+                                variant="raised" 
+                                color="primary"
+                                component={Link}
+                                to='/admin/project/new'
+                            >
                                 New
                             </Button>
                         </div>

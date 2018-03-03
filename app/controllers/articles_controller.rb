@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
 
     if @article.save(article_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
-      redirect_to @article
+      redirect_to '/admin/article' + article.slug
     else
       Basic.update(1, alert: @article.errors.full_messages)
     end
@@ -69,7 +69,7 @@ class ArticlesController < ApplicationController
 
   def multiple_actions
 
-    params[:data].split(',').each do |id|
+    params[:data].each do |id|
       case params[:actions]
       when 'publish'
         Article.update(id, public: true)

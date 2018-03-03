@@ -26,12 +26,29 @@ const styles = theme => ({
         marginRight: '5px',
         borderRadius: '16px'
     },
-    button: {
+    buttons: {
         margin: theme.spacing.unit,
     },
 });
 
 class ArticlesIndexRow extends React.Component {
+
+    
+    shouldComponentUpdate(nextProps) {
+        const {classes, data, selected, page, rowsPerPage } = this.props;
+        if (
+            data !== nextProps.data || rowsPerPage !== nextProps.rowsPerPage ||
+            page !== nextProps.page || classes !== nextProps.classes ||
+            selected !== nextProps.selected || 
+            
+            classes !== nextProps.classes
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     render() {
         const {data, rowsPerPage, page, classes } = this.props;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (data !== null && data.length) - page * rowsPerPage);
@@ -77,7 +94,7 @@ class ArticlesIndexRow extends React.Component {
                             <Actions
                                 className={classes.cells}
                                 buttons={classes.buttons}
-                                deleteItem={this.props.deleteItem}
+                                deleteItem={this.props.deleteItem.bind(this)}
                                 article={a}
                             />
                         </TableRow>

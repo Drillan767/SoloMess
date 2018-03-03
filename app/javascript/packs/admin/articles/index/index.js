@@ -41,7 +41,6 @@ class EnhancedTable extends React.Component {
             order: 'asc',
             orderBy: 'title',
             selected: [],
-            settings: null,
             articles: null,
             page: 0,
             filteredArticles: null,
@@ -52,9 +51,6 @@ class EnhancedTable extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.origin + '/settings.json', function(settings) {
-            self.setState({settings: settings});
-        });
         utils.loader(window.location.origin + '/all_articles.json', function(articles) {
             self.setState({articles: articles});
         })
@@ -85,7 +81,6 @@ class EnhancedTable extends React.Component {
     };
 
     handleMultipleActions(action, payload) {
-        console.log(payload);
         let self = this;
         swal({
             title: 'Confirm action?',
@@ -98,10 +93,9 @@ class EnhancedTable extends React.Component {
             preConfirm: function () {
                 return new Promise(function(resolve) {
                     $.ajax({ url: '/admin/articles/multiple/' + action,
-                        data: {đata: payload},
-                        type: 'POST',
+                    data: {'data': payload},
+                    type: 'POST',
                         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
-                        data: payload,
 
                     }).done(function(response) {
                         swal(
@@ -138,6 +132,7 @@ class EnhancedTable extends React.Component {
     }
 
     deleteItem(id, title) {
+        console.log('ouais');
         let self = this;
         swal({
             title: 'Confirm action?',
@@ -197,9 +192,34 @@ class EnhancedTable extends React.Component {
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+    shouldComponentUpdate(nextState, nextProps) {
+        const { articles, order, orderBy, page, rowsPerPage, search, selected } = this.state;
+        const { classes, settings, title } = this.props;
+
+        if (
+            articles !== nextState.article || order !== nextState.order || 
+            orderBy !== nextState.orderBy || page !== nextState.page ||
+            rowsPerPage !== nextState.rowsPerPage || search !== nextState.search || 
+            selected !== nextState.selected
+        ) {
+            return true;
+        }
+
+        if (
+            classes !== nextProps.classes || settings !== nextProps.settings || title !== nextProps.title
+        ) {
+            return true;
+        }
+
+        return false;
+        
+    }
+
     render() {
         const { classes } = this.props;
         const { articles, order, orderBy, selected, rowsPerPage, page, filteredArticles } = this.state;
+
+        // console.log(this.props);
 
         let data = this.state.input ? filteredArticles : articles;
 
@@ -228,7 +248,7 @@ class EnhancedTable extends React.Component {
                                 page={page}
                                 selected={selected}
                                 isSelected={this.isSelected.bind(this)}
-                                deleteItem={() => this.deleteItem}
+                                deleteItem={this.deleteItem.bind(this)}
                                 handleClick={this.handleClick.bind(this)}
                             />
 

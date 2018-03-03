@@ -34,7 +34,12 @@ Rails.application.routes.draw do
     end
     devise_for :users, skip: [:sessions]
 
+    resources :articles, only: :create do
+      resources :comments
+    end
+
     post '/articles/multiple/:actions' => 'articles#multiple_actions'
+    post '/articles/:id/ajax_delete' => 'articles#ajax_delete'
 
     get '*path' => 'home#admin'
   end
@@ -50,13 +55,11 @@ end
       get '/project/:id/edit' => 'portfolios#edit'
       post '/project/:id' => 'portfolios#update'
 
-      resources :articles, except: :update do
-        resources :comments
-      end
+      
 
 
       post '/articles/multiple/:actions/:data' => 'articles#multiple_actions'
-      post '/articles/:id/ajax_delete' => 'articles#ajax_delete'
+      
 
       post '/portfolio/multiple/:actions/:data' => 'portfolios#multiple_actions'
       post '/portfolio/:id/ajax_delete' => 'portfolios#ajax_delete'

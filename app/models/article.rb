@@ -7,6 +7,7 @@ class Article < ApplicationRecord
 
   has_many :comments
   accepts_nested_attributes_for :comments, reject_if: :all_blank, allow_destroy: true
+  attr_accessor :data
 
   def should_generate_new_friendly_id?
     title_changed?

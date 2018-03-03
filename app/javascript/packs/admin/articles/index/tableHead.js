@@ -24,6 +24,19 @@ class EnhancedTableHead extends React.Component {
         this.props.onRequestSort(event, property);
     };
 
+    shouldComponentUpdate(nextProps) {
+        const { classes, numSelected, order, orderBy, rowCount} = this.props;
+
+        if (
+            classes !== nextProps.classes || numSelected !== nextProps.numSelected || order !== nextProps.order ||
+            orderBy !== nextProps.orderBy || rowCount !== nextProps.rowCount
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     render() {
         const { onSelectAllClick, order, orderBy, numSelected, rowCount, classes } = this.props;
 

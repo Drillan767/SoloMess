@@ -19,6 +19,10 @@ class TableTop extends React.Component {
         this.props.handleFilterInput(event.target.value);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return this.props.classes !== nextProps.classes;
+    }
+
     render() {
         const { classes } = this.props;
         return (

@@ -2,6 +2,17 @@ import React from 'react';
 import { TableFooter, TablePagination, TableRow} from 'material-ui';
 
 export default class ArticleIndexFooter extends React.Component {
+
+    shouldComponentUpdate(nextProps) {
+        const { articles, page, rowsPerPage } = this.props;
+
+        if(articles !== nextProps.articles || page !== nextProps.page || rowsPerPage !== nextProps.rowsPerPage) {
+            return true;
+        }
+
+        return false;
+    }
+
     render() {
         const { articles, rowsPerPage, page } = this.props;
         return (
