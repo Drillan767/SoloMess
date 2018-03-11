@@ -8,6 +8,7 @@ import AdminIndex from './admin/home/index';
 import ArticleNew from './admin/articles/new';
 import ArticleShow from './admin/articles/show';
 import ArticlesIndex from './admin/articles/index/';
+import ArticleEdit from './admin/articles/edit'
 
 const drawerWidth = 240;
 
@@ -116,9 +117,20 @@ class ResponsiveDrawer extends React.Component {
                                             }
                                         />
                                         <Route
+                                            exact
                                             path='/admin/article/:slug'
                                             render={
                                                 (props) =><ArticleShow
+                                                            settings={settings}
+                                                            {...props}
+                                                />
+                                            }
+                                        />
+                                        <Route
+                                            exact
+                                            path='/admin/article/:slug/edit'
+                                            render={
+                                                (props) =><ArticleEdit
                                                             settings={settings}
                                                             {...props}
                                                 />

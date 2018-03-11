@@ -1,4 +1,133 @@
 import React from 'react';
+import utils from '../../../lib/functionsLibrary';
+import Paper from 'material-ui/Paper';
+import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+import Title from './title';
+import Tags from './tags'
+import Image from './image';
+import Quill from './quill';
+import Actions from './actions';
+import _ from 'lodash'
+
+const styles = {
+    root: {
+        margin: 'auto'
+    },
+    file: {
+        margin: '5px auto 30px auto'
+    },
+    actions: {
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '10px'
+    },
+    buttons: {
+        margin: '0 7px'
+    },
+    textarea: {
+        display: 'none'
+    }
+};
+
+class ArticleEdit extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            article: null,
+            settings: null,
+            // pas sûr d'avoir besoin du reste
+            title: '',
+            text: ''
+        }
+
+        this.handleChangeFor = this.handleChangeFor.bind(this);
+    }
+
+    handleChangeFor(field, value) {
+        console.log(value);
+        const article = _.cloneDeep(this.state.article)
+        article[field] = value
+        this.setState({ article: article });
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.settings !== nextProps.settings;
+    }
+
+    componentDidMount() {
+        let self = this;
+        utils.loader(window.location.origin + '/all_articles.json', function(articles) {            
+            self.setState({
+                article: articles.find(a => a.slug === self.props.match.params.slug)
+            })
+        });
+        utils.getSettings(function (settings) {
+            self.setState({settings: settings})
+        });
+    }
+
+    render() {
+        const { classes } =this.props;
+        const { article } = this.state;
+        return (
+            article !== null &&
+            <Grid item xs={12} sm={6} className={classes.root}>
+                <Paper elevation={4}>
+                    <form encType="multipart/form-data" action="/admin/articles" acceptCharset="UTF-8" method="post">
+                        <input name="utf8" type="hidden" value="✓" />
+                        <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
+
+                        <Title 
+                            className={classes.root} 
+                            value={article.title}
+                            handleChange={this.handleChangeFor}
+                        />
+                        <Tags 
+                            className={classes.root} 
+                            article={article} 
+                        />
+                        <Image 
+                            className={classes.file} 
+                            value={article.image} 
+                        />
+                        <Quill 
+                            className={classes.textarea} 
+                            value={article.content} 
+                        />
+                        <Actions div={classes.actions} buttons={classes.buttons} />
+
+                    </form>
+                </Paper>
+            </Grid>
+        )
+    }
+}
+
+export default withStyles(styles)(ArticleEdit)
+
+/*
+<Grid item xs={12} sm={6} className={classes.root}>
+                <Paper elevation={4}>
+                    <form encType="multipart/form-data" action="/admin/articles" acceptCharset="UTF-8" method="post">
+                        <input name="utf8" type="hidden" value="✓" />
+                        <input type="hidden" name="authenticity_token" value={utils.getCSRF()}/>
+
+                        <Title className={classes.root} />
+                        <Tags className={classes.root} />
+                        <Image className={classes.file} />
+                        <Quill className={classes.textarea}/>
+                        <Actions div={classes.actions} buttons={classes.buttons} />
+
+                    </form>
+                </Paper>
+            </Grid>
+
+
+
+
+import React from 'react';
 import utils from '../../lib/functionsLibrary';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -236,3 +365,4 @@ class ArticleEdit extends React.Component {
 }
 
 export default withStyles(styles)(ArticleEdit)
+*/

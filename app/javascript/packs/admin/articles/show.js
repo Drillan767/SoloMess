@@ -77,7 +77,6 @@ class ArticleShow extends React.Component {
     render() {
         const { article } = this.state;
         const { classes } = this.props;
-        console.log(this.props);
         return (
             article !== null &&
             <Grid item xs={12} sm={6} className={classes.root}>
