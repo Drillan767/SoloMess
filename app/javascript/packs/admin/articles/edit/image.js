@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Tooltip, Input, IconButton, Dialog, FormHelperText, InputAdornment} from 'material-ui';
 import { AttachFile } from 'material-ui-icons';
+import utils from '../../../lib/functionsLibrary';
 
 export default class ArticleNewImage extends React.Component {
 
@@ -37,6 +38,13 @@ export default class ArticleNewImage extends React.Component {
         reader.readAsDataURL(file);
     }
 
+    componentDidMount() {
+        this.setState({
+            filename: utils.basename(this.props.value),
+            file: this.props.value
+        })
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         if(this.state.file !== nextState.file ||
             this.state.filename !== nextState.filename ||
@@ -44,7 +52,10 @@ export default class ArticleNewImage extends React.Component {
             return true
         }
 
-        if(this.props.className !== nextProps.className) {
+        if(this.props.className !== nextProps.className ||
+           this.props.dialog !== nextProps.dialog ||
+           this.props.value !== nextProps.value ) {
+
             return true
         }
 
@@ -53,7 +64,8 @@ export default class ArticleNewImage extends React.Component {
 
     render() {
 
-        const { className } = this.props;
+        const { className, value, dialog } = this.props;
+        console.log(this.props);
 
         return (
             <Grid item xs={12} sm={8} className={className}>
@@ -86,6 +98,7 @@ export default class ArticleNewImage extends React.Component {
                 <Dialog
                     open={this.state.open}
                     keepMounted
+                    maxWidth={false}
                     onClose={this.hideImage.bind(this)}
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"

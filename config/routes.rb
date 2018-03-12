@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
     authenticate :user do
 
-      post '/articles/:id' => 'articles#update'
+      post '/article/:id' => 'articles#update'
     end
     devise_for :users, skip: [:sessions]
 

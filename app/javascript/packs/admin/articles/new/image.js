@@ -87,6 +87,7 @@ export default class ArticleNewImage extends React.Component {
                 <Dialog
                     open={this.state.open}
                     keepMounted
+                    maxWidth={false}
                     onClose={this.hideImage.bind(this)}
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"

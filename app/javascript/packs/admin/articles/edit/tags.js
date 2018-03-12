@@ -3,24 +3,19 @@ import { Grid, TextField } from 'material-ui';
 
 export default class ArticleEditTags extends React.Component {
 
-    /*
     shouldComponentUpdate(nextProps) {
-        return this.props.className !== nextProps.className;
+        if(this.props.className !== nextProps.className || this.props.value !== nextProps.value) {
+            return true
+        }
+
+        else {
+            return false
+        }
     }
-    
-
-   handleChangeFor = () => (event) => {
-       console.log(event.target.value);
-        const article = this.props.article;
-        article['tags'] = event.target.value;
-        this.setState({ article: article });
-    };
-
-    */
 
     render() {
-        const { className, article } = this.props;
-        console.log(article);
+        const { className, value } = this.props;
+        console.log(this.props)
         return (
             <Grid item xs={12} sm={8} className={className}>
                 <TextField
@@ -29,7 +24,7 @@ export default class ArticleEditTags extends React.Component {
                     name="article[tags]"
                     fullWidth
                     helperText="Separate each tag with a comma"
-                    value={article.tags}
+                    defaultValue={value}
                 />
             </Grid>
         )

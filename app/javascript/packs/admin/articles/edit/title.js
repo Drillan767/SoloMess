@@ -3,25 +3,14 @@ import { Grid, TextField } from 'material-ui';
 
 export default class ArticleNewTitle extends React.Component {
 
-   /* shouldComponentUpdate(nextProps) {
-        return this.props.className !== nextProps.className;
-    } 
-
-    handleChangeFor = () => (event) => {
-        const article = this.props.article;
-        article['title'] = event.target.value;
-        this.setState({ article: article });
-    };
-
-    */
-
-    constructor(props) {
-        super(props);
-        this.fieldChange = this.fieldChange.bind(this);
-    }
-
-    fieldChange(event) {
-        this.props.handleChange('title', event.target.value)
+    shouldComponentUpdate(nextProps, nextState) {
+        const { className, value } = this.props;
+        if(className !== nextProps.className || value !== nextProps.value) {
+            return true
+        }
+        else {
+            return false;
+        }
     }
 
     render() {
@@ -32,8 +21,7 @@ export default class ArticleNewTitle extends React.Component {
                     id="article_title"
                     label="Title"
                     name="article[title]"
-                    value={value}
-                    onChange={this.fieldChange}
+                    defaultValue={value}
                     fullWidth
                 />
             </Grid>

@@ -26,12 +26,16 @@ export default class Quill extends React.Component {
         this.setState({text: value})
     }
 
+    componentDidMount() {
+        this.setState({text: this.props.value})
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         if(this.state.text !== nextState.text) {
             return true
         }
 
-        if(this.props.className !== nextProps.className) {
+        if(this.props.className !== nextProps.className || this.state.value !== nextState.value) {
             return true;
         }
 
@@ -40,7 +44,7 @@ export default class Quill extends React.Component {
 
     render() {
 
-        const { className, value } = this.props;
+        const { className } = this.props;
 
         return (
             [
@@ -50,7 +54,7 @@ export default class Quill extends React.Component {
                     readOnly
                     name="article[content]"
                     className={className}
-                    value={value}
+                    value={this.state.text}
                 />,
                 <ReactQuill
                     key={1}
