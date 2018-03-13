@@ -1,9 +1,7 @@
 import React from 'react';
-import Button from 'material-ui/Button';
+import { Button, Toolbar, TextField, withStyles } from 'material-ui';
 import Add from 'material-ui-icons/Add';
-import TextField from 'material-ui/TextField';
-import Toolbar from 'material-ui/Toolbar';
-import {withStyles} from "material-ui/styles/index";
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
 
@@ -19,6 +17,10 @@ class TableTop extends React.Component {
 
     onFieldChange(event) {
         this.props.handleFilterInput(event.target.value);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.classes !== nextProps.classes;
     }
 
     render() {
@@ -40,7 +42,8 @@ class TableTop extends React.Component {
                     <Button
                         variant="raised"
                         color="primary"
-                        href="/admin/new/project"
+                        component={Link}
+                        to='/admin/new/project'
                     >
                     New project
                     <Add className={classes.rightIcon} />

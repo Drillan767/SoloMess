@@ -129,7 +129,7 @@ class SideBarContent extends React.Component {
                                     />
                                 </ListItem>
                             </Link>
-                            <Link to={'/admin/new/project'} className={classes.links}>
+                            <Link to={'/admin/portfolio'} className={classes.links}>
                                 <ListItem button className={classes.nested}>
                                     <ListItemIcon>
                                         <ViewList className={pathname === '/admin/portfolio' ? classes.active : ''}/>

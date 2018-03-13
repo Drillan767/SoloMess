@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
 
     if @article.save(article_params)
       Basic.update(1, notice: 'Eveything was good thank you so much omg')
-      redirect_to '/admin/article' + article.slug
+      redirect_to '/admin/article' + @article.slug
     else
       Basic.update(1, alert: @article.errors.full_messages)
     end

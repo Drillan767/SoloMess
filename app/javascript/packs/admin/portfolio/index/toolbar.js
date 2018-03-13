@@ -11,24 +11,16 @@ const styles = theme => ({
     root: {
         paddingRight: theme.spacing.unit,
     },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.dark,
-                backgroundColor: lighten(theme.palette.primary.light, 0.4),
-            } : {
-                color: lighten(theme.palette.secondary.light, 0.4),
-                backgroundColor: theme.palette.primary.dark,
-            },
     spacer: {
         flex: '1 1 auto',
     },
     actions: {
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
     },
     title: {
         flex: '0 0 auto',
     },
+
 });
 
 class EnhancedTableToolbar extends React.Component {

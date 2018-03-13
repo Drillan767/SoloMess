@@ -41,9 +41,9 @@ class EnhancedTable extends React.Component {
             order: 'asc',
             orderBy: 'title',
             selected: [],
-            articles: null,
+            projects: null,
             page: 0,
-            filteredArticles: null,
+            filteredProjectss: null,
             rowsPerPage: 5,
             search: ''
         };
@@ -51,8 +51,8 @@ class EnhancedTable extends React.Component {
 
     componentDidMount() {
         let self = this;
-        utils.loader(window.location.origin + '/all_articles.json', function(articles) {
-            self.setState({articles: articles});
+        utils.loader(window.location.origin + '/all_projects.json', function(projects) {
+            self.setState({projects: projects});
         })
     }
 
@@ -64,17 +64,17 @@ class EnhancedTable extends React.Component {
             order = 'asc';
         }
 
-        const articles =
+        const projects =
             order === 'desc'
-                ? this.state.articles.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-                : this.state.articles.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
+                ? this.state.projects.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+                : this.state.projects.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
 
-        this.setState({ articles, order, orderBy });
+        this.setState({ projects, order, orderBy });
     };
 
     handleSelectAllClick = (event, checked) => {
         if (checked) {
-            this.setState({ selected: this.state.articles.map(n => n.id) });
+            this.setState({ selected: this.state.projects.map(n => n.id) });
             return;
         }
         this.setState({ selected: [] });
@@ -92,7 +92,7 @@ class EnhancedTable extends React.Component {
             confirmButtonText: 'Confirm',
             preConfirm: function () {
                 return new Promise(function(resolve) {
-                    $.ajax({ url: '/admin/articles/multiple/' + action,
+                    $.ajax({ url: '/admin/projects/multiple/' + action,
                     data: {'data': payload},
                     type: 'POST',
                         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
@@ -103,7 +103,7 @@ class EnhancedTable extends React.Component {
                             payload.length + ' element(s) have successfully been ' + action + 'ed',
                             'success'
                         );
-                        self.setState({articles: response});
+                        self.setState({projects: response});
                     });
                 })
             }
@@ -112,23 +112,23 @@ class EnhancedTable extends React.Component {
 
     handleFilterInput(value) {
         this.setState({input: value});
-        const { articles } = this.state;
-        let filtered = articles.filter(
-            (article) => {
+        const { projects } = this.state;
+        let filtered = projects.filter(
+            (project) => {
                 return (
-                    article.title.toLowerCase().indexOf(value.toLowerCase()) !== -1
+                    project.title.toLowerCase().indexOf(value.toLowerCase()) !== -1
 
                     /*||
-                    utils.toRealDate(article.created_at, true).indexOf(input.toLowerCase()) !== -1 ||
-                    utils.toRealDate(article.updated_at, true).indexOf(input.toLowerCase()) !== -1 ||
-                    article.tags.split(',').map(function(tag) {
+                    utils.toRealDate(project.created_at, true).indexOf(input.toLowerCase()) !== -1 ||
+                    utils.toRealDate(project.updated_at, true).indexOf(input.toLowerCase()) !== -1 ||
+                    project.tags.split(',').map(function(tag) {
                         tag.toLowerCase().indexOf(input.toLowerCase()) != -1;
                     })*/
                 )
             }
         );
-        this.setState({filteredArticles: filtered});
-        console.log(filtered);
+
+        this.setState({filteredProjects: filtered});
     }
 
     deleteItem(id, title) {
@@ -143,7 +143,7 @@ class EnhancedTable extends React.Component {
             confirmButtonText: 'Confirm',
             preConfirm: function () {
                 return new Promise(function(resolve) {
-                    $.ajax({ url: '/admin/articles/'+ id +'/ajax_delete',
+                    $.ajax({ url: '/admin/projects/'+ id +'/ajax_delete',
                         type: 'POST',
                         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', utils.getCSRF())},
                     }).done(function(response) {
@@ -152,7 +152,7 @@ class EnhancedTable extends React.Component {
                             '"' + title + '" have successfully been deleted',
                             'success'
                         );
-                        self.setState({articles: response});
+                        self.setState({projects: response});
                     });
                 })
             }
@@ -181,7 +181,6 @@ class EnhancedTable extends React.Component {
     };
 
     handleChangePage = (event, page) => {
-        console.log(page);
         this.setState({ page });
     };
 
@@ -192,11 +191,11 @@ class EnhancedTable extends React.Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     shouldComponentUpdate(nextState, nextProps) {
-        const { articles, order, orderBy, page, rowsPerPage, search, selected } = this.state;
+        const { projects, order, orderBy, page, rowsPerPage, search, selected } = this.state;
         const { classes, settings, title } = this.props;
 
         if (
-            articles !== nextState.article || order !== nextState.order || 
+            projects !== nextState.projects || order !== nextState.order || 
             orderBy !== nextState.orderBy || page !== nextState.page ||
             rowsPerPage !== nextState.rowsPerPage || search !== nextState.search || 
             selected !== nextState.selected
@@ -216,11 +215,9 @@ class EnhancedTable extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { articles, order, orderBy, selected, rowsPerPage, page, filteredArticles } = this.state;
+        const { projects, order, orderBy, selected, rowsPerPage, page, filteredProjects } = this.state;
 
-        // console.log(this.props);
-
-        let data = this.state.input ? filteredArticles : articles;
+        let data = this.state.input ? filteredProjects : projects;
 
         return (
             <Grid item xs={12}>
@@ -256,7 +253,7 @@ class EnhancedTable extends React.Component {
                                 page={page}
                                 onChangePage={this.handleChangePage.bind(this)}
                                 onChangeRowsPerPage={this.handleChangeRowsPerPage.bind(this)}
-                                articles={articles}
+                                projects={projects}
                             />
                         </Table>
                     </div>

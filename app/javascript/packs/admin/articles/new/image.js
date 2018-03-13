@@ -54,7 +54,6 @@ export default class ArticleNewImage extends React.Component {
     render() {
 
         const { className } = this.props;
-        console.log(this.state.open);
 
         return (
             <Grid item xs={12} sm={8} className={className}>
